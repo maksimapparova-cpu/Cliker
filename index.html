@@ -264,7 +264,6 @@
                     
                     div.innerHTML = innerHTML;
                     
-                    // Если вы админ и это не ваш профиль — добавляем кнопку бана
                     if (isAdmin && !isSelf) {
                         const banBtn = document.createElement('button');
                         banBtn.textContent = data.banned ? 'Разблокировать' : 'Забанить';
@@ -272,13 +271,27 @@
                         
                         banBtn.onclick = async (e) => {
                             e.stopPropagation();
+                            if (banBtn.disabled) return;
+                            
+                            banBtn.disabled = true;
+                            banBtn.textContent = '...';
+                            
                             const newBanStatus = !data.banned;
-                            await updateDoc(doc(db, "users", docSnap.id), { banned: newBanStatus });
-                            data.banned = newBanStatus; // обновляем локально
-                            banBtn.textContent = newBanStatus ? 'Разблокировать' : 'Забанить';
-                            banBtn.style.color = newBanStatus ? '#0f0' : '#f00';
-                            banBtn.style.borderColor = newBanStatus ? '#0f0' : '#f00';
-                            div.querySelector('span').innerHTML = `${rank}. ${data.nickname || 'Игрок'} ${newBanStatus ? '🚫' : ''}`;
+                            try {
+                                await updateDoc(doc(db, "users", docSnap.id), { banned: newBanStatus });
+                                data.banned = newBanStatus;
+                                
+                                banBtn.textContent = newBanStatus ? 'Разблокировать' : 'Забанить';
+                                banBtn.style.color = newBanStatus ? '#0f0' : '#f00';
+                                banBtn.style.borderColor = newBanStatus ? '#0f0' : '#f00';
+                                div.querySelector('span').innerHTML = `${rank}. ${data.nickname || 'Игрок'} ${newBanStatus ? '🚫' : ''}`;
+                            } catch (err) {
+                                console.error(err);
+                                alert('Ошибка при бане! Проверьте правила в Firebase.');
+                                banBtn.textContent = data.banned ? 'Разблокировать' : 'Забанить';
+                            } finally {
+                                banBtn.disabled = false;
+                            }
                         };
                         div.appendChild(banBtn);
                     }
