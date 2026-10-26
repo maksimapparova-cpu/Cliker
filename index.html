@@ -10,6 +10,8 @@
         #particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 360px; padding: 16px; z-index: 20; gap: 14px; }
         .screen.active { display: flex; }
+        
+        /* Авторизация */
         .auth-box { display: flex; flex-direction: column; gap: 12px; width: 100%; background: rgba(10, 5, 25, 0.8); padding: 24px; border-radius: 20px; border: 1px solid #0ff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
         .auth-box h2 { text-align: center; margin-bottom: 10px; text-shadow: 0 0 10px #0ff; }
         .auth-box input { padding: 12px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid #f0f; color: white; outline: none; font-size: 1rem; }
@@ -17,22 +19,47 @@
         .auth-btn { padding: 12px; border-radius: 10px; background: linear-gradient(135deg, #0ff, #00aaff); border: none; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; color: #000; }
         .auth-switch { text-align: center; font-size: 0.8rem; margin-top: 10px; color: #aaa; cursor: pointer; }
         .auth-switch span { color: #f0f; text-decoration: underline; }
-        .menu { display: flex; gap: 10px; padding: 8px 20px; background: rgba(10, 5, 25, 0.7); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 40px; }
-        .menu-btn { background: transparent; border: none; color: #a0f0ff; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; padding: 5px 10px; cursor: pointer; text-shadow: 0 0 6px cyan; }
+
+        /* Меню и игра */
+        .menu { display: flex; gap: 5px; padding: 8px 10px; background: rgba(10, 5, 25, 0.7); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 40px; flex-wrap: wrap; justify-content: center; width: 100%; }
+        .menu-btn { background: transparent; border: none; color: #a0f0ff; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 5px 6px; cursor: pointer; text-shadow: 0 0 6px cyan; }
         .score-panel { font-size: 2.4rem; font-weight: 800; text-shadow: 0 0 8px #0ff, 0 0 18px #0ff; background: rgba(0, 20, 30, 0.5); padding: 0 22px; border-radius: 50px; border: 1px solid rgba(0, 255, 255, 0.5); }
         .clicker-btn { width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #00ffff, #0066cc, #220044); border: 3px solid #0ff; box-shadow: 0 0 22px #0ff, 0 0 50px #00aaff; cursor: pointer; font-size: 1.3rem; font-weight: 900; color: white; display: flex; justify-content: center; align-items: center; outline: none; transition: 0.1s; }
         .clicker-btn:active { transform: scale(0.92); }
+        
+        /* Улучшения */
         .upgrade-panel { padding: 10px 16px; background: rgba(10, 5, 25, 0.8); border: 1px solid rgba(255, 0, 255, 0.35); border-radius: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
         .upgrade-btn { width: 100%; padding: 10px; font-size: 0.8rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #2a0a3a, #0a1a3a); border: 2px solid #f0f; border-radius: 40px; cursor: pointer; }
         .upgrade-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #555; }
         .progress-bar-wrap { width: 100%; height: 6px; background: rgba(0, 0, 0, 0.6); border-radius: 10px; overflow: hidden; border: 1px solid rgba(0, 255, 255, 0.25); }
         .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0ff, #f0f, #0ff); transition: width 0.3s; }
         .level-badge { font-size: 0.7rem; color: #f0f; text-transform: uppercase; }
-        .leaderboard-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #f0f; display: flex; flex-direction: column; gap: 10px; }
-        .leaderboard-box h3 { text-align: center; color: #f0f; margin-bottom: 10px; }
-        .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
-        .leader-item.self { background: rgba(0, 255, 255, 0.1); border-radius: 5px; color: #0ff; }
+        .rank-badge { font-size: 0.75rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+
+        /* Магазин и Лидеры */
+        .shop-box, .leaderboard-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #0ff; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
+        .shop-box h3, .leaderboard-box h3 { text-align: center; color: #0ff; text-shadow:0 0 10px #0ff; margin-bottom: 10px; }
+        .shop-list, .leader-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 5px; }
+        
+        .shop-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .shop-item .preview { font-size: 1.5rem; margin-right: 10px; }
+        .buy-btn { padding: 6px 12px; border-radius: 10px; background: #0ff; color: #000; font-weight: bold; border: none; cursor: pointer; white-space: nowrap; }
+        .buy-btn:disabled { background: #555; color: #aaa; cursor: not-allowed; }
+        
+        .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-radius: 8px; }
+        .leader-item:hover { background: rgba(255,255,255,0.1); }
+        .leader-item.self { background: rgba(0, 255, 255, 0.1); color: #0ff; }
+        
         .close-btn { margin-top: 15px; padding: 10px; width: 100%; background: transparent; border: 1px solid #0ff; color: #0ff; border-radius: 20px; cursor: pointer; text-transform: uppercase; }
+
+        /* Профиль игрока */
+        .profile-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 2px solid #0ff; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; overflow: hidden; }
+        .profile-banner { position: absolute; top: 0; left: 0; width: 100%; height: 90px; z-index: 0; }
+        .profile-avatar { font-size: 4rem; z-index: 1; margin-top: 30px; text-shadow: 0 0 10px #0ff; }
+        .profile-name { font-size: 1.5rem; font-weight: bold; z-index: 1; text-shadow: 0 0 10px #fff; margin-top: 5px; }
+        .profile-rank { font-size: 0.9rem; color: #f0f; z-index: 1; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+        .profile-stats { display: flex; gap: 15px; z-index: 1; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        
         #loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #0ff; font-size: 1.2rem; z-index: 100; }
     </style>
 </head>
@@ -55,12 +82,15 @@
     <!-- Экран игры -->
     <div class="screen" id="gameScreen">
         <div class="menu">
-            <button class="menu-btn" id="logoutBtn">Выйти</button>
+            <button class="menu-btn" id="myProfileBtn">Профиль</button>
             <button class="menu-btn" id="leaderboardBtn">Лидеры</button>
+            <button class="menu-btn" id="shopBtn">Магазин</button>
+            <button class="menu-btn" id="logoutBtn">Выйти</button>
         </div>
         <div class="score-panel" id="scoreDisplay">0</div>
         <button class="clicker-btn" id="clickerButton">ЖМИ</button>
         <div class="level-badge" id="clickValueLabel">+1 за клик</div>
+        <div class="rank-badge" id="rankBadge">🧴 Новичок</div>
         <div class="upgrade-panel">
             <div style="font-size: 0.7rem; color: #b0d8ff; text-transform: uppercase;">Улучшение: <b id="nextUpgradeCost" style="color:#0ff">4</b></div>
             <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
@@ -69,12 +99,42 @@
         </div>
     </div>
 
+    <!-- Экран магазина -->
+    <div class="screen" id="shopScreen">
+        <div class="shop-box">
+            <h3>🛒 МАГАЗИН</h3>
+            <div class="shop-list" id="shopList"></div>
+            <button class="close-btn" id="closeShopBtn">Назад</button>
+        </div>
+    </div>
+
     <!-- Экран лидеров -->
     <div class="screen" id="leaderboardScreen">
         <div class="leaderboard-box">
             <h3>🏆 ТОП ИГРОКОВ 🏆</h3>
-            <div id="leaderboardList" style="display: flex; flex-direction: column; gap: 5px; max-height: 300px; overflow-y: auto;"></div>
+            <div class="leader-list" id="leaderboardList"></div>
             <button class="close-btn" id="closeLeaderboardBtn">Назад</button>
+        </div>
+    </div>
+
+    <!-- Экран профиля -->
+    <div class="screen" id="profileScreen">
+        <div class="profile-box" id="profileBox">
+            <div class="profile-banner" id="profileBanner"></div>
+            <div class="profile-avatar" id="profileAvatar">👤</div>
+            <div class="profile-name" id="profileName">Никнейм</div>
+            <div class="profile-rank" id="profileRank">Ранг</div>
+            <div class="profile-stats">
+                <div style="text-align:center;">
+                    <div style="font-size:0.7rem; color:#aaa;">КЛИКИ</div>
+                    <div style="font-weight:bold; color:#0ff; font-size:1.2rem;" id="profileScore">0</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:0.7rem; color:#aaa;">УРОВЕНЬ</div>
+                    <div style="font-weight:bold; color:#f0f; font-size:1.2rem;" id="profileLevel">1</div>
+                </div>
+            </div>
+            <button class="close-btn" id="closeProfileBtn">Назад</button>
         </div>
     </div>
 
@@ -97,16 +157,21 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // Элементы интерфейса
         const loading = document.getElementById('loading');
         const authScreen = document.getElementById('authScreen');
         const gameScreen = document.getElementById('gameScreen');
+        const shopScreen = document.getElementById('shopScreen');
         const leaderboardScreen = document.getElementById('leaderboardScreen');
+        const profileScreen = document.getElementById('profileScreen');
+
         const nicknameInput = document.getElementById('nickname');
         const passwordInput = document.getElementById('password');
         const authTitle = document.getElementById('authTitle');
         const authActionBtn = document.getElementById('authActionBtn');
         const authSwitch = document.getElementById('authSwitch');
         const authError = document.getElementById('authError');
+
         const scoreDisplay = document.getElementById('scoreDisplay');
         const clickerButton = document.getElementById('clickerButton');
         const upgradeBtn = document.getElementById('upgradeBtn');
@@ -114,16 +179,57 @@
         const progressBar = document.getElementById('progressBar');
         const levelBadge = document.getElementById('levelBadge');
         const clickValueLabel = document.getElementById('clickValueLabel');
+        const rankBadge = document.getElementById('rankBadge');
         
-        const leaderboardBtn = document.getElementById('leaderboardBtn');
-        const closeLeaderboardBtn = document.getElementById('closeLeaderboardBtn');
+        const shopList = document.getElementById('shopList');
         const leaderboardList = document.getElementById('leaderboardList');
+
+        // Данные магазина (8 Аватарок и 8 Баннеров)
+        const shopItems = [
+            // Аватарки
+            { id: 'avatar1', type: 'avatar', icon: '👤', name: 'Новичок', price: 0 },
+            { id: 'avatar2', type: 'avatar', icon: '🐱', name: 'Котик', price: 500 },
+            { id: 'avatar3', type: 'avatar', icon: '👽', name: 'Пришелец', price: 2000 },
+            { id: 'avatar4', type: 'avatar', icon: '🤖', name: 'Кибер-робот', price: 5000 },
+            { id: 'avatar5', type: 'avatar', icon: '👑', name: 'Корона', price: 15000 },
+            { id: 'avatar6', type: 'avatar', icon: '🔥', name: 'Демон', price: 50000 },
+            { id: 'avatar7', type: 'avatar', icon: '🐉', name: 'Дракон', price: 150000 },
+            { id: 'avatar8', type: 'avatar', icon: '🌟', name: 'Суперзвезда', price: 500000 },
+            // Баннеры
+            { id: 'banner1', type: 'banner', icon: '⬛', name: 'Стандартный', price: 0, style: 'linear-gradient(90deg, #111, #333)' },
+            { id: 'banner2', type: 'banner', icon: '💙', name: 'Неон', price: 1000, style: 'linear-gradient(90deg, #0ff, #f0f)' },
+            { id: 'banner3', type: 'banner', icon: '🔥', name: 'Огненный', price: 3000, style: 'linear-gradient(90deg, #f00, #ff0)' },
+            { id: 'banner4', type: 'banner', icon: '💜', name: 'Фиолетовый', price: 8000, style: 'linear-gradient(90deg, #800080, #ff00ff)' },
+            { id: 'banner5', type: 'banner', icon: '💎', name: 'Алмазный', price: 25000, style: 'linear-gradient(90deg, #0ff, #fff, #0ff)' },
+            { id: 'banner6', type: 'banner', icon: '🌌', name: 'Космос', price: 100000, style: 'radial-gradient(circle, #000 20%, #220044 80%)' },
+            { id: 'banner7', type: 'banner', icon: '☢️', name: 'Радиация', price: 300000, style: 'linear-gradient(90deg, #00ff00, #003300)' },
+            { id: 'banner8', type: 'banner', icon: '⚡', name: 'Гроза', price: 1000000, style: 'linear-gradient(90deg, #000, #0ff, #000)' }
+        ];
 
         let isLoginMode = true;
         let currentUser = null;
         let isAdmin = false;
-        let userData = { score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, nickname: '', banned: false };
+        let userData = { 
+            score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, nickname: '', banned: false,
+            avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', inventory: ['avatar1', 'banner1']
+        };
 
+        // --- Функция определения титула (по скриншоту) ---
+        function getRank(level) {
+            if (level >= 100) return '👑 Бог';
+            if (level >= 90) return '🌌 Легенда';
+            if (level >= 80) return '🚀 Грандмастер';
+            if (level >= 70) return '🔮 Архимаг';
+            if (level >= 60) return '⚡ Полубог';
+            if (level >= 50) return '🔥 Мастер';
+            if (level >= 40) return '🗡️ Ветеран';
+            if (level >= 30) return '💎 Эксперт';
+            if (level >= 20) return '⚔️ Профи';
+            if (level >= 10) return '🛡️ Боец';
+            return '🧴 Новичок';
+        }
+
+        // --- Логика Авторизации ---
         authSwitch.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             authTitle.textContent = isLoginMode ? 'Вход' : 'Регистрация';
@@ -146,7 +252,8 @@
                 } else {
                     const userCredential = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
                     await setDoc(doc(db, "users", userCredential.user.uid), {
-                        nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false
+                        nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false,
+                        avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', inventory: ['avatar1', 'banner1']
                     });
                 }
             } catch (error) {
@@ -167,7 +274,6 @@
             loading.style.display = 'none';
             if (user) {
                 currentUser = user;
-                
                 const adminDoc = await getDoc(doc(db, "admins", user.uid));
                 isAdmin = adminDoc.exists();
                 
@@ -176,34 +282,37 @@
                 
                 if (docSnap.exists()) {
                     userData = docSnap.data();
+                    if (!userData.inventory) userData.inventory = ['avatar1', 'banner1'];
+                    if (!userData.avatar) userData.avatar = '👤';
+                    if (!userData.banner) userData.banner = 'linear-gradient(90deg, #111, #333)';
+
                     if (userData.banned) {
                         alert("Вы забанены и не можете играть.");
-                        authScreen.classList.add('active');
-                        gameScreen.classList.remove('active');
-                        leaderboardScreen.classList.remove('active');
                         await signOut(auth);
                         return;
                     }
                     updateUI();
                 }
-                
-                authScreen.classList.remove('active');
-                gameScreen.classList.add('active');
-                leaderboardScreen.classList.remove('active');
+                showScreen(gameScreen);
             } else {
                 currentUser = null;
                 isAdmin = false;
-                authScreen.classList.add('active');
-                gameScreen.classList.remove('active');
-                leaderboardScreen.classList.remove('active');
+                showScreen(authScreen);
                 passwordInput.value = '';
             }
         });
 
+        function showScreen(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            screen.classList.add('active');
+        }
+
+        // --- Обновление интерфейса игры ---
         function updateUI() {
             scoreDisplay.textContent = Math.floor(userData.score);
             levelBadge.textContent = `УРОВЕНЬ ${userData.level} · +${userData.clicksPerClick}`;
             clickValueLabel.textContent = `+${userData.clicksPerClick} за клик`;
+            rankBadge.textContent = getRank(userData.level);
             nextUpgradeCostEl.textContent = userData.upgradeCost;
             const canUpgrade = userData.score >= userData.upgradeCost;
             upgradeBtn.disabled = !canUpgrade;
@@ -218,7 +327,9 @@
             const performSave = async () => {
                 try {
                     await updateDoc(doc(db, "users", currentUser.uid), {
-                        score: Math.floor(userData.score), clicksPerClick: userData.clicksPerClick, level: userData.level, upgradeCost: userData.upgradeCost
+                        score: Math.floor(userData.score), clicksPerClick: userData.clicksPerClick, 
+                        level: userData.level, upgradeCost: userData.upgradeCost,
+                        avatar: userData.avatar, banner: userData.banner, inventory: userData.inventory
                     });
                 } catch (e) { console.error("Ошибка сохранения:", e); }
             };
@@ -226,6 +337,7 @@
             if (immediate) performSave(); else saveTimeout = setTimeout(performSave, 2000);
         }
 
+        // --- Клик и Улучшение ---
         clickerButton.addEventListener('click', () => {
             if (!currentUser || userData.banned) return;
             userData.score += userData.clicksPerClick;
@@ -241,9 +353,61 @@
             createParticles(window.innerWidth / 2, window.innerHeight / 2, 40, true);
         });
 
-        leaderboardBtn.addEventListener('click', async () => {
-            gameScreen.classList.remove('active');
-            leaderboardScreen.classList.add('active');
+        // --- Магазин ---
+        document.getElementById('shopBtn').addEventListener('click', () => {
+            renderShop();
+            showScreen(shopScreen);
+        });
+        document.getElementById('closeShopBtn').addEventListener('click', () => showScreen(gameScreen));
+
+        function renderShop() {
+            shopList.innerHTML = '';
+            shopItems.forEach(item => {
+                const isOwned = userData.inventory.includes(item.id);
+                const isEquipped = (item.type === 'avatar' && userData.avatar === item.icon) || (item.type === 'banner' && userData.banner === item.style);
+                
+                const div = document.createElement('div');
+                div.className = 'shop-item';
+                div.innerHTML = `
+                    <div style="display:flex; align-items:center;">
+                        <span class="preview" style="background:${item.type === 'banner' ? item.style : 'transparent'}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span>
+                        <div style="margin-left: 10px;">
+                            <div style="font-weight:bold; color:${item.type === 'banner' ? '#0ff' : '#fff'}">${item.name}</div>
+                            <div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div>
+                        </div>
+                    </div>
+                    <button class="buy-btn" ${isEquipped ? 'disabled' : ''}>
+                        ${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}
+                    </button>
+                `;
+
+                const btn = div.querySelector('button');
+                btn.onclick = () => {
+                    if (isEquipped) return;
+                    if (isOwned) {
+                        if (item.type === 'avatar') userData.avatar = item.icon;
+                        if (item.type === 'banner') userData.banner = item.style;
+                        saveToCloud(true); renderShop();
+                    } else {
+                        if (userData.score >= item.price) {
+                            userData.score -= item.price;
+                            userData.inventory.push(item.id);
+                            if (item.type === 'avatar') userData.avatar = item.icon;
+                            if (item.type === 'banner') userData.banner = item.style;
+                            updateUI(); saveToCloud(true); renderShop();
+                            createParticles(window.innerWidth/2, window.innerHeight/2, 30);
+                        } else {
+                            alert('Недостаточно кликов!');
+                        }
+                    }
+                };
+                shopList.appendChild(div);
+            });
+        }
+
+        // --- Таблица лидеров ---
+        document.getElementById('leaderboardBtn').addEventListener('click', async () => {
+            showScreen(leaderboardScreen);
             leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
             
             try {
@@ -254,61 +418,68 @@
                 let rank = 1;
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    
-                    // Если игрок забанен, мы просто его пропускаем (он не отобразится в топе)
                     if (data.banned) return;
                     
                     const isSelf = docSnap.id === currentUser.uid;
-                    
                     const div = document.createElement('div');
                     div.className = `leader-item ${isSelf ? 'self' : ''}`;
                     
-                    let innerHTML = `<span>${rank}. ${data.nickname || 'Игрок'}</span>`;
+                    let innerHTML = `<span>${rank}. ${data.avatar || '👤'} ${data.nickname || 'Игрок'} <span style="font-size:0.65rem; color:#ffd700;">${getRank(data.level)}</span></span>`;
                     innerHTML += `<span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
-                    
                     div.innerHTML = innerHTML;
+                    
+                    div.onclick = () => showProfile(data);
                     
                     if (isAdmin && !isSelf) {
                         const banBtn = document.createElement('button');
-                        banBtn.textContent = 'Забанить';
+                        banBtn.textContent = 'Бан';
                         banBtn.style.cssText = "margin-left: 10px; padding: 4px 8px; font-size: 0.7rem; background: transparent; color: #f00; border: 1px solid #f00; border-radius: 5px; cursor: pointer;";
-                        
                         banBtn.onclick = async (e) => {
                             e.stopPropagation();
                             if (banBtn.disabled) return;
-                            banBtn.disabled = true;
-                            banBtn.textContent = '...';
-                            
+                            banBtn.disabled = true; banBtn.textContent = '...';
                             try {
                                 await updateDoc(doc(db, "users", docSnap.id), { banned: true });
-                                div.style.display = 'none'; // Скрываем забаненного
-                                // Пересчитываем оставшихся (опционально, но можно просто оставить дырку)
+                                div.style.display = 'none';
                             } catch (err) {
-                                console.error(err);
-                                alert('Ошибка при бане! Проверьте правила в Firebase.');
-                                banBtn.textContent = 'Забанить';
-                                banBtn.disabled = false;
+                                alert('Ошибка при бане!');
+                                banBtn.textContent = 'Бан'; banBtn.disabled = false;
                             }
                         };
                         div.appendChild(banBtn);
                     }
-                    
                     leaderboardList.appendChild(div);
                     rank++;
                 });
-                
                 if (rank === 1) leaderboardList.innerHTML = '<div style="text-align:center;">Пока нет игроков</div>';
-            } catch (e) {
-                console.error(e);
-                leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>';
+            } catch (e) { leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>'; }
+        });
+        document.getElementById('closeLeaderboardBtn').addEventListener('click', () => showScreen(gameScreen));
+
+        // --- Профиль игрока ---
+        function showProfile(data) {
+            document.getElementById('profileBanner').style.background = data.banner || 'linear-gradient(90deg, #111, #333)';
+            document.getElementById('profileAvatar').textContent = data.avatar || '👤';
+            document.getElementById('profileName').textContent = data.nickname || 'Игрок';
+            document.getElementById('profileRank').textContent = getRank(data.level);
+            document.getElementById('profileScore').textContent = Math.floor(data.score);
+            document.getElementById('profileLevel').textContent = data.level;
+            showScreen(profileScreen);
+        }
+
+        // Открытие СВОЕГО профиля из меню
+        document.getElementById('myProfileBtn').addEventListener('click', () => {
+            showProfile(userData);
+        });
+        document.getElementById('closeProfileBtn').addEventListener('click', () => {
+            if (leaderboardScreen.classList.contains('active') === false) {
+                 showScreen(gameScreen);
+            } else {
+                 showScreen(leaderboardScreen);
             }
         });
 
-        closeLeaderboardBtn.addEventListener('click', () => {
-            leaderboardScreen.classList.remove('active');
-            gameScreen.classList.add('active');
-        });
-
+        // --- Частицы ---
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
