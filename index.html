@@ -247,49 +247,46 @@
             leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
             
             try {
-                const q = query(collection(db, "users"), orderBy("score", "desc"), limit(20));
+                const q = query(collection(db, "users"), orderBy("score", "desc"), limit(30));
                 const querySnapshot = await getDocs(q);
                 
                 leaderboardList.innerHTML = '';
                 let rank = 1;
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
+                    
+                    // Если игрок забанен, мы просто его пропускаем (он не отобразится в топе)
+                    if (data.banned) return;
+                    
                     const isSelf = docSnap.id === currentUser.uid;
                     
                     const div = document.createElement('div');
                     div.className = `leader-item ${isSelf ? 'self' : ''}`;
                     
-                    let innerHTML = `<span>${rank}. ${data.nickname || 'Игрок'} ${data.banned ? '🚫' : ''}</span>`;
+                    let innerHTML = `<span>${rank}. ${data.nickname || 'Игрок'}</span>`;
                     innerHTML += `<span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
                     
                     div.innerHTML = innerHTML;
                     
                     if (isAdmin && !isSelf) {
                         const banBtn = document.createElement('button');
-                        banBtn.textContent = data.banned ? 'Разблокировать' : 'Забанить';
-                        banBtn.style.cssText = "margin-left: 10px; padding: 4px 8px; font-size: 0.7rem; background: transparent; color: " + (data.banned ? '#0f0' : '#f00') + "; border: 1px solid " + (data.banned ? '#0f0' : '#f00') + "; border-radius: 5px; cursor: pointer;";
+                        banBtn.textContent = 'Забанить';
+                        banBtn.style.cssText = "margin-left: 10px; padding: 4px 8px; font-size: 0.7rem; background: transparent; color: #f00; border: 1px solid #f00; border-radius: 5px; cursor: pointer;";
                         
                         banBtn.onclick = async (e) => {
                             e.stopPropagation();
                             if (banBtn.disabled) return;
-                            
                             banBtn.disabled = true;
                             banBtn.textContent = '...';
                             
-                            const newBanStatus = !data.banned;
                             try {
-                                await updateDoc(doc(db, "users", docSnap.id), { banned: newBanStatus });
-                                data.banned = newBanStatus;
-                                
-                                banBtn.textContent = newBanStatus ? 'Разблокировать' : 'Забанить';
-                                banBtn.style.color = newBanStatus ? '#0f0' : '#f00';
-                                banBtn.style.borderColor = newBanStatus ? '#0f0' : '#f00';
-                                div.querySelector('span').innerHTML = `${rank}. ${data.nickname || 'Игрок'} ${newBanStatus ? '🚫' : ''}`;
+                                await updateDoc(doc(db, "users", docSnap.id), { banned: true });
+                                div.style.display = 'none'; // Скрываем забаненного
+                                // Пересчитываем оставшихся (опционально, но можно просто оставить дырку)
                             } catch (err) {
                                 console.error(err);
                                 alert('Ошибка при бане! Проверьте правила в Firebase.');
-                                banBtn.textContent = data.banned ? 'Разблокировать' : 'Забанить';
-                            } finally {
+                                banBtn.textContent = 'Забанить';
                                 banBtn.disabled = false;
                             }
                         };
