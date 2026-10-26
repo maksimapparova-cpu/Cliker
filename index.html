@@ -7,57 +7,40 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #0a0a1a; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; color: white; }
-        
         #particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
-        
-        /* Экраны (Вход / Игра / Лидеры) */
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 360px; padding: 16px; z-index: 20; gap: 14px; }
         .screen.active { display: flex; }
-
-        /* Формы входа */
         .auth-box { display: flex; flex-direction: column; gap: 12px; width: 100%; background: rgba(10, 5, 25, 0.8); padding: 24px; border-radius: 20px; border: 1px solid #0ff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
         .auth-box h2 { text-align: center; margin-bottom: 10px; text-shadow: 0 0 10px #0ff; }
         .auth-box input { padding: 12px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid #f0f; color: white; outline: none; font-size: 1rem; }
         .auth-box input:focus { border-color: #0ff; box-shadow: 0 0 10px #0ff; }
-        .auth-btn { padding: 12px; border-radius: 10px; background: linear-gradient(135deg, #0ff, #00aaff); border: none; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s; color: #000; }
-        .auth-btn:hover { box-shadow: 0 0 20px #0ff; transform: scale(1.02); }
+        .auth-btn { padding: 12px; border-radius: 10px; background: linear-gradient(135deg, #0ff, #00aaff); border: none; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; color: #000; }
         .auth-switch { text-align: center; font-size: 0.8rem; margin-top: 10px; color: #aaa; cursor: pointer; }
         .auth-switch span { color: #f0f; text-decoration: underline; }
-
-        /* Меню и игра */
-        .menu { display: flex; gap: 10px; padding: 8px 20px; background: rgba(10, 5, 25, 0.7); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 40px; box-shadow: 0 0 18px rgba(0, 255, 255, 0.25); }
-        .menu-btn { background: transparent; border: none; color: #a0f0ff; font-size: 0.8rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 10px; cursor: pointer; text-shadow: 0 0 6px cyan; }
-        .menu-btn:hover { color: #fff; text-shadow: 0 0 12px cyan, 0 0 22px magenta; }
-        
-        .score-panel { font-size: 2.4rem; font-weight: 800; color: #fff; text-shadow: 0 0 8px #0ff, 0 0 18px #0ff, 0 0 32px #f0f; background: rgba(0, 20, 30, 0.5); padding: 0 22px; border-radius: 50px; border: 1px solid rgba(0, 255, 255, 0.5); }
-        
-        .clicker-btn { width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #00ffff, #0066cc, #220044); border: 3px solid #0ff; box-shadow: 0 0 22px #0ff, 0 0 50px #00aaff, 0 0 80px #ff00ff, inset 0 0 30px rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 1.3rem; font-weight: 900; color: white; text-shadow: 0 0 10px black, 0 0 18px #ff00ff; display: flex; justify-content: center; align-items: center; outline: none; transition: 0.1s; }
-        .clicker-btn:active { transform: scale(0.92); box-shadow: 0 0 40px #0ff, 0 0 80px #ff00ff, inset 0 0 45px white; }
-
+        .menu { display: flex; gap: 10px; padding: 8px 20px; background: rgba(10, 5, 25, 0.7); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 40px; }
+        .menu-btn { background: transparent; border: none; color: #a0f0ff; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; padding: 5px 10px; cursor: pointer; text-shadow: 0 0 6px cyan; }
+        .score-panel { font-size: 2.4rem; font-weight: 800; text-shadow: 0 0 8px #0ff, 0 0 18px #0ff; background: rgba(0, 20, 30, 0.5); padding: 0 22px; border-radius: 50px; border: 1px solid rgba(0, 255, 255, 0.5); }
+        .clicker-btn { width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #00ffff, #0066cc, #220044); border: 3px solid #0ff; box-shadow: 0 0 22px #0ff, 0 0 50px #00aaff; cursor: pointer; font-size: 1.3rem; font-weight: 900; color: white; display: flex; justify-content: center; align-items: center; outline: none; transition: 0.1s; }
+        .clicker-btn:active { transform: scale(0.92); }
         .upgrade-panel { padding: 10px 16px; background: rgba(10, 5, 25, 0.8); border: 1px solid rgba(255, 0, 255, 0.35); border-radius: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
-        .upgrade-btn { width: 100%; padding: 10px; font-size: 0.8rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #2a0a3a, #0a1a3a); border: 2px solid #f0f; border-radius: 40px; cursor: pointer; transition: 0.2s; }
-        .upgrade-btn:hover:not(:disabled) { box-shadow: 0 0 20px #f0f; }
+        .upgrade-btn { width: 100%; padding: 10px; font-size: 0.8rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #2a0a3a, #0a1a3a); border: 2px solid #f0f; border-radius: 40px; cursor: pointer; }
         .upgrade-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #555; }
         .progress-bar-wrap { width: 100%; height: 6px; background: rgba(0, 0, 0, 0.6); border-radius: 10px; overflow: hidden; border: 1px solid rgba(0, 255, 255, 0.25); }
         .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0ff, #f0f, #0ff); transition: width 0.3s; }
         .level-badge { font-size: 0.7rem; color: #f0f; text-transform: uppercase; }
-
-        /* Таблица лидеров */
-        .leaderboard-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #f0f; box-shadow: 0 0 20px rgba(255,0,255,0.3); display: flex; flex-direction: column; gap: 10px; }
-        .leaderboard-box h3 { text-align: center; color: #f0f; text-shadow: 0 0 10px #f0f; margin-bottom: 10px; }
-        .leader-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
-        .leader-item:last-child { border: none; }
-        .leader-item.self { background: rgba(0, 255, 255, 0.1); border-radius: 5px; color: #0ff; text-shadow: 0 0 5px #0ff; }
+        .leaderboard-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #f0f; display: flex; flex-direction: column; gap: 10px; }
+        .leaderboard-box h3 { text-align: center; color: #f0f; margin-bottom: 10px; }
+        .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
+        .leader-item.self { background: rgba(0, 255, 255, 0.1); border-radius: 5px; color: #0ff; }
         .close-btn { margin-top: 15px; padding: 10px; width: 100%; background: transparent; border: 1px solid #0ff; color: #0ff; border-radius: 20px; cursor: pointer; text-transform: uppercase; }
-        
-        #loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #0ff; font-size: 1.2rem; text-shadow: 0 0 10px #0ff; z-index: 100; }
+        #loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #0ff; font-size: 1.2rem; z-index: 100; }
     </style>
 </head>
 <body>
     <div id="loading">Загрузка...</div>
     <canvas id="particleCanvas"></canvas>
 
-    <!-- Экран 1: Вход/Регистрация -->
+    <!-- Экран входа -->
     <div class="screen" id="authScreen">
         <div class="auth-box">
             <h2 id="authTitle">Вход</h2>
@@ -69,17 +52,15 @@
         </div>
     </div>
 
-    <!-- Экран 2: Сама игра -->
+    <!-- Экран игры -->
     <div class="screen" id="gameScreen">
         <div class="menu">
             <button class="menu-btn" id="logoutBtn">Выйти</button>
             <button class="menu-btn" id="leaderboardBtn">Лидеры</button>
         </div>
-
         <div class="score-panel" id="scoreDisplay">0</div>
         <button class="clicker-btn" id="clickerButton">ЖМИ</button>
         <div class="level-badge" id="clickValueLabel">+1 за клик</div>
-
         <div class="upgrade-panel">
             <div style="font-size: 0.7rem; color: #b0d8ff; text-transform: uppercase;">Улучшение: <b id="nextUpgradeCost" style="color:#0ff">4</b></div>
             <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
@@ -88,7 +69,7 @@
         </div>
     </div>
 
-    <!-- Экран 3: Таблица лидеров -->
+    <!-- Экран лидеров -->
     <div class="screen" id="leaderboardScreen">
         <div class="leaderboard-box">
             <h3>🏆 ТОП ИГРОКОВ 🏆</h3>
@@ -97,13 +78,12 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase и логика -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
-        // ВАШИ КЛЮЧИ ИЗ FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyB-62t80STqCoAcWmz00tirAMRWvtC3bok",
             authDomain: "neon-cliker-68bf7.firebaseapp.com",
@@ -117,19 +97,16 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- Элементы UI ---
         const loading = document.getElementById('loading');
         const authScreen = document.getElementById('authScreen');
         const gameScreen = document.getElementById('gameScreen');
         const leaderboardScreen = document.getElementById('leaderboardScreen');
-        
         const nicknameInput = document.getElementById('nickname');
         const passwordInput = document.getElementById('password');
         const authTitle = document.getElementById('authTitle');
         const authActionBtn = document.getElementById('authActionBtn');
         const authSwitch = document.getElementById('authSwitch');
         const authError = document.getElementById('authError');
-
         const scoreDisplay = document.getElementById('scoreDisplay');
         const clickerButton = document.getElementById('clickerButton');
         const upgradeBtn = document.getElementById('upgradeBtn');
@@ -137,13 +114,16 @@
         const progressBar = document.getElementById('progressBar');
         const levelBadge = document.getElementById('levelBadge');
         const clickValueLabel = document.getElementById('clickValueLabel');
+        
+        const leaderboardBtn = document.getElementById('leaderboardBtn');
+        const closeLeaderboardBtn = document.getElementById('closeLeaderboardBtn');
+        const leaderboardList = document.getElementById('leaderboardList');
 
-        // --- Состояние ---
         let isLoginMode = true;
         let currentUser = null;
-        let userData = { score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, nickname: '' };
+        let isAdmin = false;
+        let userData = { score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, nickname: '', banned: false };
 
-        // --- Логика Авторизации ---
         authSwitch.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             authTitle.textContent = isLoginMode ? 'Вход' : 'Регистрация';
@@ -155,29 +135,21 @@
         authActionBtn.addEventListener('click', async () => {
             const nick = nicknameInput.value.trim();
             const pass = passwordInput.value;
-            
             if (nick.length < 3) return authError.textContent = 'Ник должен быть от 3 символов';
             if (pass.length < 6) return authError.textContent = 'Пароль должен быть от 6 символов';
-
             const fakeEmail = `${nick.toLowerCase()}@neonclicker.com`;
             authActionBtn.disabled = true;
             authError.textContent = '';
-
             try {
                 if (isLoginMode) {
                     await signInWithEmailAndPassword(auth, fakeEmail, pass);
                 } else {
                     const userCredential = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
                     await setDoc(doc(db, "users", userCredential.user.uid), {
-                        nickname: nick,
-                        score: 0,
-                        clicksPerClick: 1,
-                        level: 1,
-                        upgradeCost: 4
+                        nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false
                     });
                 }
             } catch (error) {
-                console.error(error);
                 if (error.code === 'auth/email-already-in-use') authError.textContent = 'Этот ник уже занят';
                 else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') authError.textContent = 'Неверный ник или пароль';
                 else authError.textContent = 'Ошибка: ' + error.message;
@@ -191,15 +163,27 @@
             signOut(auth);
         });
 
-        // --- Отслеживание состояния входа ---
         onAuthStateChanged(auth, async (user) => {
             loading.style.display = 'none';
             if (user) {
                 currentUser = user;
+                
+                const adminDoc = await getDoc(doc(db, "admins", user.uid));
+                isAdmin = adminDoc.exists();
+                
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
+                
                 if (docSnap.exists()) {
                     userData = docSnap.data();
+                    if (userData.banned) {
+                        alert("Вы забанены и не можете играть.");
+                        authScreen.classList.add('active');
+                        gameScreen.classList.remove('active');
+                        leaderboardScreen.classList.remove('active');
+                        await signOut(auth);
+                        return;
+                    }
                     updateUI();
                 }
                 
@@ -208,6 +192,7 @@
                 leaderboardScreen.classList.remove('active');
             } else {
                 currentUser = null;
+                isAdmin = false;
                 authScreen.classList.add('active');
                 gameScreen.classList.remove('active');
                 leaderboardScreen.classList.remove('active');
@@ -215,109 +200,105 @@
             }
         });
 
-        // --- Обновление UI ---
         function updateUI() {
             scoreDisplay.textContent = Math.floor(userData.score);
             levelBadge.textContent = `УРОВЕНЬ ${userData.level} · +${userData.clicksPerClick}`;
             clickValueLabel.textContent = `+${userData.clicksPerClick} за клик`;
             nextUpgradeCostEl.textContent = userData.upgradeCost;
-            
             const canUpgrade = userData.score >= userData.upgradeCost;
             upgradeBtn.disabled = !canUpgrade;
             upgradeBtn.textContent = canUpgrade ? `Улучшить (${userData.upgradeCost})` : `Нужно ${userData.upgradeCost}`;
-            
             const progress = Math.min(userData.score, userData.upgradeCost) / userData.upgradeCost * 100;
             progressBar.style.width = progress + '%';
         }
 
-        // --- Сохранение в облако (Firestore) ---
         let saveTimeout;
         function saveToCloud(immediate = false) {
-            if (!currentUser) return;
-            
+            if (!currentUser || userData.banned) return;
             const performSave = async () => {
                 try {
                     await updateDoc(doc(db, "users", currentUser.uid), {
-                        score: Math.floor(userData.score),
-                        clicksPerClick: userData.clicksPerClick,
-                        level: userData.level,
-                        upgradeCost: userData.upgradeCost
+                        score: Math.floor(userData.score), clicksPerClick: userData.clicksPerClick, level: userData.level, upgradeCost: userData.upgradeCost
                     });
-                } catch (e) {
-                    console.error("Ошибка сохранения:", e);
-                }
+                } catch (e) { console.error("Ошибка сохранения:", e); }
             };
-
             clearTimeout(saveTimeout);
-            if (immediate) {
-                performSave();
-            } else {
-                saveTimeout = setTimeout(performSave, 2000);
-            }
+            if (immediate) performSave(); else saveTimeout = setTimeout(performSave, 2000);
         }
 
-        // --- Клик ---
         clickerButton.addEventListener('click', () => {
-            if (!currentUser) return;
+            if (!currentUser || userData.banned) return;
             userData.score += userData.clicksPerClick;
-            updateUI();
-            saveToCloud();
+            updateUI(); saveToCloud();
             createParticles(window.innerWidth / 2, window.innerHeight / 2, 15);
         });
 
-        // --- Улучшение ---
         upgradeBtn.addEventListener('click', () => {
-            if (userData.score < userData.upgradeCost) return;
+            if (!currentUser || userData.banned || userData.score < userData.upgradeCost) return;
             userData.score -= userData.upgradeCost;
-            userData.level += 1;
-            userData.clicksPerClick = userData.level;
-            userData.upgradeCost *= 2;
-            updateUI();
-            saveToCloud(true);
+            userData.level += 1; userData.clicksPerClick = userData.level; userData.upgradeCost *= 2;
+            updateUI(); saveToCloud(true);
             createParticles(window.innerWidth / 2, window.innerHeight / 2, 40, true);
         });
 
-        // --- Таблица Лидеров ---
-        document.getElementById('leaderboardBtn').addEventListener('click', async () => {
+        leaderboardBtn.addEventListener('click', async () => {
             gameScreen.classList.remove('active');
             leaderboardScreen.classList.add('active');
-            
-            const listContainer = document.getElementById('leaderboardList');
-            listContainer.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
+            leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
             
             try {
-                const q = query(collection(db, "users"), orderBy("score", "desc"), limit(10));
+                const q = query(collection(db, "users"), orderBy("score", "desc"), limit(20));
                 const querySnapshot = await getDocs(q);
                 
-                listContainer.innerHTML = '';
+                leaderboardList.innerHTML = '';
                 let rank = 1;
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const isSelf = doc.id === currentUser.uid;
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const isSelf = docSnap.id === currentUser.uid;
                     
                     const div = document.createElement('div');
                     div.className = `leader-item ${isSelf ? 'self' : ''}`;
-                    div.innerHTML = `
-                        <span>${rank}. ${data.nickname || 'Игрок'}</span>
-                        <span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>
-                    `;
-                    listContainer.appendChild(div);
+                    
+                    let innerHTML = `<span>${rank}. ${data.nickname || 'Игрок'} ${data.banned ? '🚫' : ''}</span>`;
+                    innerHTML += `<span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
+                    
+                    div.innerHTML = innerHTML;
+                    
+                    // Если вы админ и это не ваш профиль — добавляем кнопку бана
+                    if (isAdmin && !isSelf) {
+                        const banBtn = document.createElement('button');
+                        banBtn.textContent = data.banned ? 'Разблокировать' : 'Забанить';
+                        banBtn.style.cssText = "margin-left: 10px; padding: 4px 8px; font-size: 0.7rem; background: transparent; color: " + (data.banned ? '#0f0' : '#f00') + "; border: 1px solid " + (data.banned ? '#0f0' : '#f00') + "; border-radius: 5px; cursor: pointer;";
+                        
+                        banBtn.onclick = async (e) => {
+                            e.stopPropagation();
+                            const newBanStatus = !data.banned;
+                            await updateDoc(doc(db, "users", docSnap.id), { banned: newBanStatus });
+                            data.banned = newBanStatus; // обновляем локально
+                            banBtn.textContent = newBanStatus ? 'Разблокировать' : 'Забанить';
+                            banBtn.style.color = newBanStatus ? '#0f0' : '#f00';
+                            banBtn.style.borderColor = newBanStatus ? '#0f0' : '#f00';
+                            div.querySelector('span').innerHTML = `${rank}. ${data.nickname || 'Игрок'} ${newBanStatus ? '🚫' : ''}`;
+                        };
+                        div.appendChild(banBtn);
+                    }
+                    
+                    leaderboardList.appendChild(div);
                     rank++;
                 });
                 
-                if (rank === 1) listContainer.innerHTML = '<div style="text-align:center;">Пока нет игроков</div>';
+                if (rank === 1) leaderboardList.innerHTML = '<div style="text-align:center;">Пока нет игроков</div>';
             } catch (e) {
                 console.error(e);
-                listContainer.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>';
+                leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>';
             }
         });
 
-        document.getElementById('closeLeaderboardBtn').addEventListener('click', () => {
+        closeLeaderboardBtn.addEventListener('click', () => {
             leaderboardScreen.classList.remove('active');
             gameScreen.classList.add('active');
         });
 
-        // --- Частицы ---
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -327,12 +308,7 @@
         
         function createParticles(x, y, count, big = false) {
             for (let i = 0; i < (big ? count * 2 : count); i++) {
-                particles.push({
-                    x: x + (Math.random() - 0.5) * 100, y: y + (Math.random() - 0.5) * 100,
-                    vx: (Math.random() - 0.5) * 10, vy: (Math.random() - 0.5) * 10,
-                    life: 1, color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 4 + 2
-                });
+                particles.push({ x: x + (Math.random() - 0.5) * 100, y: y + (Math.random() - 0.5) * 100, vx: (Math.random() - 0.5) * 10, vy: (Math.random() - 0.5) * 10, life: 1, color: colors[Math.floor(Math.random() * colors.length)], size: Math.random() * 4 + 2 });
             }
         }
         
@@ -343,15 +319,13 @@
                 let p = particles[i];
                 p.x += p.vx; p.y += p.vy; p.life -= 0.02;
                 if (p.life <= 0) { particles.splice(i, 1); continue; }
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
                 ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
             }
             ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
             requestAnimationFrame(animate);
         }
         animate();
-
     </script>
 </body>
 </html>
