@@ -268,7 +268,6 @@
         let viewingProfileUid = null;
         let passiveInterval = null;
 
-        // --- ВСЕ ТИТУЛЫ ---
         const allTitles = [
             { id: 'lvl_1', icon: '🧴', name: 'Новичок', requiredLevel: 1 },
             { id: 'lvl_10', icon: '🛡️', name: 'Боец', requiredLevel: 10 },
@@ -374,7 +373,7 @@
             return customTitle || getDefaultTitle(level);
         }
 
-        // --- Авторизация (ВОЗВРАЩЕНА СТАРАЯ ЛОГИКА ГЕНЕРАЦИИ EMAIL ИЗ НИКА) ---
+        // --- Авторизация (Возвращена старая логика, без смены ника) ---
         authSwitch.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             authTitle.textContent = isLoginMode ? 'Вход' : 'Регистрация';
@@ -865,4 +864,4 @@
         animate();
     </script>
 </body>
-</html>
+    </html>
