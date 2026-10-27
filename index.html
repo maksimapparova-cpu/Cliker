@@ -106,7 +106,7 @@
     <div class="screen" id="authScreen">
         <div class="auth-box">
             <h2 id="authTitle">Вход</h2>
-            <input type="text" id="nickname" placeholder="Ваш Никнейм">
+            <input type="text" id="nickname" placeholder="Ваш Никнейм (логин)">
             <input type="password" id="password" placeholder="Пароль (мин. 6 символов)">
             <button class="auth-btn" id="authActionBtn">Войти</button>
             <div class="auth-switch" id="authSwitch">Нет аккаунта? <span>Регистрация</span></div>
@@ -205,9 +205,6 @@
                     <div style="font-weight:bold; color:#f0f; font-size:1.2rem;" id="profileLevel">1</div>
                 </div>
             </div>
-            <!-- Кнопка смены ника (только для своего профиля) -->
-            <button class="action-btn" id="changeNickBtn" style="z-index:1; margin-bottom:10px; display:none;">Сменить ник</button>
-            
             <button class="action-btn" id="addFriendBtn" style="z-index:1; margin-bottom:10px; display:none;">Добавить в друзья</button>
             <button class="close-btn" id="closeProfileBtn">Назад</button>
         </div>
@@ -301,7 +298,6 @@
             { id: 'title14', icon: '👸', name: 'Сама непобедимость', requiredLevel: 0, price: 200000 }
         ];
 
-        // Новые цвета для ника
         const allColors = [
             { id: 'color_rainbow', name: 'Переливающийся (Радуга)', price: 150000, className: 'rainbow-text' },
             { id: 'color_blue', name: 'Неоново-синий', price: 150000, className: 'neon-blue-text' },
@@ -309,7 +305,6 @@
         ];
 
         const shopItems = [
-            // Старые аватарки
             { id: 'avatar1', type: 'avatar', icon: '👤', name: 'Новичок', price: 0 },
             { id: 'avatar2', type: 'avatar', icon: '🐱', name: 'Котик', price: 500 },
             { id: 'avatar3', type: 'avatar', icon: '👽', name: 'Пришелец', price: 2000 },
@@ -326,7 +321,6 @@
             { id: 'avatar14', type: 'avatar', icon: '👾', name: 'Пиксель', price: 200000 },
             { id: 'avatar15', type: 'avatar', icon: '💀', name: 'Череп', price: 400000 },
             { id: 'avatar16', type: 'avatar', icon: '🌌', name: 'Космос', price: 1000000 },
-            // Новые аватарки
             { id: 'avatar17', type: 'avatar', icon: '🐸', name: 'Жаба', price: 300 },
             { id: 'avatar18', type: 'avatar', icon: '🦉', name: 'Сова', price: 800 },
             { id: 'avatar19', type: 'avatar', icon: '🦈', name: 'Акула', price: 3000 },
@@ -334,7 +328,6 @@
             { id: 'avatar21', type: 'avatar', icon: '🍕', name: 'Пицца', price: 100000 },
             { id: 'avatar22', type: 'avatar', icon: '🧊', name: 'Ледяной куб', price: 750000 },
             
-            // Старые баннеры
             { id: 'banner1', type: 'banner', icon: '⬛', name: 'Стандартный', price: 0, style: 'linear-gradient(90deg, #111, #333)' },
             { id: 'banner2', type: 'banner', icon: '💙', name: 'Неон', price: 1000, style: 'linear-gradient(90deg, #0ff, #f0f)' },
             { id: 'banner3', type: 'banner', icon: '🔥', name: 'Огненный', price: 3000, style: 'linear-gradient(90deg, #f00, #ff0)' },
@@ -350,7 +343,6 @@
             { id: 'banner13', type: 'banner', icon: '🌋', name: 'Вулкан', price: 60000, style: 'linear-gradient(90deg, #300, #f00, #300)' },
             { id: 'banner14', type: 'banner', icon: '🪐', name: 'Сатурн', price: 250000, style: 'radial-gradient(circle, #ffd700 10%, #8b4513 40%, #000 70%)' },
             { id: 'banner15', type: 'banner', icon: '🩸', name: 'Кровавый', price: 700000, style: 'linear-gradient(90deg, #000, #800000, #000)' },
-            // Новые баннеры
             { id: 'banner16', type: 'banner', icon: '🌿', name: 'Природа', price: 2000, style: 'linear-gradient(90deg, #004d00, #00ff00, #004d00)' },
             { id: 'banner17', type: 'banner', icon: '🌇', name: 'Мегаполис', price: 15000, style: 'linear-gradient(180deg, #ff8c00, #4b0082)' },
             { id: 'banner18', type: 'banner', icon: '👑', name: 'Золотой', price: 50000, style: 'linear-gradient(90deg, #ffd700, #b8860b, #ffd700)' },
@@ -365,7 +357,7 @@
             score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, nickname: '', banned: false,
             avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', 
             customTitle: '', 
-            customColor: '', // Класс цвета для ника
+            customColor: '', 
             inventory: ['avatar1', 'banner1'],
             friends: [],
             passiveMultiplier: 1,
@@ -382,7 +374,7 @@
             return customTitle || getDefaultTitle(level);
         }
 
-        // --- Авторизация ---
+        // --- Авторизация (ВОЗВРАЩЕНА СТАРАЯ ЛОГИКА ГЕНЕРАЦИИ EMAIL ИЗ НИКА) ---
         authSwitch.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             authTitle.textContent = isLoginMode ? 'Вход' : 'Регистрация';
@@ -397,11 +389,10 @@
             if (nick.length < 3) return authError.textContent = 'Ник должен быть от 3 символов';
             if (pass.length < 6) return authError.textContent = 'Пароль должен быть от 6 символов';
             
-            // Генерируем случайный email, чтобы можно было менять ник
-            const randomId = Math.random().toString(36).substring(2, 10);
-            const fakeEmail = isLoginMode 
-                ? `${nick.toLowerCase().replace(/[^a-z0-9]/g, '')}@neonclicker.com` 
-                : `user_${randomId}@neonclicker.com`;
+            // Очищаем от всего кроме латиницы и цифр, чтобы не было ошибки invalid-email
+            const cleanNick = nick.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (cleanNick.length < 3) return authError.textContent = 'Ник должен содержать хотя бы 3 латинские буквы/цифры';
+            const fakeEmail = `${cleanNick}@neonclicker.com`;
 
             authActionBtn.disabled = true;
             authError.textContent = '';
@@ -422,7 +413,7 @@
                 }
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') authError.textContent = 'Этот ник уже занят';
-                else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') authError.textContent = 'Неверный ник или пароль';
+                else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') authError.textContent = 'Неверный ник или пароль';
                 else authError.textContent = 'Ошибка: ' + error.message;
             } finally {
                 authActionBtn.disabled = false;
@@ -543,7 +534,6 @@
             if (immediate) performSave(); else saveTimeout = setTimeout(performSave, 2000);
         }
 
-        // --- Пассивный доход ---
         function startPassiveIncome() {
             if (passiveInterval) clearInterval(passiveInterval);
             passiveInterval = setInterval(() => {
@@ -555,7 +545,7 @@
                     saveToCloud();
                     createParticles(window.innerWidth / 2, window.innerHeight / 2, 5);
                 }
-            }, 2000); // 2 секунды
+            }, 2000);
         }
 
         upgradePassiveBtn.addEventListener('click', () => {
@@ -583,67 +573,47 @@
         });
 
         // --- Друзья ---
-        document.getElementById('friendsBtn').addEventListener('click', () => {
-            loadFriends();
-            showScreen(friendsScreen);
-        });
+        document.getElementById('friendsBtn').addEventListener('click', () => { loadFriends(); showScreen(friendsScreen); });
         document.getElementById('closeFriendsBtn').addEventListener('click', () => showScreen(gameScreen));
 
         async function loadFriends() {
-            myFriendsList.innerHTML = 'Загрузка...';
-            friendRequestsList.innerHTML = 'Загрузка...';
-            
+            myFriendsList.innerHTML = 'Загрузка...'; friendRequestsList.innerHTML = 'Загрузка...';
             myFriendsList.innerHTML = '';
             if (userData.friends && userData.friends.length > 0) {
                 for (const uid of userData.friends) {
                     const fDoc = await getDoc(doc(db, "users", uid));
                     if (fDoc.exists()) {
                         const fData = fDoc.data();
-                        const div = document.createElement('div');
-                        div.className = 'friend-item';
-                        // Показываем цвет друга
+                        const div = document.createElement('div'); div.className = 'friend-item';
                         const colorClass = fData.customColor || '';
                         div.innerHTML = `<span>${fData.avatar || '👤'} <span class="${colorClass}">${fData.nickname}</span></span>`;
-                        
-                        const btn = document.createElement('button');
-                        btn.className = 'action-btn danger';
-                        btn.textContent = 'Удалить';
+                        const btn = document.createElement('button'); btn.className = 'action-btn danger'; btn.textContent = 'Удалить';
                         btn.onclick = async () => {
                             await updateDoc(doc(db, "users", currentUser.uid), { friends: arrayRemove(uid) });
                             await updateDoc(doc(db, "users", uid), { friends: arrayRemove(currentUser.uid) });
                             userData.friends = userData.friends.filter(id => id !== uid);
                             loadFriends();
                         };
-                        div.appendChild(btn);
-                        myFriendsList.appendChild(div);
+                        div.appendChild(btn); myFriendsList.appendChild(div);
                     }
                 }
-            } else {
-                myFriendsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem;">У вас пока нет друзей</div>';
-            }
+            } else myFriendsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem;">У вас пока нет друзей</div>';
 
             friendRequestsList.innerHTML = '';
             const q = query(collection(db, "friendRequests"), where("to", "==", currentUser.uid));
             const reqSnap = await getDocs(q);
-            if (reqSnap.empty) {
-                friendRequestsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem;">Нет новых запросов</div>';
-            } else {
+            if (reqSnap.empty) friendRequestsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem;">Нет новых запросов</div>';
+            else {
                 for (const reqDoc of reqSnap.docs) {
                     const reqData = reqDoc.data();
                     const senderDoc = await getDoc(doc(db, "users", reqData.from));
                     if (senderDoc.exists()) {
                         const senderData = senderDoc.data();
-                        const div = document.createElement('div');
-                        div.className = 'friend-item';
+                        const div = document.createElement('div'); div.className = 'friend-item';
                         const colorClass = senderData.customColor || '';
                         div.innerHTML = `<span>${senderData.avatar} <span class="${colorClass}">${senderData.nickname}</span></span>`;
-                        
                         const btnContainer = document.createElement('div');
-                        
-                        const accBtn = document.createElement('button');
-                        accBtn.className = 'action-btn';
-                        accBtn.textContent = 'Принять';
-                        accBtn.style.marginRight = '5px';
+                        const accBtn = document.createElement('button'); accBtn.className = 'action-btn'; accBtn.textContent = 'Принять'; accBtn.style.marginRight = '5px';
                         accBtn.onclick = async () => {
                             await updateDoc(doc(db, "users", currentUser.uid), { friends: arrayUnion(reqData.from) });
                             await updateDoc(doc(db, "users", reqData.from), { friends: arrayUnion(currentUser.uid) });
@@ -651,85 +621,46 @@
                             userData.friends.push(reqData.from);
                             loadFriends();
                         };
-                        
-                        const rejBtn = document.createElement('button');
-                        rejBtn.className = 'action-btn danger';
-                        rejBtn.textContent = 'Отклонить';
-                        rejBtn.onclick = async () => {
-                            await deleteDoc(doc(db, "friendRequests", reqDoc.id));
-                            loadFriends();
-                        };
-                        
-                        btnContainer.appendChild(accBtn);
-                        btnContainer.appendChild(rejBtn);
-                        div.appendChild(btnContainer);
-                        friendRequestsList.appendChild(div);
+                        const rejBtn = document.createElement('button'); rejBtn.className = 'action-btn danger'; rejBtn.textContent = 'Отклонить';
+                        rejBtn.onclick = async () => { await deleteDoc(doc(db, "friendRequests", reqDoc.id)); loadFriends(); };
+                        btnContainer.appendChild(accBtn); btnContainer.appendChild(rejBtn);
+                        div.appendChild(btnContainer); friendRequestsList.appendChild(div);
                     }
                 }
             }
         }
 
-        // Поиск друга
         document.getElementById('searchFriendBtn').addEventListener('click', async () => {
             const searchNick = document.getElementById('friendSearchInput').value.trim();
             if (!searchNick) return;
             searchResult.innerHTML = 'Поиск...';
-            
             const q = query(collection(db, "users"), where("nickname", "==", searchNick));
             const snap = await getDocs(q);
-            
-            if (snap.empty) {
-                searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Игрок не найден</div>';
-                return;
-            }
-            
-            const foundDoc = snap.docs[0];
-            const foundData = foundDoc.data();
-            const foundUid = foundDoc.id;
-            
-            if (foundUid === currentUser.uid) {
-                searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Это вы!</div>';
-                return;
-            }
-            if (userData.friends && userData.friends.includes(foundUid)) {
-                searchResult.innerHTML = '<div style="color:#ffd700; font-size:0.8rem;">Этот игрок уже у вас в друзьях</div>';
-                return;
-            }
-            
+            if (snap.empty) { searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Игрок не найден</div>'; return; }
+            const foundDoc = snap.docs[0]; const foundData = foundDoc.data(); const foundUid = foundDoc.id;
+            if (foundUid === currentUser.uid) { searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Это вы!</div>'; return; }
+            if (userData.friends && userData.friends.includes(foundUid)) { searchResult.innerHTML = '<div style="color:#ffd700; font-size:0.8rem;">Этот игрок уже у вас в друзьях</div>'; return; }
             const reqQuery = query(collection(db, "friendRequests"), where("from", "==", currentUser.uid), where("to", "==", foundUid));
             const reqSnap = await getDocs(reqQuery);
-            
             searchResult.innerHTML = '';
-            const div = document.createElement('div');
-            div.className = 'friend-item';
+            const div = document.createElement('div'); div.className = 'friend-item';
             const colorClass = foundData.customColor || '';
             div.innerHTML = `<span>${foundData.avatar} <span class="${colorClass}">${foundData.nickname}</span></span>`;
-            
-            const btn = document.createElement('button');
-            btn.className = 'action-btn';
-            if (!reqSnap.empty) {
-                btn.textContent = 'Запрос отправлен';
-                btn.disabled = true;
-            } else {
+            const btn = document.createElement('button'); btn.className = 'action-btn';
+            if (!reqSnap.empty) { btn.textContent = 'Запрос отправлен'; btn.disabled = true; }
+            else {
                 btn.textContent = 'Добавить';
                 btn.onclick = async () => {
-                    await addDoc(collection(db, "friendRequests"), {
-                        from: currentUser.uid,
-                        to: foundUid,
-                        timestamp: Date.now()
-                    });
-                    btn.textContent = 'Запрос отправлен';
-                    btn.disabled = true;
+                    await addDoc(collection(db, "friendRequests"), { from: currentUser.uid, to: foundUid, timestamp: Date.now() });
+                    btn.textContent = 'Запрос отправлен'; btn.disabled = true;
                 };
             }
-            div.appendChild(btn);
-            searchResult.appendChild(div);
+            div.appendChild(btn); searchResult.appendChild(div);
         });
 
         document.getElementById('addFriendBtn').addEventListener('click', async () => {
             if (!viewingProfileUid || viewingProfileUid === currentUser.uid) return;
-            const btn = document.getElementById('addFriendBtn');
-            btn.textContent = 'Отправка...'; btn.disabled = true;
+            const btn = document.getElementById('addFriendBtn'); btn.textContent = 'Отправка...'; btn.disabled = true;
             try {
                 const reqQuery = query(collection(db, "friendRequests"), where("from", "==", currentUser.uid), where("to", "==", viewingProfileUid));
                 const reqSnap = await getDocs(reqQuery);
@@ -750,28 +681,20 @@
             const q = query(collection(db, "tickets"), where("uid", "==", currentUser.uid));
             const snap = await getDocs(q);
             ticketsList.innerHTML = '';
-            if (snap.empty) {
-                ticketsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem; text-align:center; margin-bottom:10px;">У вас нет активных запросов</div>';
-                return;
-            }
+            if (snap.empty) { ticketsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem; text-align:center; margin-bottom:10px;">У вас нет активных запросов</div>'; return; }
             const sortedDocs = snap.docs.sort((a, b) => b.data().timestamp - a.data().timestamp);
             sortedDocs.forEach(docSnap => {
-                const data = docSnap.data();
-                const date = new Date(data.timestamp).toLocaleString();
-                let html = `<div class="ticket-item">
-                    <div style="font-size:0.7rem; color:#aaa; margin-bottom:5px;">${date} · Статус: ${data.status === 'closed' ? '✅ Закрыт' : '⏳ В ожидании'}</div>
-                    <div>${data.message}</div>`;
+                const data = docSnap.data(); const date = new Date(data.timestamp).toLocaleString();
+                let html = `<div class="ticket-item"><div style="font-size:0.7rem; color:#aaa; margin-bottom:5px;">${date} · Статус: ${data.status === 'closed' ? '✅ Закрыт' : '⏳ В ожидании'}</div><div>${data.message}</div>`;
                 if (data.reply) html += `<div class="ticket-reply"><b>Ответ поддержки:</b><br>${data.reply}</div>`;
-                html += `</div>`;
-                ticketsList.innerHTML += html;
+                html += `</div>`; ticketsList.innerHTML += html;
             });
         }
 
         document.getElementById('sendTicketBtn').addEventListener('click', async () => {
             const msg = document.getElementById('ticketMessage').value.trim();
             if (!msg) return alert('Напишите сообщение!');
-            const btn = document.getElementById('sendTicketBtn');
-            btn.disabled = true; btn.textContent = 'Отправка...';
+            const btn = document.getElementById('sendTicketBtn'); btn.disabled = true; btn.textContent = 'Отправка...';
             try {
                 await addDoc(collection(db, "tickets"), { uid: currentUser.uid, nickname: userData.nickname, message: msg, status: 'open', reply: '', timestamp: Date.now() });
                 document.getElementById('ticketMessage').value = '';
@@ -786,97 +709,51 @@
         function renderShop() {
             shopList.innerHTML = '';
 
-            // 1. АВАТАРКИ
             const catAvatars = document.createElement('div'); catAvatars.className = 'shop-category'; catAvatars.textContent = 'Аватарки'; shopList.appendChild(catAvatars);
             shopItems.filter(i => i.type === 'avatar').forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
                 const isEquipped = userData.avatar === item.icon;
                 const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center;">
-                        <span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span>
-                        <div style="margin-left: 10px;">
-                            <div style="font-weight:bold; color:#fff">${item.name}</div>
-                            <div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div>
-                        </div>
-                    </div>
-                    <button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>
-                `;
+                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                 const btn = div.querySelector('button');
                 btn.onclick = () => {
                     if (isEquipped) return;
                     if (isOwned) { userData.avatar = item.icon; saveToCloud(true); renderShop(); updateUI(); }
-                    else {
-                        if (userData.score >= item.price) {
-                            userData.score -= item.price; userData.inventory.push(item.id); userData.avatar = item.icon;
-                            updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30);
-                        } else alert('Недостаточно кликов!');
-                    }
+                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.avatar = item.icon; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
                 };
                 shopList.appendChild(div);
             });
 
-            // 2. БАННЕРЫ
             const catBanners = document.createElement('div'); catBanners.className = 'shop-category'; catBanners.textContent = 'Баннеры'; shopList.appendChild(catBanners);
             shopItems.filter(i => i.type === 'banner').forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
                 const isEquipped = userData.banner === item.style;
                 const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center;">
-                        <span class="preview" style="background:${item.style}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span>
-                        <div style="margin-left: 10px;">
-                            <div style="font-weight:bold; color:#0ff">${item.name}</div>
-                            <div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div>
-                        </div>
-                    </div>
-                    <button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>
-                `;
+                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="background:${item.style}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                 const btn = div.querySelector('button');
                 btn.onclick = () => {
                     if (isEquipped) return;
                     if (isOwned) { userData.banner = item.style; saveToCloud(true); renderShop(); updateUI(); }
-                    else {
-                        if (userData.score >= item.price) {
-                            userData.score -= item.price; userData.inventory.push(item.id); userData.banner = item.style;
-                            updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30);
-                        } else alert('Недостаточно кликов!');
-                    }
+                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.banner = item.style; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
                 };
                 shopList.appendChild(div);
             });
 
-            // 3. ЦВЕТА
             const catColors = document.createElement('div'); catColors.className = 'shop-category'; catColors.textContent = 'Цвета для ника'; shopList.appendChild(catColors);
             allColors.forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
                 const isEquipped = userData.customColor === item.className;
                 const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center;">
-                        <span class="preview ${item.className}" style="font-weight:bold; font-size:1.2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">Aa</span>
-                        <div style="margin-left: 10px;">
-                            <div style="font-weight:bold; color:#fff">${item.name}</div>
-                            <div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div>
-                        </div>
-                    </div>
-                    <button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>
-                `;
+                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${item.className}" style="font-weight:bold; font-size:1.2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">Aa</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                 const btn = div.querySelector('button');
                 btn.onclick = () => {
                     if (isEquipped) return;
                     if (isOwned) { userData.customColor = item.className; saveToCloud(true); renderShop(); updateUI(); }
-                    else {
-                        if (userData.score >= item.price) {
-                            userData.score -= item.price; userData.inventory.push(item.id); userData.customColor = item.className;
-                            updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30);
-                        } else alert('Недостаточно кликов!');
-                    }
+                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customColor = item.className; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
                 };
                 shopList.appendChild(div);
             });
 
-            // 4. ТИТУЛЫ
             const catTitles = document.createElement('div'); catTitles.className = 'shop-category'; catTitles.textContent = 'Титулы'; shopList.appendChild(catTitles);
             allTitles.forEach(item => {
                 const titleText = `${item.icon} ${item.name.toUpperCase()}`;
@@ -885,45 +762,19 @@
                 if (item.requiredLevel > 0) {
                     const isUnlocked = userData.level >= item.requiredLevel;
                     const div = document.createElement('div'); div.className = 'shop-item';
-                    div.innerHTML = `
-                        <div style="display:flex; align-items:center;">
-                            <span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span>
-                            <div style="margin-left: 10px;">
-                                <div style="font-weight:bold; color:#ffd700">${item.name}</div>
-                                <div style="font-size:0.7rem; color:${isUnlocked ? '#0f0' : '#ff3366'};">${isUnlocked ? 'Доступно' : 'Достигните ' + item.requiredLevel + ' лвл'}</div>
-                            </div>
-                        </div>
-                        <button class="buy-btn" ${isEquipped || !isUnlocked ? 'disabled' : ''}>${isEquipped ? 'Надето' : 'Надеть'}</button>
-                    `;
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#ffd700">${item.name}</div><div style="font-size:0.7rem; color:${isUnlocked ? '#0f0' : '#ff3366'};">${isUnlocked ? 'Доступно' : 'Достигните ' + item.requiredLevel + ' лвл'}</div></div></div><button class="buy-btn" ${isEquipped || !isUnlocked ? 'disabled' : ''}>${isEquipped ? 'Надето' : 'Надеть'}</button>`;
                     const btn = div.querySelector('button');
-                    btn.onclick = () => {
-                        if (!isUnlocked) return;
-                        userData.customTitle = titleText; saveToCloud(true); renderShop(); updateUI();
-                    };
+                    btn.onclick = () => { if (!isUnlocked) return; userData.customTitle = titleText; saveToCloud(true); renderShop(); updateUI(); };
                     shopList.appendChild(div);
                 } else {
                     const isOwned = userData.inventory.includes(item.id);
                     const div = document.createElement('div'); div.className = 'shop-item';
-                    div.innerHTML = `
-                        <div style="display:flex; align-items:center;">
-                            <span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span>
-                            <div style="margin-left: 10px;">
-                                <div style="font-weight:bold; color:#0ff">${item.name}</div>
-                                <div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div>
-                            </div>
-                        </div>
-                        <button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>
-                    `;
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                     const btn = div.querySelector('button');
                     btn.onclick = () => {
                         if (isEquipped) return;
                         if (isOwned) { userData.customTitle = titleText; saveToCloud(true); renderShop(); updateUI(); }
-                        else {
-                            if (userData.score >= item.price) {
-                                userData.score -= item.price; userData.inventory.push(item.id); userData.customTitle = titleText;
-                                updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30);
-                            } else alert('Недостаточно кликов!');
-                        }
+                        else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customTitle = titleText; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
                     };
                     shopList.appendChild(div);
                 }
@@ -937,35 +788,26 @@
             try {
                 const q = query(collection(db, "users"), orderBy("score", "desc"), limit(30));
                 const querySnapshot = await getDocs(q);
-                leaderboardList.innerHTML = '';
-                let rank = 1;
+                leaderboardList.innerHTML = ''; let rank = 1;
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     if (data.banned) return;
                     const isSelf = docSnap.id === currentUser.uid;
-                    const div = document.createElement('div');
-                    div.className = `leader-item ${isSelf ? 'self' : ''}`;
-                    
+                    const div = document.createElement('div'); div.className = `leader-item ${isSelf ? 'self' : ''}`;
                     const colorClass = data.customColor || '';
-                    div.innerHTML = `<span>${rank}. ${data.avatar || '👤'} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span>
-                    <span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
-                    
+                    div.innerHTML = `<span>${rank}. ${data.avatar || '👤'} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
                     div.onclick = () => showProfile(data, docSnap.id);
                     if (isAdmin && !isSelf) {
-                        const banBtn = document.createElement('button');
-                        banBtn.textContent = 'Бан';
+                        const banBtn = document.createElement('button'); banBtn.textContent = 'Бан';
                         banBtn.style.cssText = "margin-left: 10px; padding: 4px 8px; font-size: 0.7rem; background: transparent; color: #f00; border: 1px solid #f00; border-radius: 5px; cursor: pointer;";
                         banBtn.onclick = async (e) => {
-                            e.stopPropagation();
-                            if (banBtn.disabled) return;
-                            banBtn.disabled = true; banBtn.textContent = '...';
+                            e.stopPropagation(); if (banBtn.disabled) return; banBtn.disabled = true; banBtn.textContent = '...';
                             try { await updateDoc(doc(db, "users", docSnap.id), { banned: true }); div.style.display = 'none'; }
                             catch (err) { alert('Ошибка при бане!'); banBtn.textContent = 'Бан'; banBtn.disabled = false; }
                         };
                         div.appendChild(banBtn);
                     }
-                    leaderboardList.appendChild(div);
-                    rank++;
+                    leaderboardList.appendChild(div); rank++;
                 });
                 if (rank === 1) leaderboardList.innerHTML = '<div style="text-align:center;">Пока нет игроков</div>';
             } catch (e) { leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>'; }
@@ -977,58 +819,24 @@
             viewingProfileUid = uid;
             document.getElementById('profileBanner').style.background = data.banner || 'linear-gradient(90deg, #111, #333)';
             document.getElementById('profileAvatar').textContent = data.avatar || '👤';
-            
-            // Применяем цвет к нику в профиле
             const nameEl = document.getElementById('profileName');
             nameEl.textContent = data.nickname || 'Игрок';
             nameEl.className = 'profile-name ' + (data.customColor || '');
-
             document.getElementById('profileRank').textContent = getDisplayTitle(data.level, data.customTitle);
             document.getElementById('profileScore').textContent = Math.floor(data.score);
             document.getElementById('profileLevel').textContent = data.level;
             
-            const changeNickBtn = document.getElementById('changeNickBtn');
             const addBtn = document.getElementById('addFriendBtn');
-
-            if (uid === currentUser.uid) {
-                changeNickBtn.style.display = 'block';
-                addBtn.style.display = 'none';
-            } else {
-                changeNickBtn.style.display = 'none';
+            if (uid !== currentUser.uid) {
                 addBtn.style.display = 'block';
-                if (userData.friends && userData.friends.includes(uid)) {
-                    addBtn.textContent = 'Уже в друзьях';
-                    addBtn.disabled = true;
-                } else {
-                    addBtn.textContent = 'Добавить в друзья';
-                    addBtn.disabled = false;
-                }
-            }
+                if (userData.friends && userData.friends.includes(uid)) { addBtn.textContent = 'Уже в друзьях'; addBtn.disabled = true; }
+                else { addBtn.textContent = 'Добавить в друзья'; addBtn.disabled = false; }
+            } else addBtn.style.display = 'none';
             showScreen(profileScreen);
         }
 
-        // Смена ника
-        document.getElementById('changeNickBtn').addEventListener('click', async () => {
-            const newNick = prompt('Введите новый никнейм (от 3 до 15 символов):', userData.nickname);
-            if (!newNick) return;
-            const trimmed = newNick.trim();
-            if (trimmed.length < 3 || trimmed.length > 15) return alert('Ник должен быть от 3 до 15 символов!');
-
-            try {
-                await updateDoc(doc(db, "users", currentUser.uid), { nickname: trimmed });
-                userData.nickname = trimmed;
-                alert('Ник успешно изменен!');
-                showProfile(userData, currentUser.uid);
-            } catch(e) {
-                alert('Ошибка при смене ника. Возможно, Firestore запрещает менять поле nickname.');
-            }
-        });
-
         document.getElementById('myProfileBtn').addEventListener('click', () => showProfile(userData, currentUser.uid));
-        document.getElementById('closeProfileBtn').addEventListener('click', () => {
-            if (leaderboardScreen.classList.contains('active') === false) showScreen(gameScreen);
-            else showScreen(leaderboardScreen);
-        });
+        document.getElementById('closeProfileBtn').addEventListener('click', () => { if (leaderboardScreen.classList.contains('active') === false) showScreen(gameScreen); else showScreen(leaderboardScreen); });
 
         // --- Частицы ---
         const canvas = document.getElementById('particleCanvas');
@@ -1037,19 +845,16 @@
         const colors = ['#00ffff', '#ff00ff', '#aa88ff', '#00ffcc', '#ffaa00'];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-        
         function createParticles(x, y, count, big = false) {
             for (let i = 0; i < (big ? count * 2 : count); i++) {
                 particles.push({ x: x + (Math.random() - 0.5) * 100, y: y + (Math.random() - 0.5) * 100, vx: (Math.random() - 0.5) * 10, vy: (Math.random() - 0.5) * 10, life: 1, color: colors[Math.floor(Math.random() * colors.length)], size: Math.random() * 4 + 2 });
             }
         }
-        
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.globalCompositeOperation = 'lighter';
             for (let i = particles.length - 1; i >= 0; i--) {
-                let p = particles[i];
-                p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+                let p = particles[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.02;
                 if (p.life <= 0) { particles.splice(i, 1); continue; }
                 ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
                 ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
