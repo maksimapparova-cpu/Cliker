@@ -23,6 +23,7 @@
         /* Меню и игра */
         .menu { display: flex; gap: 5px; padding: 8px 10px; background: rgba(10, 5, 25, 0.7); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 40px; flex-wrap: wrap; justify-content: center; width: 100%; }
         .menu-btn { background: transparent; border: none; color: #a0f0ff; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 5px 6px; cursor: pointer; text-shadow: 0 0 6px cyan; }
+        .menu-btn.admin { color: #ff3366; text-shadow: 0 0 6px #ff3366; }
         .score-panel { font-size: 2.4rem; font-weight: 800; text-shadow: 0 0 8px #0ff, 0 0 18px #0ff; background: rgba(0, 20, 30, 0.5); padding: 0 22px; border-radius: 50px; border: 1px solid rgba(0, 255, 255, 0.5); }
         .clicker-btn { width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #00ffff, #0066cc, #220044); border: 3px solid #0ff; box-shadow: 0 0 22px #0ff, 0 0 50px #00aaff; cursor: pointer; font-size: 1.3rem; font-weight: 900; color: white; display: flex; justify-content: center; align-items: center; outline: none; transition: 0.1s; }
         .clicker-btn:active { transform: scale(0.92); }
@@ -41,24 +42,29 @@
         .passive-btn { width: 100%; padding: 10px; font-size: 0.8rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #0a2a3a, #0a3a2a); border: 2px solid #0ff; border-radius: 40px; cursor: pointer; }
         .passive-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #555; }
 
-        /* Магазин, Лидеры, Друзья, Поддержка */
-        .shop-box, .leaderboard-box, .friends-box, .support-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #0ff; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
-        .shop-box h3, .leaderboard-box h3, .friends-box h3, .support-box h3 { text-align: center; color: #0ff; text-shadow:0 0 10px #0ff; margin-bottom: 10px; }
-        .shop-list, .leader-list, .friends-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 5px; }
+        /* Магазин, Лидеры, Друзья, Поддержка, Админка */
+        .shop-box, .leaderboard-box, .friends-box, .support-box, .admin-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #0ff; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
+        .admin-box { border-color: #ff3366; }
+        .shop-box h3, .leaderboard-box h3, .friends-box h3, .support-box h3, .admin-box h3 { text-align: center; color: #0ff; text-shadow:0 0 10px #0ff; margin-bottom: 10px; }
+        .admin-box h3 { color: #ff3366; text-shadow: 0 0 10px #ff3366; }
+        .shop-list, .leader-list, .friends-list, .admin-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 5px; }
         
         .shop-category { font-size: 0.8rem; color: #ffd700; text-transform: uppercase; margin: 10px 0 5px 0; font-weight: bold; text-align: left; width: 100%; }
         
-        .shop-item, .friend-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
+        .shop-item, .friend-item, .admin-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
+        .admin-item { border-color: rgba(255, 51, 102, 0.3); }
         .shop-item .preview { font-size: 1.5rem; margin-right: 10px; }
         .buy-btn, .action-btn { padding: 6px 12px; border-radius: 10px; background: #0ff; color: #000; font-weight: bold; border: none; cursor: pointer; white-space: nowrap; font-size: 0.75rem; }
         .buy-btn:disabled, .action-btn:disabled { background: #555; color: #aaa; cursor: not-allowed; }
         .action-btn.danger { background: #ff3366; color: white; }
+        .action-btn.success { background: #00ff00; color: #000; }
         
         .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-radius: 8px; }
         .leader-item:hover { background: rgba(255,255,255,0.1); }
         .leader-item.self { background: rgba(0, 255, 255, 0.1); color: #0ff; }
         
         .close-btn { margin-top: 15px; padding: 10px; width: 100%; background: transparent; border: 1px solid #0ff; color: #0ff; border-radius: 20px; cursor: pointer; text-transform: uppercase; }
+        .admin-box .close-btn { border-color: #ff3366; color: #ff3366; }
 
         /* Поддержка */
         .support-box textarea { width: 100%; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid #f0f; color: white; outline: none; resize: none; height: 80px; font-size: 0.9rem; }
@@ -177,6 +183,7 @@
             <button class="menu-btn" id="friendsBtn">Друзья</button>
             <button class="menu-btn" id="shopBtn">Магазин</button>
             <button class="menu-btn" id="supportBtn">Помощь</button>
+            <button class="menu-btn admin" id="adminBtn" style="display:none;">Админка</button>
             <button class="menu-btn" id="logoutBtn" style="color: #ff3366;">Выйти</button>
         </div>
         <div class="score-panel" id="scoreDisplay">0</div>
@@ -222,6 +229,17 @@
             <textarea id="ticketMessage" placeholder="Опишите вашу проблему..."></textarea>
             <button class="action-btn" id="sendTicketBtn" style="width:100%; padding:10px;">Отправить запрос</button>
             <button class="close-btn" id="closeSupportBtn">Назад</button>
+        </div>
+    </div>
+
+    <!-- Экран админки -->
+    <div class="screen" id="adminScreen">
+        <div class="admin-box">
+            <h3>🛡 АДМИН-ПАНЕЛЬ</h3>
+            <div class="admin-list" id="adminList">
+                <!-- Сюда будут грузиться игроки -->
+            </div>
+            <button class="close-btn" id="closeAdminBtn">Назад</button>
         </div>
     </div>
 
@@ -294,6 +312,7 @@
         const profileScreen = document.getElementById('profileScreen');
         const friendsScreen = document.getElementById('friendsScreen');
         const supportScreen = document.getElementById('supportScreen');
+        const adminScreen = document.getElementById('adminScreen');
 
         const nicknameInput = document.getElementById('nickname');
         const passwordInput = document.getElementById('password');
@@ -320,6 +339,7 @@
         const friendRequestsList = document.getElementById('friendRequestsList');
         const searchResult = document.getElementById('searchResult');
         const ticketsList = document.getElementById('ticketsList');
+        const adminList = document.getElementById('adminList');
 
         let viewingProfileUid = null;
         let passiveInterval = null;
@@ -565,6 +585,9 @@
                 const adminDoc = await getDoc(doc(db, "admins", user.uid));
                 isAdmin = adminDoc.exists();
                 
+                // Показываем кнопку админки, если мы админ
+                document.getElementById('adminBtn').style.display = isAdmin ? 'block' : 'none';
+
                 const docSnap = await getDoc(doc(db, "users", user.uid));
                 if (docSnap.exists()) {
                     const cloudData = docSnap.data();
@@ -593,6 +616,7 @@
             } else {
                 currentUser = null;
                 isAdmin = false;
+                document.getElementById('adminBtn').style.display = 'none';
                 if (passiveInterval) clearInterval(passiveInterval);
                 showScreen(authScreen);
                 passwordInput.value = '';
@@ -705,6 +729,66 @@
             updateUI(); saveToCloud(true);
             createParticles(window.innerWidth / 2, window.innerHeight / 2, 40, true);
         });
+
+        // --- Админ-панель ---
+        document.getElementById('adminBtn').addEventListener('click', () => {
+            loadAdminPanel();
+            showScreen(adminScreen);
+        });
+        document.getElementById('closeAdminBtn').addEventListener('click', () => showScreen(gameScreen));
+
+        async function loadAdminPanel() {
+            adminList.innerHTML = 'Загрузка...';
+            try {
+                const q = query(collection(db, "users"));
+                const snap = await getDocs(q, { source: 'server' });
+                adminList.innerHTML = '';
+                
+                snap.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const uid = docSnap.id;
+                    const isBanned = data.banned === true;
+
+                    const div = document.createElement('div');
+                    div.className = 'admin-item';
+                    
+                    const colorClass = data.customColor || '';
+                    const nameHtml = `<span class="${colorClass}">${data.nickname || 'Игрок'}</span>`;
+                    
+                    div.innerHTML = `
+                        <div style="display:flex; flex-direction:column;">
+                            <span style="font-weight:bold;">${nameHtml} ${isBanned ? '🚫 (Забанен)' : ''}</span>
+                            <span style="font-size:0.7rem; color:#aaa;">Ур. ${data.level || 1} · Кликов: ${Math.floor(data.score || 0)}</span>
+                        </div>
+                    `;
+
+                    const btn = document.createElement('button');
+                    btn.className = `action-btn ${isBanned ? 'success' : 'danger'}`;
+                    btn.textContent = isBanned ? 'Разбанить' : 'Забанить';
+                    
+                    btn.onclick = async () => {
+                        btn.disabled = true;
+                        btn.textContent = '...';
+                        try {
+                            await updateDoc(doc(db, "users", uid), { banned: !isBanned });
+                            loadAdminPanel(); // Перезагружаем список
+                        } catch (e) {
+                            alert('Ошибка изменения статуса!');
+                            btn.disabled = false;
+                            btn.textContent = isBanned ? 'Разбанить' : 'Забанить';
+                        }
+                    };
+                    
+                    div.appendChild(btn);
+                    adminList.appendChild(div);
+                });
+                
+                if (snap.empty) adminList.innerHTML = '<div style="text-align:center;">Нет игроков</div>';
+            } catch (e) {
+                console.error(e);
+                adminList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>';
+            }
+        }
 
         // --- Друзья ---
         document.getElementById('friendsBtn').addEventListener('click', () => { loadFriends(); showScreen(friendsScreen); });
@@ -937,7 +1021,7 @@
             });
         }
 
-        // --- Таблица лидеров (С ПОДМЕНОЙ СВОЕГО СЧЁТА) ---
+        // --- Таблица лидеров ---
         document.getElementById('leaderboardBtn').addEventListener('click', async () => {
             showScreen(leaderboardScreen);
             leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
@@ -950,13 +1034,10 @@
                     const data = docSnap.data();
                     if (data.banned) return;
                     
-                    // Если это мы, берем наш локальный счёт, а не серверный
                     let actualScore = (docSnap.id === currentUser.uid) ? userData.score : data.score;
-                    
                     players.push({ id: docSnap.id, data: data, score: actualScore });
                 });
 
-                // Сортируем локально, чтобы наш новый счёт встал на правильное место
                 players.sort((a, b) => b.score - a.score);
 
                 leaderboardList.innerHTML = ''; 
@@ -1086,4 +1167,4 @@
         animate();
     </script>
 </body>
-    </html>
+</html>
