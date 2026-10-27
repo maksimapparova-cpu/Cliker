@@ -66,27 +66,40 @@
         .support-box .ticket-reply { background: rgba(0,255,255,0.1); padding: 8px; border-radius: 8px; margin-top: 5px; border-left: 2px solid #0ff; }
 
         /* Профиль игрока */
-        .profile-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 40px 20px 20px 20px; border-radius: 20px; border: 2px solid #0ff; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; overflow: hidden; margin-top: 20px;}
+        .profile-box { 
+            width: 100%; 
+            background: rgba(10, 5, 25, 0.9); 
+            padding: 50px 20px 20px 20px; 
+            border-radius: 20px; 
+            border: 2px solid #0ff; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 10px; 
+            position: relative; 
+            overflow: visible; 
+            margin-top: 20px;
+        }
         .profile-banner { position: absolute; top: 0; left: 0; width: 100%; height: 90px; z-index: 0; border-radius: 18px 18px 0 0; }
         
         /* Верхний бейдж рамки */
         .frame-badge {
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
             width: 50px;
             height: 50px;
             background: #0a0a1a;
-            border: 2px solid #fff;
+            border: 3px solid #fff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             z-index: 5;
             box-shadow: 0 0 10px rgba(0,0,0,0.8);
-            display: none; /* Скрыто по умолчанию */
+            display: none;
         }
 
         .profile-avatar { font-size: 4rem; z-index: 1; margin-top: 30px; text-shadow: 0 0 10px #0ff; }
@@ -97,15 +110,22 @@
         /* --- РАМКИ ДЛЯ ВСЕГО ПРОФИЛЯ --- */
         .frame-rank { border: 4px solid #cd7f32 !important; box-shadow: 0 0 15px #cd7f32, inset 0 0 10px #cd7f32 !important; }
         .frame-rank .frame-badge { border-color: #cd7f32; box-shadow: 0 0 15px #cd7f32; color: #cd7f32; }
-
         .frame-legendary { border: 4px solid #ffd700 !important; box-shadow: 0 0 25px #ffd700, inset 0 0 15px #ffd700 !important; }
         .frame-legendary .frame-badge { border-color: #ffd700; box-shadow: 0 0 20px #ffd700; color: #ffd700; }
-
         .frame-diamond { border: 4px solid #00ffff !important; box-shadow: 0 0 25px #00ffff, inset 0 0 15px #00ffff !important; }
         .frame-diamond .frame-badge { border-color: #00ffff; box-shadow: 0 0 20px #00ffff; color: #00ffff; }
-
         .frame-mythic { border: 4px solid #ff00ff !important; box-shadow: 0 0 30px #ff00ff, inset 0 0 20px #ff00ff !important; }
         .frame-mythic .frame-badge { border-color: #ff00ff; box-shadow: 0 0 25px #ff00ff; color: #ff00ff; }
+        .frame-emerald { border: 4px solid #00ff00 !important; box-shadow: 0 0 25px #00ff00, inset 0 0 15px #00ff00 !important; }
+        .frame-emerald .frame-badge { border-color: #00ff00; box-shadow: 0 0 20px #00ff00; color: #00ff00; }
+        .frame-ruby { border: 4px solid #ff0000 !important; box-shadow: 0 0 25px #ff0000, inset 0 0 15px #ff0000 !important; }
+        .frame-ruby .frame-badge { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; color: #ff0000; }
+        .frame-sapphire { border: 4px solid #0000ff !important; box-shadow: 0 0 25px #0000ff, inset 0 0 15px #0000ff !important; }
+        .frame-sapphire .frame-badge { border-color: #0000ff; box-shadow: 0 0 20px #0000ff; color: #0000ff; }
+        .frame-plasma { border: 4px solid #00ffff !important; box-shadow: 0 0 30px #00ffff, inset 0 0 20px #ff00ff !important; border-style: double !important; }
+        .frame-plasma .frame-badge { border-color: #00ffff; box-shadow: 0 0 20px #ff00ff; color: #00ffff; }
+        .frame-void { border: 4px solid #4b0082 !important; box-shadow: 0 0 30px #4b0082, inset 0 0 20px #000 !important; }
+        .frame-void .frame-badge { border-color: #4b0082; box-shadow: 0 0 20px #4b0082; color: #4b0082; }
 
         /* Переливающиеся цвета */
         .rainbow-text { background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: rainbow-anim 3s linear infinite; }
@@ -114,6 +134,11 @@
         .neon-green-text { color: #0f0; text-shadow: 0 0 5px #0f0, 0 0 15px #0f0, 0 0 25px #0f0; animation: pulse-anim 1.5s infinite alternate; }
         .neon-gold-text { color: #ffd700; text-shadow: 0 0 5px #ffd700, 0 0 15px #ffd700, 0 0 25px #ffd700; animation: pulse-anim 1.5s infinite alternate; }
         .neon-purple-text { color: #9d00ff; text-shadow: 0 0 5px #9d00ff, 0 0 15px #9d00ff, 0 0 25px #9d00ff; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-red-text { color: #ff0000; text-shadow: 0 0 5px #ff0000, 0 0 15px #ff0000, 0 0 25px #ff0000; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-orange-text { color: #ff8c00; text-shadow: 0 0 5px #ff8c00, 0 0 15px #ff8c00, 0 0 25px #ff8c00; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-cyan-text { color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 25px #00ffff; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-yellow-text { color: #ffff00; text-shadow: 0 0 5px #ffff00, 0 0 15px #ffff00, 0 0 25px #ffff00; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-white-text { color: #ffffff; text-shadow: 0 0 5px #ffffff, 0 0 15px #ffffff, 0 0 25px #ffffff; animation: pulse-anim 1.5s infinite alternate; }
 
         /* Тёмно-синий неоновый титул */
         .dark-blue-title { color: #000080; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 5px #00f, 0 0 10px #00f; }
@@ -220,11 +245,8 @@
 
     <!-- Экран профиля -->
     <div class="screen" id="profileScreen">
-        <!-- Сама карточка профиля с рамкой -->
         <div class="profile-box" id="profileBox">
-            <!-- Бейдж рамки (иконка наверху) -->
             <div class="frame-badge" id="profileFrameBadge"></div>
-            
             <div class="profile-banner" id="profileBanner"></div>
             <div class="profile-avatar" id="profileAvatar">👤</div>
             <div class="profile-name" id="profileName">Никнейм</div>
@@ -330,14 +352,21 @@
             { id: 'title12', icon: '🎰', name: 'Читер 777', requiredLevel: 0, price: 200000 },
             { id: 'title13', icon: '🦾', name: "I'm Iron Man", requiredLevel: 0, price: 200000 },
             { id: 'title14', icon: '👸', name: 'Сама непобедимость', requiredLevel: 0, price: 200000 },
-
             { id: 'title15', icon: '🚀', name: 'Топ пушер', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title16', icon: '🚫', name: 'Не меняй своё имя', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title17', icon: '🏆', name: 'Топ 1', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title18', icon: '🖤', name: 'Дед инсайд', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title19', icon: '💻', name: 'Вайбкодер', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title20', icon: '📱', name: 'Зависимый от телефона', requiredLevel: 0, price: 350000, isDarkBlue: true },
-            { id: 'title21', icon: '⏱️', name: 'Спидран 1 млрд', requiredLevel: 0, price: 350000, isDarkBlue: true }
+            { id: 'title21', icon: '⏱️', name: 'Спидран 1 млрд', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title22', icon: '🦏', name: 'Броненосец', requiredLevel: 0, price: 200000 },
+            { id: 'title23', icon: '👆', name: 'Тап темпер', requiredLevel: 0, price: 200000 },
+            { id: 'title24', icon: '🤓', name: 'Задрот', requiredLevel: 0, price: 200000 },
+            { id: 'title25', icon: '👩', name: 'Твоя мама лучшая', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title26', icon: '⚫', name: 'Чёрный день', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title27', icon: '👨', name: 'Батя мистера Макса', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title28', icon: '🦾', name: 'Тони Старк собрал мини реактор', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title29', icon: '🗣️', name: 'Нет такого слова не хочу', requiredLevel: 0, price: 350000, isDarkBlue: true }
         ];
 
         // --- РАМКИ ---
@@ -345,7 +374,12 @@
             { id: 'frame_rank', name: 'Рамка Ранга (Бронза)', price: 550000, className: 'frame-rank', icon: '🥉' },
             { id: 'frame_legendary', name: 'Легендарная Рамка', price: 550000, className: 'frame-legendary', icon: '🌟' },
             { id: 'frame_diamond', name: 'Алмазная Рамка', price: 550000, className: 'frame-diamond', icon: '💎' },
-            { id: 'frame_mythic', name: 'Мифическая Рамка', price: 550000, className: 'frame-mythic', icon: '🔮' }
+            { id: 'frame_mythic', name: 'Мифическая Рамка', price: 550000, className: 'frame-mythic', icon: '🔮' },
+            { id: 'frame_emerald', name: 'Изумрудная Рамка', price: 550000, className: 'frame-emerald', icon: '💚' },
+            { id: 'frame_ruby', name: 'Рубиновая Рамка', price: 550000, className: 'frame-ruby', icon: '❤️' },
+            { id: 'frame_sapphire', name: 'Сапфировая Рамка', price: 550000, className: 'frame-sapphire', icon: '💙' },
+            { id: 'frame_plasma', name: 'Плазменная Рамка', price: 550000, className: 'frame-plasma', icon: '⚡' },
+            { id: 'frame_void', name: 'Рамка Пустоты', price: 550000, className: 'frame-void', icon: '🕳️' }
         ];
 
         // --- ЦВЕТА ДЛЯ НИКА ---
@@ -355,12 +389,17 @@
             { id: 'color_pink', name: 'Неоново-розовый', price: 150000, className: 'neon-pink-text' },
             { id: 'color_green', name: 'Неоново-зеленый', price: 150000, className: 'neon-green-text' },
             { id: 'color_gold', name: 'Неоново-золотой', price: 150000, className: 'neon-gold-text' },
-            { id: 'color_purple', name: 'Неоново-фиолетовый', price: 150000, className: 'neon-purple-text' }
+            { id: 'color_purple', name: 'Неоново-фиолетовый', price: 150000, className: 'neon-purple-text' },
+            { id: 'color_red', name: 'Неоново-красный', price: 150000, className: 'neon-red-text' },
+            { id: 'color_orange', name: 'Неоново-оранжевый', price: 150000, className: 'neon-orange-text' },
+            { id: 'color_cyan', name: 'Неоново-голубой', price: 150000, className: 'neon-cyan-text' },
+            { id: 'color_yellow', name: 'Неоново-желтый', price: 150000, className: 'neon-yellow-text' },
+            { id: 'color_white', name: 'Неоново-белый', price: 150000, className: 'neon-white-text' }
         ];
 
         // --- МАГАЗИН ---
         const shopItems = [
-            // Аватарки (32)
+            // Аватарки
             { id: 'avatar1', type: 'avatar', icon: '👤', name: 'Новичок', price: 0 },
             { id: 'avatar2', type: 'avatar', icon: '🐱', name: 'Котик', price: 500 },
             { id: 'avatar3', type: 'avatar', icon: '👽', name: 'Пришелец', price: 2000 },
@@ -393,8 +432,13 @@
             { id: 'avatar30', type: 'avatar', icon: '🛸', name: 'НЛО', price: 800000 },
             { id: 'avatar31', type: 'avatar', icon: '🥶', name: 'Замороженный', price: 90000 },
             { id: 'avatar32', type: 'avatar', icon: '🤡', name: 'Клоун', price: 5000 },
+            { id: 'avatar33', type: 'avatar', icon: '😈', name: 'Чертик', price: 35000 },
+            { id: 'avatar34', type: 'avatar', icon: '🥷', name: 'Ниндзя', price: 8000 },
+            { id: 'avatar35', type: 'avatar', icon: '🦅', name: 'Орел', price: 1500000 },
+            { id: 'avatar36', type: 'avatar', icon: '🍔', name: 'Бургер', price: 6000 },
+            { id: 'avatar37', type: 'avatar', icon: '🤠', name: 'Ковбой', price: 450000 },
             
-            // Баннеры (30)
+            // Баннеры
             { id: 'banner1', type: 'banner', icon: '⬛', name: 'Стандартный', price: 0, style: 'linear-gradient(90deg, #111, #333)' },
             { id: 'banner2', type: 'banner', icon: '💙', name: 'Неон', price: 1000, style: 'linear-gradient(90deg, #0ff, #f0f)' },
             { id: 'banner3', type: 'banner', icon: '🔥', name: 'Огненный', price: 3000, style: 'linear-gradient(90deg, #f00, #ff0)' },
@@ -415,8 +459,13 @@
             { id: 'banner18', type: 'banner', icon: '👑', name: 'Золотой', price: 50000, style: 'linear-gradient(90deg, #ffd700, #b8860b, #ffd700)' },
             { id: 'banner19', type: 'banner', icon: '🌸', name: 'Сакура', price: 400000, style: 'linear-gradient(90deg, #ffb7c5, #ff69b4, #ffb7c5)' },
             { id: 'banner20', type: 'banner', icon: '🕳️', name: 'Чёрная дыра', price: 2000000, style: 'radial-gradient(circle, #000 40%, #4b0082 80%, #000 100%)' },
+            { id: 'banner31', type: 'banner', icon: '🌑', name: 'Луна', price: 120000, style: 'radial-gradient(circle, #ddd 20%, #555 80%)' },
+            { id: 'banner32', type: 'banner', icon: '🏙️', name: 'Город', price: 35000, style: 'linear-gradient(180deg, #000, #555, #000)' },
+            { id: 'banner33', type: 'banner', icon: '🍭', name: 'Конфета', price: 10000, style: 'linear-gradient(45deg, #ff0, #f0f, #0ff, #ff0)' },
+            { id: 'banner34', type: 'banner', icon: '🌲', name: 'Лес', price: 8000, style: 'linear-gradient(180deg, #003300, #006600, #003300)' },
+            { id: 'banner35', type: 'banner', icon: '🧨', name: 'Взрыв', price: 500000, style: 'radial-gradient(circle, #ff0 10%, #f00 50%, #000 90%)' },
             
-            // Переливающиеся баннеры (10)
+            // Переливающиеся баннеры
             { id: 'banner21', type: 'banner', icon: '🌈', name: 'Переливающаяся Радуга', price: 200000, style: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000)', isAnimated: true },
             { id: 'banner22', type: 'banner', icon: '🌊', name: 'Переливающаяся Волна', price: 200000, style: 'linear-gradient(90deg, #00f, #0ff, #00f, #0ff, #00f)', isAnimated: true },
             { id: 'banner23', type: 'banner', icon: '🔥', name: 'Переливающееся Пламя', price: 200000, style: 'linear-gradient(90deg, #f00, #ff8c00, #ff0, #f00)', isAnimated: true },
@@ -426,7 +475,12 @@
             { id: 'banner27', type: 'banner', icon: '💖', name: 'Переливающаяся Любовь', price: 200000, style: 'linear-gradient(90deg, #f0f, #f00, #f0f, #f00)', isAnimated: true },
             { id: 'banner28', type: 'banner', icon: '💎', name: 'Переливающийся Алмаз', price: 200000, style: 'linear-gradient(90deg, #0ff, #fff, #0ff, #fff)', isAnimated: true },
             { id: 'banner29', type: 'banner', icon: '☢️', name: 'Переливающаяся Радиация', price: 200000, style: 'linear-gradient(90deg, #00ff00, #003300, #00ff00, #003300)', isAnimated: true },
-            { id: 'banner30', type: 'banner', icon: '⚡', name: 'Переливающаяся Гроза', price: 200000, style: 'linear-gradient(90deg, #000, #0ff, #000, #0ff)', isAnimated: true }
+            { id: 'banner30', type: 'banner', icon: '⚡', name: 'Переливающаяся Гроза', price: 200000, style: 'linear-gradient(90deg, #000, #0ff, #000, #0ff)', isAnimated: true },
+            { id: 'banner36', type: 'banner', icon: '🌪️', name: 'Переливающийся Вихрь', price: 200000, style: 'linear-gradient(90deg, #555, #fff, #555, #fff)', isAnimated: true },
+            { id: 'banner37', type: 'banner', icon: '🌠', name: 'Переливающаяся Комета', price: 200000, style: 'linear-gradient(90deg, #00f, #fff, #00f, #fff)', isAnimated: true },
+            { id: 'banner38', type: 'banner', icon: '🌺', name: 'Переливающийся Цветок', price: 200000, style: 'linear-gradient(90deg, #ff1493, #ff69b4, #ff1493, #ff69b4)', isAnimated: true },
+            { id: 'banner39', type: 'banner', icon: '🪄', name: 'Переливающаяся Магия', price: 200000, style: 'linear-gradient(90deg, #8a2be2, #4b0082, #8a2be2, #4b0082)', isAnimated: true },
+            { id: 'banner40', type: 'banner', icon: '🔱', name: 'Переливающийся Трезубец', price: 200000, style: 'linear-gradient(90deg, #00ffff, #00008b, #00ffff, #00008b)', isAnimated: true }
         ];
 
         let isLoginMode = true;
@@ -681,7 +735,7 @@
 
             friendRequestsList.innerHTML = '';
             const q = query(collection(db, "friendRequests"), where("to", "==", currentUser.uid));
-            const reqSnap = await getDocs(q, { source: 'server' });
+            const reqSnap = await getDocs(q);
             if (reqSnap.empty) friendRequestsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem;">Нет новых запросов</div>';
             else {
                 for (const reqDoc of reqSnap.docs) {
@@ -715,7 +769,7 @@
             if (!searchNick) return;
             searchResult.innerHTML = 'Поиск...';
             const q = query(collection(db, "users"), where("nickname", "==", searchNick));
-            const snap = await getDocs(q, { source: 'server' });
+            const snap = await getDocs(q);
             if (snap.empty) { searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Игрок не найден</div>'; return; }
             const foundDoc = snap.docs[0]; const foundData = foundDoc.data(); const foundUid = foundDoc.id;
             if (foundUid === currentUser.uid) { searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Это вы!</div>'; return; }
@@ -883,7 +937,7 @@
             });
         }
 
-        // --- Таблица лидеров ---
+        // --- Таблица лидеров (С ПОДМЕНОЙ СВОЕГО СЧЁТА) ---
         document.getElementById('leaderboardBtn').addEventListener('click', async () => {
             showScreen(leaderboardScreen);
             leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
@@ -896,10 +950,13 @@
                     const data = docSnap.data();
                     if (data.banned) return;
                     
+                    // Если это мы, берем наш локальный счёт, а не серверный
                     let actualScore = (docSnap.id === currentUser.uid) ? userData.score : data.score;
+                    
                     players.push({ id: docSnap.id, data: data, score: actualScore });
                 });
 
+                // Сортируем локально, чтобы наш новый счёт встал на правильное место
                 players.sort((a, b) => b.score - a.score);
 
                 leaderboardList.innerHTML = ''; 
@@ -953,21 +1010,18 @@
         function showProfile(data, uid) {
             viewingProfileUid = uid;
             
-            // Применяем рамку ко ВСЕМУ профилю
             const profileBox = document.getElementById('profileBox');
-            profileBox.className = 'profile-box'; // Сброс старых классов
+            profileBox.className = 'profile-box'; 
             
             const frameBadge = document.getElementById('profileFrameBadge');
-            frameBadge.style.display = 'none'; // Скрываем бейдж по умолчанию
+            frameBadge.style.display = 'none';
 
             if (data.customFrame) {
                 profileBox.classList.add(data.customFrame);
-                // Ищем иконку этой рамки
                 const frameItem = allFrames.find(f => f.className === data.customFrame);
                 if (frameItem) {
                     frameBadge.textContent = frameItem.icon;
                     frameBadge.style.display = 'flex';
-                    // Цвет обводки бейджа задается в CSS (через классы .frame-xxx .frame-badge)
                 }
             }
 
@@ -1032,4 +1086,4 @@
         animate();
     </script>
 </body>
-        </html>
+    </html>
