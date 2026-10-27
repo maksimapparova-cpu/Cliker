@@ -35,6 +35,11 @@
         .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0ff, #f0f, #0ff); transition: width 0.3s; }
         .level-badge { font-size: 0.7rem; color: #f0f; text-transform: uppercase; }
         .rank-badge { font-size: 0.75rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+        
+        /* Пассивный доход */
+        .passive-panel { padding: 10px 16px; background: rgba(10, 5, 25, 0.8); border: 1px solid rgba(0, 255, 255, 0.35); border-radius: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+        .passive-btn { width: 100%; padding: 10px; font-size: 0.8rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #0a2a3a, #0a3a2a); border: 2px solid #0ff; border-radius: 40px; cursor: pointer; }
+        .passive-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #555; }
 
         /* Магазин, Лидеры, Друзья, Поддержка */
         .shop-box, .leaderboard-box, .friends-box, .support-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 1px solid #0ff; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
@@ -101,11 +106,17 @@
         <button class="clicker-btn" id="clickerButton">ЖМИ</button>
         <div class="level-badge" id="clickValueLabel">+1 за клик</div>
         <div class="rank-badge" id="rankBadge">🧴 Новичок</div>
+        
         <div class="upgrade-panel">
             <div style="font-size: 0.7rem; color: #b0d8ff; text-transform: uppercase;">Улучшение: <b id="nextUpgradeCost" style="color:#0ff">4</b></div>
             <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
             <button class="upgrade-btn" id="upgradeBtn" disabled>Улучшить</button>
             <div class="level-badge" id="levelBadge">УРОВЕНЬ 1 · +1</div>
+        </div>
+
+        <div class="passive-panel">
+            <div style="font-size: 0.7rem; color: #b0d8ff; text-transform: uppercase;">Пассивный доход: <b id="passiveIncomeDisplay" style="color:#0ff">+0 / 5 сек</b></div>
+            <button class="passive-btn" id="upgradePassiveBtn" disabled>Улучшить пассив (10)</button>
         </div>
     </div>
 
@@ -222,6 +233,9 @@
         const clickValueLabel = document.getElementById('clickValueLabel');
         const rankBadge = document.getElementById('rankBadge');
         
+        const passiveIncomeDisplay = document.getElementById('passiveIncomeDisplay');
+        const upgradePassiveBtn = document.getElementById('upgradePassiveBtn');
+
         const shopList = document.getElementById('shopList');
         const leaderboardList = document.getElementById('leaderboardList');
         const myFriendsList = document.getElementById('myFriendsList');
@@ -230,6 +244,7 @@
         const ticketsList = document.getElementById('ticketsList');
 
         let viewingProfileUid = null;
+        let passiveInterval = null;
 
         // --- ВСЕ ТИТУЛЫ ---
         const allTitles = [
@@ -255,7 +270,8 @@
             { id: 'title8', icon: '😎', name: 'Красавчик', requiredLevel: 0, price: 500000 },
             { id: 'title9', icon: '⏱️', name: 'Watch Man of Doom', requiredLevel: 0, price: 500000 },
             { id: 'title10', icon: '📅', name: '2023', requiredLevel: 0, price: 500000 },
-            { id: 'title11', icon: '🥭', name: 'Манго', requiredLevel: 0, price: 500000 }
+            { id: 'title11', icon: '🥭', name: 'Манго', requiredLevel: 0, price: 500000 },
+            { id: 'title12', icon: '🎰', name: 'Читер 777', requiredLevel: 0, price: 500000 }
         ];
 
         const shopItems = [
@@ -301,7 +317,10 @@
             avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', 
             customTitle: '', 
             inventory: ['avatar1', 'banner1'],
-            friends: []
+            friends: [],
+            passiveMultiplier: 1,
+            passiveUpgradeCost: 10,
+            lastLogoutTime: 0 // Время последнего выхода для оффлайн-фарма
         };
 
         function getDefaultTitle(level) {
@@ -339,7 +358,10 @@
                         nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false,
                         avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', customTitle: '',
                         inventory: ['avatar1', 'banner1'],
-                        friends: []
+                        friends: [],
+                        passiveMultiplier: 1,
+                        passiveUpgradeCost: 10,
+                        lastLogoutTime: Date.now()
                     });
                 }
             } catch (error) {
@@ -351,8 +373,8 @@
             }
         });
 
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            saveToCloud(true);
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await saveToCloud(true, true);
             signOut(auth);
         });
 
@@ -377,16 +399,47 @@
                     if (!userData.banner) userData.banner = 'linear-gradient(90deg, #111, #333)';
                     if (!userData.customTitle) userData.customTitle = '';
                     if (!userData.friends) userData.friends = [];
+                    if (!userData.passiveMultiplier) userData.passiveMultiplier = 1;
+                    if (!userData.passiveUpgradeCost) userData.passiveUpgradeCost = 10;
+                    if (!userData.lastLogoutTime) userData.lastLogoutTime = Date.now();
+
+                    // Оффлайн-фарм
+                    calculateOfflineIncome();
+                    
                     updateUI();
+                    startPassiveIncome();
                 }
                 showScreen(gameScreen);
             } else {
                 currentUser = null;
                 isAdmin = false;
+                if (passiveInterval) clearInterval(passiveInterval);
                 showScreen(authScreen);
                 passwordInput.value = '';
             }
         });
+
+        // Подсчет кликов за время отсутствия
+        function calculateOfflineIncome() {
+            const now = Date.now();
+            const offlineTimeMs = now - userData.lastLogoutTime;
+            const OFFLINE_LIMIT_MS = 24 * 60 * 60 * 1000; // Максимум 24 часа
+            const timeToCount = Math.min(offlineTimeMs, OFFLINE_LIMIT_MS);
+
+            if (timeToCount > 10000) { // Если отсутствовал больше 10 секунд
+                const incomePer5Sec = userData.level * userData.passiveMultiplier;
+                const periods = Math.floor(timeToCount / 5000); // Считаем по 5-секундным интервалам
+                const offlineIncome = periods * incomePer5Sec;
+
+                if (offlineIncome > 0) {
+                    userData.score += offlineIncome;
+                    setTimeout(() => {
+                        alert(`С возвращением! Пока вас не было, вы заработали: ${offlineIncome} кликов.`);
+                    }, 500);
+                }
+            }
+            userData.lastLogoutTime = now;
+        }
 
         function showScreen(screen) {
             screens.forEach(s => s.classList.remove('active'));
@@ -399,28 +452,71 @@
             clickValueLabel.textContent = `+${userData.clicksPerClick} за клик`;
             rankBadge.textContent = getDisplayTitle(userData.level, userData.customTitle);
             nextUpgradeCostEl.textContent = userData.upgradeCost;
+            
             const canUpgrade = userData.score >= userData.upgradeCost;
             upgradeBtn.disabled = !canUpgrade;
             upgradeBtn.textContent = canUpgrade ? `Улучшить (${userData.upgradeCost})` : `Нужно ${userData.upgradeCost}`;
+            
             progressBar.style.width = (Math.min(userData.score, userData.upgradeCost) / userData.upgradeCost * 100) + '%';
+
+            // Пассивный доход
+            const passiveIncome = userData.level * userData.passiveMultiplier;
+            passiveIncomeDisplay.textContent = `+${passiveIncome} / 5 сек`;
+
+            const canUpgradePassive = userData.score >= userData.passiveUpgradeCost;
+            upgradePassiveBtn.disabled = !canUpgradePassive;
+            upgradePassiveBtn.textContent = canUpgradePassive ? `Улучшить пассив (${userData.passiveUpgradeCost})` : `Нужно ${userData.passiveUpgradeCost}`;
         }
 
         let saveTimeout;
-        function saveToCloud(immediate = false) {
+        function saveToCloud(immediate = false, isLogout = false) {
             if (!currentUser || userData.banned) return;
             const performSave = async () => {
                 try {
-                    await updateDoc(doc(db, "users", currentUser.uid), {
+                    const dataToSave = {
                         score: Math.floor(userData.score), clicksPerClick: userData.clicksPerClick, 
                         level: userData.level, upgradeCost: userData.upgradeCost,
                         avatar: userData.avatar, banner: userData.banner, customTitle: userData.customTitle,
-                        inventory: userData.inventory
-                    });
+                        inventory: userData.inventory,
+                        passiveMultiplier: userData.passiveMultiplier,
+                        passiveUpgradeCost: userData.passiveUpgradeCost
+                    };
+                    
+                    // Если это выход из игры, фиксируем время
+                    if (isLogout) {
+                        dataToSave.lastLogoutTime = Date.now();
+                    }
+
+                    await updateDoc(doc(db, "users", currentUser.uid), dataToSave);
                 } catch (e) { console.error("Ошибка сохранения:", e); }
             };
             clearTimeout(saveTimeout);
             if (immediate) performSave(); else saveTimeout = setTimeout(performSave, 2000);
         }
+
+        // --- Пассивный доход ---
+        function startPassiveIncome() {
+            if (passiveInterval) clearInterval(passiveInterval);
+            passiveInterval = setInterval(() => {
+                if (!currentUser || userData.banned) return;
+                const income = userData.level * userData.passiveMultiplier;
+                if (income > 0) {
+                    userData.score += income;
+                    updateUI();
+                    saveToCloud();
+                    createParticles(window.innerWidth / 2, window.innerHeight / 2, 5);
+                }
+            }, 5000); // 5 секунд
+        }
+
+        upgradePassiveBtn.addEventListener('click', () => {
+            if (!currentUser || userData.banned || userData.score < userData.passiveUpgradeCost) return;
+            userData.score -= userData.passiveUpgradeCost;
+            userData.passiveMultiplier += 1;
+            userData.passiveUpgradeCost *= 2;
+            updateUI(); saveToCloud(true);
+            createParticles(window.innerWidth / 2, window.innerHeight / 2, 40, true);
+        });
 
         clickerButton.addEventListener('click', () => {
             if (!currentUser || userData.banned) return;
