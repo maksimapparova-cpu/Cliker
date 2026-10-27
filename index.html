@@ -68,30 +68,36 @@
         /* Профиль игрока */
         .profile-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 2px solid #0ff; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; overflow: hidden; }
         .profile-banner { position: absolute; top: 0; left: 0; width: 100%; height: 90px; z-index: 0; }
-        .profile-avatar { font-size: 4rem; z-index: 1; margin-top: 30px; text-shadow: 0 0 10px #0ff; }
+        
+        /* Обертка для аватара с рамкой */
+        .avatar-wrapper { z-index: 1; margin-top: 30px; position: relative; display: flex; justify-content: center; align-items: center; }
+        .profile-avatar { font-size: 4rem; text-shadow: 0 0 10px #0ff; }
+        
         .profile-name { font-size: 1.5rem; font-weight: bold; z-index: 1; text-shadow: 0 0 10px #fff; margin-top: 5px; }
         .profile-rank { font-size: 0.9rem; color: #ffd700; z-index: 1; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
         .profile-stats { display: flex; gap: 15px; z-index: 1; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
-        
+
+        /* --- РАМКИ --- */
+        .frame-rank { border: 4px solid #cd7f32; border-radius: 50%; padding: 5px; box-shadow: 0 0 15px #cd7f32; }
+        .frame-legendary { border: 4px solid #ffd700; border-radius: 50%; padding: 5px; box-shadow: 0 0 20px #ffd700, inset 0 0 10px #ffd700; }
+        .frame-diamond { border: 4px solid #00ffff; border-radius: 50%; padding: 5px; box-shadow: 0 0 20px #00ffff, inset 0 0 10px #00ffff; }
+        .frame-mythic { border: 4px solid #ff00ff; border-radius: 50%; padding: 5px; box-shadow: 0 0 25px #ff00ff, inset 0 0 15px #ff00ff; }
+
         /* Переливающиеся цвета */
-        .rainbow-text {
-            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: rainbow-anim 3s linear infinite;
-        }
-        .neon-blue-text {
-            color: #0ff;
-            text-shadow: 0 0 5px #0ff, 0 0 15px #0ff, 0 0 25px #0ff;
-            animation: pulse-anim 1.5s infinite alternate;
-        }
-        .neon-pink-text {
-            color: #f0f;
-            text-shadow: 0 0 5px #f0f, 0 0 15px #f0f, 0 0 25px #f0f;
-            animation: pulse-anim 1.5s infinite alternate;
-        }
+        .rainbow-text { background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: rainbow-anim 3s linear infinite; }
+        .neon-blue-text { color: #0ff; text-shadow: 0 0 5px #0ff, 0 0 15px #0ff, 0 0 25px #0ff; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-pink-text { color: #f0f; text-shadow: 0 0 5px #f0f, 0 0 15px #f0f, 0 0 25px #f0f; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-green-text { color: #0f0; text-shadow: 0 0 5px #0f0, 0 0 15px #0f0, 0 0 25px #0f0; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-gold-text { color: #ffd700; text-shadow: 0 0 5px #ffd700, 0 0 15px #ffd700, 0 0 25px #ffd700; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-purple-text { color: #9d00ff; text-shadow: 0 0 5px #9d00ff, 0 0 15px #9d00ff, 0 0 25px #9d00ff; animation: pulse-anim 1.5s infinite alternate; }
+
+        /* Тёмно-синий неоновый титул */
+        .dark-blue-title { color: #000080; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 5px #00f, 0 0 10px #00f; }
+
+        /* Анимированные баннеры */
+        .animated-banner { background-size: 200% 200% !important; animation: gradient-move 3s linear infinite; }
+        @keyframes gradient-move { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
         @keyframes rainbow-anim { to { background-position: 200% center; } }
         @keyframes pulse-anim { 0% { opacity: 0.8; } 100% { opacity: 1; filter: brightness(1.5); } }
 
@@ -192,7 +198,9 @@
     <div class="screen" id="profileScreen">
         <div class="profile-box" id="profileBox">
             <div class="profile-banner" id="profileBanner"></div>
-            <div class="profile-avatar" id="profileAvatar">👤</div>
+            <div class="avatar-wrapper" id="profileAvatarWrapper">
+                <div class="profile-avatar" id="profileAvatar">👤</div>
+            </div>
             <div class="profile-name" id="profileName">Никнейм</div>
             <div class="profile-rank" id="profileRank">Ранг</div>
             <div class="profile-stats">
@@ -268,6 +276,7 @@
         let viewingProfileUid = null;
         let passiveInterval = null;
 
+        // --- ТИТУЛЫ ---
         const allTitles = [
             { id: 'lvl_1', icon: '🧴', name: 'Новичок', requiredLevel: 1 },
             { id: 'lvl_10', icon: '🛡️', name: 'Боец', requiredLevel: 10 },
@@ -294,16 +303,38 @@
             { id: 'title11', icon: '🥭', name: 'Манго', requiredLevel: 0, price: 200000 },
             { id: 'title12', icon: '🎰', name: 'Читер 777', requiredLevel: 0, price: 200000 },
             { id: 'title13', icon: '🦾', name: "I'm Iron Man", requiredLevel: 0, price: 200000 },
-            { id: 'title14', icon: '👸', name: 'Сама непобедимость', requiredLevel: 0, price: 200000 }
+            { id: 'title14', icon: '👸', name: 'Сама непобедимость', requiredLevel: 0, price: 200000 },
+
+            { id: 'title15', icon: '🚀', name: 'Топ пушер', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title16', icon: '🚫', name: 'Не меняй своё имя', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title17', icon: '🏆', name: 'Топ 1', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title18', icon: '🖤', name: 'Дед инсайд', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title19', icon: '💻', name: 'Вайбкодер', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title20', icon: '📱', name: 'Зависимый от телефона', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title21', icon: '⏱️', name: 'Спидран 1 млрд', requiredLevel: 0, price: 350000, isDarkBlue: true }
         ];
 
+        // --- РАМКИ ---
+        const allFrames = [
+            { id: 'frame_rank', name: 'Рамка Ранга (Бронза)', price: 550000, className: 'frame-rank', icon: '🥉' },
+            { id: 'frame_legendary', name: 'Легендарная Рамка', price: 550000, className: 'frame-legendary', icon: '🌟' },
+            { id: 'frame_diamond', name: 'Алмазная Рамка', price: 550000, className: 'frame-diamond', icon: '💎' },
+            { id: 'frame_mythic', name: 'Мифическая Рамка', price: 550000, className: 'frame-mythic', icon: '🔮' }
+        ];
+
+        // --- ЦВЕТА ДЛЯ НИКА ---
         const allColors = [
             { id: 'color_rainbow', name: 'Переливающийся (Радуга)', price: 150000, className: 'rainbow-text' },
             { id: 'color_blue', name: 'Неоново-синий', price: 150000, className: 'neon-blue-text' },
-            { id: 'color_pink', name: 'Неоново-розовый', price: 150000, className: 'neon-pink-text' }
+            { id: 'color_pink', name: 'Неоново-розовый', price: 150000, className: 'neon-pink-text' },
+            { id: 'color_green', name: 'Неоново-зеленый', price: 150000, className: 'neon-green-text' },
+            { id: 'color_gold', name: 'Неоново-золотой', price: 150000, className: 'neon-gold-text' },
+            { id: 'color_purple', name: 'Неоново-фиолетовый', price: 150000, className: 'neon-purple-text' }
         ];
 
+        // --- МАГАЗИН ---
         const shopItems = [
+            // Аватарки (32)
             { id: 'avatar1', type: 'avatar', icon: '👤', name: 'Новичок', price: 0 },
             { id: 'avatar2', type: 'avatar', icon: '🐱', name: 'Котик', price: 500 },
             { id: 'avatar3', type: 'avatar', icon: '👽', name: 'Пришелец', price: 2000 },
@@ -326,7 +357,18 @@
             { id: 'avatar20', type: 'avatar', icon: '🐺', name: 'Волк', price: 10000 },
             { id: 'avatar21', type: 'avatar', icon: '🍕', name: 'Пицца', price: 100000 },
             { id: 'avatar22', type: 'avatar', icon: '🧊', name: 'Ледяной куб', price: 750000 },
+            { id: 'avatar23', type: 'avatar', icon: '🦖', name: 'Дино', price: 20000 },
+            { id: 'avatar24', type: 'avatar', icon: '🐢', name: 'Черепаха', price: 1200 },
+            { id: 'avatar25', type: 'avatar', icon: '🦋', name: 'Бабочка', price: 3500 },
+            { id: 'avatar26', type: 'avatar', icon: '🐙', name: 'Осьминог', price: 45000 },
+            { id: 'avatar27', type: 'avatar', icon: '🍩', name: 'Пончик', price: 30000 },
+            { id: 'avatar28', type: 'avatar', icon: '🎩', name: 'Цилиндр', price: 600000 },
+            { id: 'avatar29', type: 'avatar', icon: '⚡', name: 'Молния', price: 250000 },
+            { id: 'avatar30', type: 'avatar', icon: '🛸', name: 'НЛО', price: 800000 },
+            { id: 'avatar31', type: 'avatar', icon: '🥶', name: 'Замороженный', price: 90000 },
+            { id: 'avatar32', type: 'avatar', icon: '🤡', name: 'Клоун', price: 5000 },
             
+            // Баннеры (30)
             { id: 'banner1', type: 'banner', icon: '⬛', name: 'Стандартный', price: 0, style: 'linear-gradient(90deg, #111, #333)' },
             { id: 'banner2', type: 'banner', icon: '💙', name: 'Неон', price: 1000, style: 'linear-gradient(90deg, #0ff, #f0f)' },
             { id: 'banner3', type: 'banner', icon: '🔥', name: 'Огненный', price: 3000, style: 'linear-gradient(90deg, #f00, #ff0)' },
@@ -346,7 +388,19 @@
             { id: 'banner17', type: 'banner', icon: '🌇', name: 'Мегаполис', price: 15000, style: 'linear-gradient(180deg, #ff8c00, #4b0082)' },
             { id: 'banner18', type: 'banner', icon: '👑', name: 'Золотой', price: 50000, style: 'linear-gradient(90deg, #ffd700, #b8860b, #ffd700)' },
             { id: 'banner19', type: 'banner', icon: '🌸', name: 'Сакура', price: 400000, style: 'linear-gradient(90deg, #ffb7c5, #ff69b4, #ffb7c5)' },
-            { id: 'banner20', type: 'banner', icon: '🕳️', name: 'Чёрная дыра', price: 2000000, style: 'radial-gradient(circle, #000 40%, #4b0082 80%, #000 100%)' }
+            { id: 'banner20', type: 'banner', icon: '🕳️', name: 'Чёрная дыра', price: 2000000, style: 'radial-gradient(circle, #000 40%, #4b0082 80%, #000 100%)' },
+            
+            // Переливающиеся баннеры (10)
+            { id: 'banner21', type: 'banner', icon: '🌈', name: 'Переливающаяся Радуга', price: 200000, style: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000)', isAnimated: true },
+            { id: 'banner22', type: 'banner', icon: '🌊', name: 'Переливающаяся Волна', price: 200000, style: 'linear-gradient(90deg, #00f, #0ff, #00f, #0ff, #00f)', isAnimated: true },
+            { id: 'banner23', type: 'banner', icon: '🔥', name: 'Переливающееся Пламя', price: 200000, style: 'linear-gradient(90deg, #f00, #ff8c00, #ff0, #f00)', isAnimated: true },
+            { id: 'banner24', type: 'banner', icon: '❄️', name: 'Переливающийся Лёд', price: 200000, style: 'linear-gradient(90deg, #e0ffff, #00bfff, #e0ffff, #00bfff)', isAnimated: true },
+            { id: 'banner25', type: 'banner', icon: '🍀', name: 'Переливающаяся Удача', price: 200000, style: 'linear-gradient(90deg, #0f0, #ff0, #0f0, #ff0)', isAnimated: true },
+            { id: 'banner26', type: 'banner', icon: '🌌', name: 'Переливающийся Космос', price: 200000, style: 'linear-gradient(90deg, #000, #220044, #000, #220044)', isAnimated: true },
+            { id: 'banner27', type: 'banner', icon: '💖', name: 'Переливающаяся Любовь', price: 200000, style: 'linear-gradient(90deg, #f0f, #f00, #f0f, #f00)', isAnimated: true },
+            { id: 'banner28', type: 'banner', icon: '💎', name: 'Переливающийся Алмаз', price: 200000, style: 'linear-gradient(90deg, #0ff, #fff, #0ff, #fff)', isAnimated: true },
+            { id: 'banner29', type: 'banner', icon: '☢️', name: 'Переливающаяся Радиация', price: 200000, style: 'linear-gradient(90deg, #00ff00, #003300, #00ff00, #003300)', isAnimated: true },
+            { id: 'banner30', type: 'banner', icon: '⚡', name: 'Переливающаяся Гроза', price: 200000, style: 'linear-gradient(90deg, #000, #0ff, #000, #0ff)', isAnimated: true }
         ];
 
         let isLoginMode = true;
@@ -357,6 +411,7 @@
             avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', 
             customTitle: '', 
             customColor: '', 
+            customFrame: '', // Класс рамки
             inventory: ['avatar1', 'banner1'],
             friends: [],
             passiveMultiplier: 1,
@@ -373,7 +428,7 @@
             return customTitle || getDefaultTitle(level);
         }
 
-        // --- Авторизация (Возвращена старая логика, без смены ника) ---
+        // --- Авторизация ---
         authSwitch.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             authTitle.textContent = isLoginMode ? 'Вход' : 'Регистрация';
@@ -388,7 +443,6 @@
             if (nick.length < 3) return authError.textContent = 'Ник должен быть от 3 символов';
             if (pass.length < 6) return authError.textContent = 'Пароль должен быть от 6 символов';
             
-            // Очищаем от всего кроме латиницы и цифр, чтобы не было ошибки invalid-email
             const cleanNick = nick.toLowerCase().replace(/[^a-z0-9]/g, '');
             if (cleanNick.length < 3) return authError.textContent = 'Ник должен содержать хотя бы 3 латинские буквы/цифры';
             const fakeEmail = `${cleanNick}@neonclicker.com`;
@@ -402,7 +456,7 @@
                     const userCredential = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
                     await setDoc(doc(db, "users", userCredential.user.uid), {
                         nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false,
-                        avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', customTitle: '', customColor: '',
+                        avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', customTitle: '', customColor: '', customFrame: '',
                         inventory: ['avatar1', 'banner1'],
                         friends: [],
                         passiveMultiplier: 1,
@@ -445,6 +499,7 @@
                     if (!userData.banner) userData.banner = 'linear-gradient(90deg, #111, #333)';
                     if (!userData.customTitle) userData.customTitle = '';
                     if (!userData.customColor) userData.customColor = '';
+                    if (!userData.customFrame) userData.customFrame = '';
                     if (!userData.friends) userData.friends = [];
                     if (!userData.passiveMultiplier) userData.passiveMultiplier = 1;
                     if (!userData.passiveUpgradeCost) userData.passiveUpgradeCost = 10;
@@ -520,7 +575,7 @@
                         score: Math.floor(userData.score), clicksPerClick: userData.clicksPerClick, 
                         level: userData.level, upgradeCost: userData.upgradeCost,
                         avatar: userData.avatar, banner: userData.banner, 
-                        customTitle: userData.customTitle, customColor: userData.customColor,
+                        customTitle: userData.customTitle, customColor: userData.customColor, customFrame: userData.customFrame,
                         inventory: userData.inventory,
                         passiveMultiplier: userData.passiveMultiplier,
                         passiveUpgradeCost: userData.passiveUpgradeCost
@@ -708,6 +763,7 @@
         function renderShop() {
             shopList.innerHTML = '';
 
+            // АВАТАРКИ
             const catAvatars = document.createElement('div'); catAvatars.className = 'shop-category'; catAvatars.textContent = 'Аватарки'; shopList.appendChild(catAvatars);
             shopItems.filter(i => i.type === 'avatar').forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
@@ -723,12 +779,14 @@
                 shopList.appendChild(div);
             });
 
+            // БАННЕРЫ
             const catBanners = document.createElement('div'); catBanners.className = 'shop-category'; catBanners.textContent = 'Баннеры'; shopList.appendChild(catBanners);
             shopItems.filter(i => i.type === 'banner').forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
                 const isEquipped = userData.banner === item.style;
                 const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="background:${item.style}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                const animClass = item.isAnimated ? 'animated-banner' : '';
+                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${animClass}" style="background:${item.style}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                 const btn = div.querySelector('button');
                 btn.onclick = () => {
                     if (isEquipped) return;
@@ -738,6 +796,23 @@
                 shopList.appendChild(div);
             });
 
+            // РАМКИ
+            const catFrames = document.createElement('div'); catFrames.className = 'shop-category'; catFrames.textContent = 'Рамки для аватара'; shopList.appendChild(catFrames);
+            allFrames.forEach(item => {
+                const isOwned = userData.inventory.includes(item.id);
+                const isEquipped = userData.customFrame === item.className;
+                const div = document.createElement('div'); div.className = 'shop-item';
+                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${item.className}" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                const btn = div.querySelector('button');
+                btn.onclick = () => {
+                    if (isEquipped) return;
+                    if (isOwned) { userData.customFrame = item.className; saveToCloud(true); renderShop(); updateUI(); }
+                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customFrame = item.className; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
+                };
+                shopList.appendChild(div);
+            });
+
+            // ЦВЕТА
             const catColors = document.createElement('div'); catColors.className = 'shop-category'; catColors.textContent = 'Цвета для ника'; shopList.appendChild(catColors);
             allColors.forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
@@ -753,6 +828,7 @@
                 shopList.appendChild(div);
             });
 
+            // ТИТУЛЫ
             const catTitles = document.createElement('div'); catTitles.className = 'shop-category'; catTitles.textContent = 'Титулы'; shopList.appendChild(catTitles);
             allTitles.forEach(item => {
                 const titleText = `${item.icon} ${item.name.toUpperCase()}`;
@@ -768,7 +844,8 @@
                 } else {
                     const isOwned = userData.inventory.includes(item.id);
                     const div = document.createElement('div'); div.className = 'shop-item';
-                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                    const titleClass = item.isDarkBlue ? 'dark-blue-title' : '';
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div class="title-name ${titleClass}" style="font-weight:bold;">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                     const btn = div.querySelector('button');
                     btn.onclick = () => {
                         if (isEquipped) return;
@@ -794,7 +871,15 @@
                     const isSelf = docSnap.id === currentUser.uid;
                     const div = document.createElement('div'); div.className = `leader-item ${isSelf ? 'self' : ''}`;
                     const colorClass = data.customColor || '';
-                    div.innerHTML = `<span>${rank}. ${data.avatar || '👤'} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
+                    const frameClass = data.customFrame || '';
+                    
+                    // Если есть рамка, применяем её к аватару
+                    let avatarHtml = data.avatar || '👤';
+                    if (frameClass) {
+                        avatarHtml = `<span class="${frameClass}" style="display:inline-flex; justify-content:center; align-items:center; width:24px; height:24px; font-size:0.8rem;">${avatarHtml}</span>`;
+                    }
+                    
+                    div.innerHTML = `<span>${rank}. ${avatarHtml} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
                     div.onclick = () => showProfile(data, docSnap.id);
                     if (isAdmin && !isSelf) {
                         const banBtn = document.createElement('button'); banBtn.textContent = 'Бан';
@@ -817,11 +902,29 @@
         function showProfile(data, uid) {
             viewingProfileUid = uid;
             document.getElementById('profileBanner').style.background = data.banner || 'linear-gradient(90deg, #111, #333)';
+            const bannerItem = shopItems.find(i => i.style === data.banner);
+            if (bannerItem && bannerItem.isAnimated) {
+                document.getElementById('profileBanner').classList.add('animated-banner');
+            } else {
+                document.getElementById('profileBanner').classList.remove('animated-banner');
+            }
+
+            // Применяем рамку к аватару
+            const wrapper = document.getElementById('profileAvatarWrapper');
+            wrapper.className = 'avatar-wrapper'; // Сброс
+            if (data.customFrame) wrapper.classList.add(data.customFrame);
+
             document.getElementById('profileAvatar').textContent = data.avatar || '👤';
+            
             const nameEl = document.getElementById('profileName');
             nameEl.textContent = data.nickname || 'Игрок';
             nameEl.className = 'profile-name ' + (data.customColor || '');
-            document.getElementById('profileRank').textContent = getDisplayTitle(data.level, data.customTitle);
+            
+            const rankEl = document.getElementById('profileRank');
+            rankEl.textContent = getDisplayTitle(data.level, data.customTitle);
+            const isDarkBlue = allTitles.some(t => t.isDarkBlue && `${t.icon} ${t.name.toUpperCase()}` === data.customTitle);
+            rankEl.className = 'profile-rank ' + (isDarkBlue ? 'dark-blue-title' : '');
+
             document.getElementById('profileScore').textContent = Math.floor(data.score);
             document.getElementById('profileLevel').textContent = data.level;
             
@@ -864,4 +967,4 @@
         animate();
     </script>
 </body>
-    </html>
+                        </html>
