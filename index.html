@@ -66,22 +66,46 @@
         .support-box .ticket-reply { background: rgba(0,255,255,0.1); padding: 8px; border-radius: 8px; margin-top: 5px; border-left: 2px solid #0ff; }
 
         /* Профиль игрока */
-        .profile-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 20px; border-radius: 20px; border: 2px solid #0ff; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; overflow: hidden; }
-        .profile-banner { position: absolute; top: 0; left: 0; width: 100%; height: 90px; z-index: 0; }
+        .profile-box { width: 100%; background: rgba(10, 5, 25, 0.9); padding: 40px 20px 20px 20px; border-radius: 20px; border: 2px solid #0ff; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; overflow: hidden; margin-top: 20px;}
+        .profile-banner { position: absolute; top: 0; left: 0; width: 100%; height: 90px; z-index: 0; border-radius: 18px 18px 0 0; }
         
-        /* Обертка для аватара с рамкой */
-        .avatar-wrapper { z-index: 1; margin-top: 30px; position: relative; display: flex; justify-content: center; align-items: center; }
-        .profile-avatar { font-size: 4rem; text-shadow: 0 0 10px #0ff; }
-        
+        /* Верхний бейдж рамки */
+        .frame-badge {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #0a0a1a;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+            display: none; /* Скрыто по умолчанию */
+        }
+
+        .profile-avatar { font-size: 4rem; z-index: 1; margin-top: 30px; text-shadow: 0 0 10px #0ff; }
         .profile-name { font-size: 1.5rem; font-weight: bold; z-index: 1; text-shadow: 0 0 10px #fff; margin-top: 5px; }
         .profile-rank { font-size: 0.9rem; color: #ffd700; z-index: 1; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
         .profile-stats { display: flex; gap: 15px; z-index: 1; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
 
-        /* --- РАМКИ --- */
-        .frame-rank { border: 4px solid #cd7f32; border-radius: 50%; padding: 5px; box-shadow: 0 0 15px #cd7f32; }
-        .frame-legendary { border: 4px solid #ffd700; border-radius: 50%; padding: 5px; box-shadow: 0 0 20px #ffd700, inset 0 0 10px #ffd700; }
-        .frame-diamond { border: 4px solid #00ffff; border-radius: 50%; padding: 5px; box-shadow: 0 0 20px #00ffff, inset 0 0 10px #00ffff; }
-        .frame-mythic { border: 4px solid #ff00ff; border-radius: 50%; padding: 5px; box-shadow: 0 0 25px #ff00ff, inset 0 0 15px #ff00ff; }
+        /* --- РАМКИ ДЛЯ ВСЕГО ПРОФИЛЯ --- */
+        .frame-rank { border: 4px solid #cd7f32 !important; box-shadow: 0 0 15px #cd7f32, inset 0 0 10px #cd7f32 !important; }
+        .frame-rank .frame-badge { border-color: #cd7f32; box-shadow: 0 0 15px #cd7f32; color: #cd7f32; }
+
+        .frame-legendary { border: 4px solid #ffd700 !important; box-shadow: 0 0 25px #ffd700, inset 0 0 15px #ffd700 !important; }
+        .frame-legendary .frame-badge { border-color: #ffd700; box-shadow: 0 0 20px #ffd700; color: #ffd700; }
+
+        .frame-diamond { border: 4px solid #00ffff !important; box-shadow: 0 0 25px #00ffff, inset 0 0 15px #00ffff !important; }
+        .frame-diamond .frame-badge { border-color: #00ffff; box-shadow: 0 0 20px #00ffff; color: #00ffff; }
+
+        .frame-mythic { border: 4px solid #ff00ff !important; box-shadow: 0 0 30px #ff00ff, inset 0 0 20px #ff00ff !important; }
+        .frame-mythic .frame-badge { border-color: #ff00ff; box-shadow: 0 0 25px #ff00ff; color: #ff00ff; }
 
         /* Переливающиеся цвета */
         .rainbow-text { background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: rainbow-anim 3s linear infinite; }
@@ -196,11 +220,13 @@
 
     <!-- Экран профиля -->
     <div class="screen" id="profileScreen">
+        <!-- Сама карточка профиля с рамкой -->
         <div class="profile-box" id="profileBox">
+            <!-- Бейдж рамки (иконка наверху) -->
+            <div class="frame-badge" id="profileFrameBadge"></div>
+            
             <div class="profile-banner" id="profileBanner"></div>
-            <div class="avatar-wrapper" id="profileAvatarWrapper">
-                <div class="profile-avatar" id="profileAvatar">👤</div>
-            </div>
+            <div class="profile-avatar" id="profileAvatar">👤</div>
             <div class="profile-name" id="profileName">Никнейм</div>
             <div class="profile-rank" id="profileRank">Ранг</div>
             <div class="profile-stats">
@@ -411,7 +437,7 @@
             avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', 
             customTitle: '', 
             customColor: '', 
-            customFrame: '', // Класс рамки
+            customFrame: '',
             inventory: ['avatar1', 'banner1'],
             friends: [],
             passiveMultiplier: 1,
@@ -655,7 +681,7 @@
 
             friendRequestsList.innerHTML = '';
             const q = query(collection(db, "friendRequests"), where("to", "==", currentUser.uid));
-            const reqSnap = await getDocs(q);
+            const reqSnap = await getDocs(q, { source: 'server' });
             if (reqSnap.empty) friendRequestsList.innerHTML = '<div style="color:#aaa; font-size:0.8rem;">Нет новых запросов</div>';
             else {
                 for (const reqDoc of reqSnap.docs) {
@@ -689,7 +715,7 @@
             if (!searchNick) return;
             searchResult.innerHTML = 'Поиск...';
             const q = query(collection(db, "users"), where("nickname", "==", searchNick));
-            const snap = await getDocs(q);
+            const snap = await getDocs(q, { source: 'server' });
             if (snap.empty) { searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Игрок не найден</div>'; return; }
             const foundDoc = snap.docs[0]; const foundData = foundDoc.data(); const foundUid = foundDoc.id;
             if (foundUid === currentUser.uid) { searchResult.innerHTML = '<div style="color:#ff3366; font-size:0.8rem;">Это вы!</div>'; return; }
@@ -797,7 +823,7 @@
             });
 
             // РАМКИ
-            const catFrames = document.createElement('div'); catFrames.className = 'shop-category'; catFrames.textContent = 'Рамки для аватара'; shopList.appendChild(catFrames);
+            const catFrames = document.createElement('div'); catFrames.className = 'shop-category'; catFrames.textContent = 'Рамки для профиля'; shopList.appendChild(catFrames);
             allFrames.forEach(item => {
                 const isOwned = userData.inventory.includes(item.id);
                 const isEquipped = userData.customFrame === item.className;
@@ -863,44 +889,88 @@
             leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
             try {
                 const q = query(collection(db, "users"), orderBy("score", "desc"), limit(30));
-                const querySnapshot = await getDocs(q);
-                leaderboardList.innerHTML = ''; let rank = 1;
+                const querySnapshot = await getDocs(q, { source: 'server' });
+                
+                let players = [];
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     if (data.banned) return;
-                    const isSelf = docSnap.id === currentUser.uid;
-                    const div = document.createElement('div'); div.className = `leader-item ${isSelf ? 'self' : ''}`;
+                    
+                    let actualScore = (docSnap.id === currentUser.uid) ? userData.score : data.score;
+                    players.push({ id: docSnap.id, data: data, score: actualScore });
+                });
+
+                players.sort((a, b) => b.score - a.score);
+
+                leaderboardList.innerHTML = ''; 
+                let rank = 1;
+                
+                players.forEach((player) => {
+                    const data = player.data;
+                    const isSelf = player.id === currentUser.uid;
+                    const div = document.createElement('div'); 
+                    div.className = `leader-item ${isSelf ? 'self' : ''}`;
+                    
                     const colorClass = data.customColor || '';
                     const frameClass = data.customFrame || '';
                     
-                    // Если есть рамка, применяем её к аватару
                     let avatarHtml = data.avatar || '👤';
                     if (frameClass) {
                         avatarHtml = `<span class="${frameClass}" style="display:inline-flex; justify-content:center; align-items:center; width:24px; height:24px; font-size:0.8rem;">${avatarHtml}</span>`;
                     }
                     
-                    div.innerHTML = `<span>${rank}. ${avatarHtml} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(data.score)}</span>`;
-                    div.onclick = () => showProfile(data, docSnap.id);
+                    div.innerHTML = `<span>${rank}. ${avatarHtml} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(player.score)}</span>`;
+                    
+                    div.onclick = () => showProfile(data, player.id);
+                    
                     if (isAdmin && !isSelf) {
-                        const banBtn = document.createElement('button'); banBtn.textContent = 'Бан';
+                        const banBtn = document.createElement('button'); 
+                        banBtn.textContent = 'Бан';
                         banBtn.style.cssText = "margin-left: 10px; padding: 4px 8px; font-size: 0.7rem; background: transparent; color: #f00; border: 1px solid #f00; border-radius: 5px; cursor: pointer;";
                         banBtn.onclick = async (e) => {
-                            e.stopPropagation(); if (banBtn.disabled) return; banBtn.disabled = true; banBtn.textContent = '...';
-                            try { await updateDoc(doc(db, "users", docSnap.id), { banned: true }); div.style.display = 'none'; }
+                            e.stopPropagation(); 
+                            if (banBtn.disabled) return; 
+                            banBtn.disabled = true; 
+                            banBtn.textContent = '...';
+                            try { await updateDoc(doc(db, "users", player.id), { banned: true }); div.style.display = 'none'; }
                             catch (err) { alert('Ошибка при бане!'); banBtn.textContent = 'Бан'; banBtn.disabled = false; }
                         };
                         div.appendChild(banBtn);
                     }
-                    leaderboardList.appendChild(div); rank++;
+                    leaderboardList.appendChild(div); 
+                    rank++;
                 });
+                
                 if (rank === 1) leaderboardList.innerHTML = '<div style="text-align:center;">Пока нет игроков</div>';
-            } catch (e) { leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>'; }
+            } catch (e) { 
+                console.error(e);
+                leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>'; 
+            }
         });
         document.getElementById('closeLeaderboardBtn').addEventListener('click', () => showScreen(gameScreen));
 
         // --- Профиль игрока ---
         function showProfile(data, uid) {
             viewingProfileUid = uid;
+            
+            // Применяем рамку ко ВСЕМУ профилю
+            const profileBox = document.getElementById('profileBox');
+            profileBox.className = 'profile-box'; // Сброс старых классов
+            
+            const frameBadge = document.getElementById('profileFrameBadge');
+            frameBadge.style.display = 'none'; // Скрываем бейдж по умолчанию
+
+            if (data.customFrame) {
+                profileBox.classList.add(data.customFrame);
+                // Ищем иконку этой рамки
+                const frameItem = allFrames.find(f => f.className === data.customFrame);
+                if (frameItem) {
+                    frameBadge.textContent = frameItem.icon;
+                    frameBadge.style.display = 'flex';
+                    // Цвет обводки бейджа задается в CSS (через классы .frame-xxx .frame-badge)
+                }
+            }
+
             document.getElementById('profileBanner').style.background = data.banner || 'linear-gradient(90deg, #111, #333)';
             const bannerItem = shopItems.find(i => i.style === data.banner);
             if (bannerItem && bannerItem.isAnimated) {
@@ -908,11 +978,6 @@
             } else {
                 document.getElementById('profileBanner').classList.remove('animated-banner');
             }
-
-            // Применяем рамку к аватару
-            const wrapper = document.getElementById('profileAvatarWrapper');
-            wrapper.className = 'avatar-wrapper'; // Сброс
-            if (data.customFrame) wrapper.classList.add(data.customFrame);
 
             document.getElementById('profileAvatar').textContent = data.avatar || '👤';
             
@@ -967,4 +1032,4 @@
         animate();
     </script>
 </body>
-                        </html>
+        </html>
