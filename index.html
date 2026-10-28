@@ -247,11 +247,80 @@
         @keyframes rainbow-anim { to { background-position: 200% center; } }
         @keyframes pulse-anim { 0% { opacity: 0.8; } 100% { opacity: 1; filter: brightness(1.5); } }
 
-        #loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #0ff; font-size: 1.2rem; z-index: 100; }
+        /* --- ЗАГРУЗОЧНЫЙ ЭКРАН --- */
+        #loading {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 40%, #12002a 0%, #0a0a1a 60%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 22px;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        #loading.fade-out { opacity: 0; pointer-events: none; }
+        .loading-logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #0ff, #f0f, #0ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: logo-glow 2s linear infinite;
+            text-align: center;
+            padding: 0 10px;
+        }
+        @keyframes logo-glow {
+            0% { background-position: 0% center; filter: drop-shadow(0 0 8px #0ff); }
+            50% { filter: drop-shadow(0 0 20px #f0f); }
+            100% { background-position: 200% center; filter: drop-shadow(0 0 8px #0ff); }
+        }
+        .loading-bar {
+            width: 70%;
+            max-width: 280px;
+            height: 6px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.35);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+        }
+        .loading-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0ff, #f0f, #0ff);
+            background-size: 200% auto;
+            animation: bar-fill 2.5s ease-in-out infinite, bar-shift 1.5s linear infinite;
+            border-radius: 10px;
+        }
+        @keyframes bar-fill {
+            0% { width: 0%; }
+            50% { width: 85%; }
+            100% { width: 100%; }
+        }
+        @keyframes bar-shift { to { background-position: 200% center; } }
+        .loading-hint {
+            font-size: 0.85rem;
+            color: #0ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #0ff;
+            animation: pulse-anim 1.2s infinite alternate;
+        }
     </style>
 </head>
 <body>
-    <div id="loading">Загрузка...</div>
+    <div id="loading">
+        <div class="loading-logo">NEON CLICKER</div>
+        <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+        <div class="loading-hint">Загрузка...</div>
+    </div>
     <canvas id="particleCanvas"></canvas>
 
     <!-- Экран входа -->
@@ -938,6 +1007,50 @@
             }, 300);
         }
 
+        // --- ЛОГИКА ПАКЕТОВ ---
+        function buyPinPackage() {
+            const PIN_PACK_COST = 250000;
+            if (userData.score < PIN_PACK_COST) return alert('Недостаточно кликов!');
+            
+            userData.score -= PIN_PACK_COST;
+            
+            // Выбираем 3 случайных пина
+            const shuffledPins = [...allPins].sort(() => 0.5 - Math.random());
+            const droppedPins = shuffledPins.slice(0, 3);
+            
+            let msg = '🎁 Пин-пакет открыт!\n\nВам выпали:\n';
+            droppedPins.forEach(pin => {
+                if (!userData.inventory.includes(pin.id)) userData.inventory.push(pin.id);
+                msg += `- ${pin.name} (${pin.icon})\n`;
+            });
+
+            updateUI(); saveToCloud(true); renderShopItems();
+            createParticles(window.innerWidth / 2, window.innerHeight / 2, 60, true);
+            setTimeout(() => alert(msg), 300);
+        }
+
+        function buyIconPackage() {
+            const ICON_PACK_COST = 100000;
+            if (userData.score < ICON_PACK_COST) return alert('Недостаточно кликов!');
+            
+            userData.score -= ICON_PACK_COST;
+            
+            // Выбираем 3 случайных аватарки
+            const avatars = shopItems.filter(i => i.type === 'avatar');
+            const shuffledAvatars = [...avatars].sort(() => 0.5 - Math.random());
+            const droppedAvatars = shuffledAvatars.slice(0, 3);
+            
+            let msg = '🎁 Икон-пакет открыт!\n\nВам выпали:\n';
+            droppedAvatars.forEach(avatar => {
+                if (!userData.inventory.includes(avatar.id)) userData.inventory.push(avatar.id);
+                msg += `- ${avatar.name} (${avatar.icon})\n`;
+            });
+
+            updateUI(); saveToCloud(true); renderShopItems();
+            createParticles(window.innerWidth / 2, window.innerHeight / 2, 60, true);
+            setTimeout(() => alert(msg), 300);
+        }
+
         // --- Авторизация ---
         authSwitch.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
@@ -992,7 +1105,9 @@
         });
 
         onAuthStateChanged(auth, async (user) => {
-            loading.style.display = 'none';
+            loading.classList.add('fade-out');
+            setTimeout(() => { loading.style.display = 'none'; }, 500);
+
             if (user) {
                 currentUser = user;
                 const adminDoc = await getDoc(doc(db, "admins", user.uid));
@@ -1527,8 +1642,8 @@
                 autoReply = "Вы можете добавлять друзей через поиск по нику. После добавления вы сможете общаться с ними в личном чате. Перейдите в раздел 'Друзья' для управления!";
             } else if (lowerMsg.includes("бан") || lowerMsg.includes("разбан") || lowerMsg.includes("блокиров") || lowerMsg.includes("заблок")) {
                 autoReply = "Для разбана аккаунта мне нужны данные. Пожалуйста, напишите в формате: 'Разбан. Ник: [ваш_ник]. Код: [код_разбана]'. Код разбана выдает администратор.";
-            } else if (lowerMsg.includes("титул") || lowerMsg.includes("рамк") || lowerMsg.includes("баннер") || lowerMsg.includes("цвет") || lowerMsg.includes("пин") || lowerMsg.includes("значок") || lowerMsg.includes("бокс")) {
-                autoReply = "Всю косметику (титулы, рамки, баннеры, цвета, пины) и боксы с рандомными наградами можно купить в разделе 'Магазин'. Боксы дают шанс выбить редкие предметы или клики!";
+            } else if (lowerMsg.includes("титул") || lowerMsg.includes("рамк") || lowerMsg.includes("баннер") || lowerMsg.includes("цвет") || lowerMsg.includes("пин") || lowerMsg.includes("значок") || lowerMsg.includes("бокс") || lowerMsg.includes("пакет")) {
+                autoReply = "Всю косметику (титулы, рамки, баннеры, цвета, пины), боксы и пакеты с рандомными наградами можно купить в разделе 'Магазин'. Боксы и пакеты дают шанс выбить редкие предметы или клики!";
             } else if (lowerMsg.includes("сброс") || lowerMsg.includes("сезон") || lowerMsg.includes("обнул")) {
                 autoReply = "Каждые 14 дней происходит сброс сезона. Ваши клики и уровни сбрасываются, но вся купленная косметика (титулы, рамки, цвета) остается навсегда!";
             } else if (lowerMsg.includes("баг") || lowerMsg.includes("ошибк") || lowerMsg.includes("не работает") || lowerMsg.includes("глючит") || lowerMsg.includes("лагает")) {
@@ -1718,8 +1833,9 @@
             }
 
             else if (currentShopCategory === 'lootbox') {
-                const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `
+                // Бокс
+                const divBox = document.createElement('div'); divBox.className = 'shop-item';
+                divBox.innerHTML = `
                     <div style="display:flex; align-items:center;">
                         <span class="preview" style="font-size:2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">📦</span>
                         <div style="margin-left: 10px;">
@@ -1730,9 +1846,41 @@
                     </div>
                     <button class="buy-btn" ${userData.score < BOX_COST ? 'disabled' : ''}>Открыть</button>
                 `;
-                const btn = div.querySelector('button');
-                btn.onclick = openLootBox;
-                shopList.appendChild(div);
+                const btnBox = divBox.querySelector('button');
+                btnBox.onclick = openLootBox;
+                shopList.appendChild(divBox);
+
+                // Пин-пакет
+                const divPinPack = document.createElement('div'); divPinPack.className = 'shop-item';
+                divPinPack.innerHTML = `
+                    <div style="display:flex; align-items:center;">
+                        <span class="preview" style="font-size:2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">📦</span>
+                        <div style="margin-left: 10px;">
+                            <div style="font-weight:bold; color:#ffd700">Пин-пакет (3 пина)</div>
+                            <div style="font-size:0.7rem; color:#aaa;">Цена: 250 000 кликов</div>
+                        </div>
+                    </div>
+                    <button class="buy-btn" ${userData.score < 250000 ? 'disabled' : ''}>Открыть</button>
+                `;
+                const btnPinPack = divPinPack.querySelector('button');
+                btnPinPack.onclick = buyPinPackage;
+                shopList.appendChild(divPinPack);
+
+                // Икон-пакет
+                const divIconPack = document.createElement('div'); divIconPack.className = 'shop-item';
+                divIconPack.innerHTML = `
+                    <div style="display:flex; align-items:center;">
+                        <span class="preview" style="font-size:2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">📦</span>
+                        <div style="margin-left: 10px;">
+                            <div style="font-weight:bold; color:#ffd700">Икон-пакет (3 иконки)</div>
+                            <div style="font-size:0.7rem; color:#aaa;">Цена: 100 000 кликов</div>
+                        </div>
+                    </div>
+                    <button class="buy-btn" ${userData.score < 100000 ? 'disabled' : ''}>Открыть</button>
+                `;
+                const btnIconPack = divIconPack.querySelector('button');
+                btnIconPack.onclick = buyIconPackage;
+                shopList.appendChild(divIconPack);
             }
         }
 
@@ -1902,4 +2050,4 @@
         animate();
     </script>
 </body>
-                                                                                    </html>
+                </html>
