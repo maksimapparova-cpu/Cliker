@@ -94,6 +94,10 @@
         .leader-item:hover { background: rgba(255,255,255,0.1); }
         .leader-item.self { background: rgba(0, 255, 255, 0.1); color: #0ff; }
         
+        /* Кнопка обновления лидеров */
+        .refresh-btn { padding: 8px 15px; background: rgba(0, 255, 255, 0.1); color: #0ff; border: 1px solid #0ff; border-radius: 15px; cursor: pointer; font-size: 0.8rem; align-self: center; margin-bottom: 10px; font-weight: bold; transition: 0.2s; }
+        .refresh-btn:hover { background: rgba(0, 255, 255, 0.3); }
+
         .close-btn { margin-top: 15px; padding: 10px; width: 100%; background: transparent; border: 1px solid #0ff; color: #0ff; border-radius: 20px; cursor: pointer; text-transform: uppercase; }
         .admin-box .close-btn { border-color: #ff3366; color: #ff3366; }
 
@@ -361,6 +365,7 @@
     <div class="screen" id="leaderboardScreen">
         <div class="leaderboard-box">
             <h3>🏆 ТОП ИГРОКОВ 🏆</h3>
+            <button class="refresh-btn" id="refreshLeaderboardBtn">🔄 Обновить данные</button>
             <div class="leader-list" id="leaderboardList"></div>
             <button class="close-btn" id="closeLeaderboardBtn">Назад</button>
         </div>
@@ -476,9 +481,52 @@
             "avatar_dragon": { type: "avatar", itemId: "avatar7", name: "Аватарка Дракон" },
             "frame_gold": { type: "frame", itemId: "frame_gold", name: "Золотая Рамка" },
             "frame_crystal": { type: "frame", itemId: "frame_crystal", name: "Кристальная Рамка" },
+            "frame_water": { type: "frame", itemId: "frame_water", name: "Водяная Рамка" },
             "pin_crown": { type: "pin", itemId: "pin2", name: "Пин Корона" },
             "banner_rainbow": { type: "banner", itemId: "banner21", name: "Баннер Радуга" }
         };
+
+        // --- НАСТРОЙКИ БОКСОВ ---
+        const BOX_COST = 150000;
+        
+        // Общий пул наград для бокса (шансы выпадения)
+        const lootBoxPool = [
+            // Клики (шанс ~50%)
+            { type: 'clicks', amount: 5000, name: '5 000 кликов', chance: 30 },
+            { type: 'clicks', amount: 15000, name: '15 000 кликов', chance: 15 },
+            { type: 'clicks', amount: 50000, name: '50 000 кликов', chance: 5 },
+            
+            // Аватарки (шанс ~25%)
+            { type: 'avatar', itemId: 'avatar2', name: 'Аватарка Котик', chance: 5 },
+            { type: 'avatar', itemId: 'avatar3', name: 'Аватарка Пришелец', chance: 5 },
+            { type: 'avatar', itemId: 'avatar9', name: 'Аватарка Лис', chance: 5 },
+            { type: 'avatar', itemId: 'avatar4', name: 'Аватарка Робот', chance: 4 },
+            { type: 'avatar', itemId: 'avatar10', name: 'Аватарка Панда', chance: 3 },
+            { type: 'avatar', itemId: 'avatar11', name: 'Аватарка Лев', chance: 2 },
+            { type: 'avatar', itemId: 'avatar12', name: 'Аватарка Единорог', chance: 1 },
+            
+            // Рамки (шанс 3% - дорогие)
+            { type: 'frame', itemId: 'frame_silver', name: 'Серебряная Рамка', chance: 1 },
+            { type: 'frame', itemId: 'frame_ice', name: 'Ледяная Рамка', chance: 0.8 },
+            { type: 'frame', itemId: 'frame_water', name: 'Водяная Рамка', chance: 0.5 },
+            { type: 'frame', itemId: 'frame_fire', name: 'Огненная Рамка', chance: 0.4 },
+            { type: 'frame', itemId: 'frame_gold', name: 'Золотая Рамка', chance: 0.2 },
+            { type: 'frame', itemId: 'frame_crystal', name: 'Кристальная Рамка', chance: 0.1 },
+            
+            // Пины (шанс ~12%)
+            { type: 'pin', itemId: 'pin1', name: 'Пин Огонь', chance: 4 },
+            { type: 'pin', itemId: 'pin4', name: 'Пин Звезда', chance: 4 },
+            { type: 'pin', itemId: 'pin5', name: 'Пин Сердце', chance: 2 },
+            { type: 'pin', itemId: 'pin2', name: 'Пин Корона', chance: 1.5 },
+            { type: 'pin', itemId: 'pin3', name: 'Пин Череп', chance: 0.5 },
+            
+            // Баннеры (шанс ~10%)
+            { type: 'banner', itemId: 'banner2', name: 'Баннер Неон', chance: 3 },
+            { type: 'banner', itemId: 'banner9', name: 'Баннер Волна', chance: 3 },
+            { type: 'banner', itemId: 'banner3', name: 'Баннер Огненный', chance: 2 },
+            { type: 'banner', itemId: 'banner21', name: 'Баннер Радуга', chance: 1 },
+            { type: 'banner', itemId: 'banner6', name: 'Баннер Космос', chance: 1 }
+        ];
 
         // --- ТИТУЛЫ ---
         const allTitles = [
@@ -796,7 +844,7 @@
             passiveUpgradeCost: 10,
             lastLogoutTime: 0,
             lastResetTime: Date.now(),
-            usedGifts: [] // Массив для хранения активированных подарков
+            usedGifts: []
         };
 
         function getDefaultTitle(level) {
@@ -814,7 +862,6 @@
             const giftId = urlParams.get('gift');
 
             if (giftId && allGifts[giftId]) {
-                // Убираем параметр из URL, чтобы нельзя было обновить страницу
                 window.history.replaceState({}, document.title, window.location.pathname);
 
                 if (userData.usedGifts && userData.usedGifts.includes(giftId)) {
@@ -844,6 +891,51 @@
                 saveToCloud(true);
                 setTimeout(() => alert(successMessage), 500);
             }
+        }
+
+        // --- ЛОГИКА БОКСОВ ---
+        function openLootBox() {
+            if (!currentUser || userData.score < BOX_COST) {
+                alert('Недостаточно кликов для покупки бокса!');
+                return;
+            }
+
+            userData.score -= BOX_COST;
+
+            const totalChance = lootBoxPool.reduce((sum, item) => sum + item.chance, 0);
+            let random = Math.random() * totalChance;
+            let selectedItem = null;
+
+            for (const item of lootBoxPool) {
+                if (random < item.chance) {
+                    selectedItem = item;
+                    break;
+                }
+                random -= item.chance;
+            }
+
+            if (!selectedItem) selectedItem = lootBoxPool[0];
+
+            let dropMessage = `🎁 Бокс открыт!\n\nВам выпало: ${selectedItem.name}`;
+
+            if (selectedItem.type === 'clicks') {
+                userData.score += selectedItem.amount;
+            } else {
+                if (!userData.inventory.includes(selectedItem.itemId)) {
+                    userData.inventory.push(selectedItem.itemId);
+                } else {
+                    dropMessage += '\n\n(У вас уже есть этот предмет, но он добавлен в инвентарь)';
+                }
+            }
+
+            updateUI();
+            saveToCloud(true);
+            renderShopItems();
+            createParticles(window.innerWidth / 2, window.innerHeight / 2, 50, true);
+            
+            setTimeout(() => {
+                alert(dropMessage);
+            }, 300);
         }
 
         // --- Авторизация ---
@@ -940,7 +1032,6 @@
                     startPassiveIncome();
                     updateResetTimer();
                     
-                    // Проверяем подарок только после загрузки данных
                     checkGiftLink();
                 }
                 showScreen(gameScreen);
@@ -1436,8 +1527,8 @@
                 autoReply = "Вы можете добавлять друзей через поиск по нику. После добавления вы сможете общаться с ними в личном чате. Перейдите в раздел 'Друзья' для управления!";
             } else if (lowerMsg.includes("бан") || lowerMsg.includes("разбан") || lowerMsg.includes("блокиров") || lowerMsg.includes("заблок")) {
                 autoReply = "Для разбана аккаунта мне нужны данные. Пожалуйста, напишите в формате: 'Разбан. Ник: [ваш_ник]. Код: [код_разбана]'. Код разбана выдает администратор.";
-            } else if (lowerMsg.includes("титул") || lowerMsg.includes("рамк") || lowerMsg.includes("баннер") || lowerMsg.includes("цвет") || lowerMsg.includes("пин") || lowerMsg.includes("значок")) {
-                autoReply = "Всю косметику (титулы, рамки, баннеры, цвета, пины) можно купить в разделе 'Магазин'. Некоторые титулы открываются за достижение определенного уровня!";
+            } else if (lowerMsg.includes("титул") || lowerMsg.includes("рамк") || lowerMsg.includes("баннер") || lowerMsg.includes("цвет") || lowerMsg.includes("пин") || lowerMsg.includes("значок") || lowerMsg.includes("бокс")) {
+                autoReply = "Всю косметику (титулы, рамки, баннеры, цвета, пины) и боксы с рандомными наградами можно купить в разделе 'Магазин'. Боксы дают шанс выбить редкие предметы или клики!";
             } else if (lowerMsg.includes("сброс") || lowerMsg.includes("сезон") || lowerMsg.includes("обнул")) {
                 autoReply = "Каждые 14 дней происходит сброс сезона. Ваши клики и уровни сбрасываются, но вся купленная косметика (титулы, рамки, цвета) остается навсегда!";
             } else if (lowerMsg.includes("баг") || lowerMsg.includes("ошибк") || lowerMsg.includes("не работает") || lowerMsg.includes("глючит") || lowerMsg.includes("лагает")) {
@@ -1488,7 +1579,8 @@
                 { id: 'frame', name: 'Рамки' },
                 { id: 'color', name: 'Цвета' },
                 { id: 'title', name: 'Титулы' },
-                { id: 'pin', name: 'Пины' }
+                { id: 'pin', name: 'Пины' },
+                { id: 'lootbox', name: 'Боксы' }
             ];
 
             categories.forEach(cat => {
@@ -1624,11 +1716,28 @@
                     shopList.appendChild(div);
                 });
             }
+
+            else if (currentShopCategory === 'lootbox') {
+                const div = document.createElement('div'); div.className = 'shop-item';
+                div.innerHTML = `
+                    <div style="display:flex; align-items:center;">
+                        <span class="preview" style="font-size:2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">📦</span>
+                        <div style="margin-left: 10px;">
+                            <div style="font-weight:bold; color:#f0f">Случайный Бокс</div>
+                            <div style="font-size:0.7rem; color:#aaa;">Цена: ${BOX_COST} кликов</div>
+                            <div style="font-size:0.6rem; color:#888; margin-top:2px;">Шанс: Клики (50%), Иконки (25%), Рамки (3%), Пины (12%), Баннеры (10%)</div>
+                        </div>
+                    </div>
+                    <button class="buy-btn" ${userData.score < BOX_COST ? 'disabled' : ''}>Открыть</button>
+                `;
+                const btn = div.querySelector('button');
+                btn.onclick = openLootBox;
+                shopList.appendChild(div);
+            }
         }
 
         // --- Таблица лидеров ---
-        document.getElementById('leaderboardBtn').addEventListener('click', async () => {
-            showScreen(leaderboardScreen);
+        async function loadLeaderboard() {
             leaderboardList.innerHTML = '<div style="text-align:center; color:#0ff;">Загрузка...</div>';
             try {
                 const q = query(collection(db, "users"), orderBy("score", "desc"), limit(30));
@@ -1690,7 +1799,13 @@
                 console.error(e);
                 leaderboardList.innerHTML = '<div style="text-align:center; color:red;">Ошибка загрузки</div>'; 
             }
+        }
+
+        document.getElementById('leaderboardBtn').addEventListener('click', () => {
+            showScreen(leaderboardScreen);
+            loadLeaderboard();
         });
+        document.getElementById('refreshLeaderboardBtn').addEventListener('click', loadLeaderboard);
         document.getElementById('closeLeaderboardBtn').addEventListener('click', () => showScreen(gameScreen));
 
         // --- Профиль игрока ---
@@ -1787,4 +1902,4 @@
         animate();
     </script>
 </body>
-                </html>
+                                                                                    </html>
