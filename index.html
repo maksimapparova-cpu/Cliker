@@ -49,8 +49,36 @@
         .admin-box { border-color: #ff3366; }
         .shop-box h3, .leaderboard-box h3, .friends-box h3, .support-box h3, .admin-box h3 { text-align: center; color: #0ff; text-shadow:0 0 10px #0ff; margin-bottom: 10px; }
         .admin-box h3 { color: #ff3366; text-shadow: 0 0 10px #ff3366; }
+        
         .shop-list, .leader-list, .friends-list, .admin-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 5px; }
         
+        /* Вкладки магазина */
+        .shop-tabs { 
+            display: flex; 
+            flex-wrap: wrap;
+            gap: 8px; 
+            padding: 5px 0 10px 0; 
+            margin-bottom: 10px; 
+            border-bottom: 1px solid rgba(0,255,255,0.2); 
+            justify-content: center; 
+        }
+        .shop-tab { 
+            padding: 6px 10px; 
+            background: rgba(255,255,255,0.1); 
+            color: #fff; 
+            border: 1px solid transparent; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 0.75rem; 
+            transition: 0.2s; 
+        }
+        .shop-tab.active { 
+            background: #0ff; 
+            color: #000; 
+            font-weight: bold; 
+            border-color: #0ff; 
+        }
+
         .shop-category { font-size: 0.8rem; color: #ffd700; text-transform: uppercase; margin: 10px 0 5px 0; font-weight: bold; text-align: left; width: 100%; }
         
         .shop-item, .friend-item, .admin-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
@@ -121,7 +149,11 @@
         }
 
         .profile-avatar { font-size: 4rem; z-index: 1; margin-top: 30px; text-shadow: 0 0 10px #0ff; }
-        .profile-name { font-size: 1.5rem; font-weight: bold; z-index: 1; text-shadow: 0 0 10px #fff; margin-top: 5px; }
+        
+        .profile-name-wrapper { display: flex; align-items: center; gap: 5px; z-index: 1; margin-top: 5px; }
+        .profile-name { font-size: 1.5rem; font-weight: bold; text-shadow: 0 0 10px #fff; }
+        .profile-pin { font-size: 1.5rem; text-shadow: 0 0 10px #0ff; } 
+        
         .profile-rank { font-size: 0.9rem; color: #ffd700; z-index: 1; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
         .profile-stats { display: flex; gap: 15px; z-index: 1; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 20px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
 
@@ -144,6 +176,32 @@
         .frame-plasma .frame-badge { border-color: #00ffff; box-shadow: 0 0 20px #ff00ff; color: #00ffff; }
         .frame-void { border: 4px solid #4b0082 !important; box-shadow: 0 0 30px #4b0082, inset 0 0 20px #000 !important; }
         .frame-void .frame-badge { border-color: #4b0082; box-shadow: 0 0 20px #4b0082; color: #4b0082; }
+        .frame-ice { border: 4px solid #87ceeb !important; box-shadow: 0 0 25px #87ceeb, inset 0 0 15px #87ceeb !important; }
+        .frame-ice .frame-badge { border-color: #87ceeb; box-shadow: 0 0 20px #87ceeb; color: #87ceeb; }
+        .frame-fire { border: 4px solid #ff4500 !important; box-shadow: 0 0 25px #ff4500, inset 0 0 15px #ff4500 !important; }
+        .frame-fire .frame-badge { border-color: #ff4500; box-shadow: 0 0 20px #ff4500; color: #ff4500; }
+        .frame-earth { border: 4px solid #8b4513 !important; box-shadow: 0 0 25px #8b4513, inset 0 0 15px #8b4513 !important; }
+        .frame-earth .frame-badge { border-color: #8b4513; box-shadow: 0 0 20px #8b4513; color: #8b4513; }
+        .frame-wind { border: 4px solid #d3d3d3 !important; box-shadow: 0 0 25px #d3d3d3, inset 0 0 15px #d3d3d3 !important; border-style: dotted !important; }
+        .frame-wind .frame-badge { border-color: #d3d3d3; box-shadow: 0 0 20px #d3d3d3; color: #d3d3d3; }
+        .frame-light { border: 4px solid #fffacd !important; box-shadow: 0 0 25px #fffacd, inset 0 0 15px #fffacd !important; }
+        .frame-light .frame-badge { border-color: #fffacd; box-shadow: 0 0 20px #fffacd; color: #fffacd; }
+
+        /* НОВАЯ СЕРЕБРЯНАЯ РАМКА */
+        .frame-silver { border: 4px solid #c0c0c0 !important; box-shadow: 0 0 25px #c0c0c0, inset 0 0 15px #c0c0c0 !important; }
+        .frame-silver .frame-badge { border-color: #c0c0c0; box-shadow: 0 0 20px #c0c0c0; color: #c0c0c0; }
+
+        /* Новые рамки (5) */
+        .frame-gold { border: 4px solid #ffd700 !important; box-shadow: 0 0 30px #ffd700, inset 0 0 20px #ffd700 !important; border-style: ridge !important; }
+        .frame-gold .frame-badge { border-color: #ffd700; box-shadow: 0 0 25px #ffd700; color: #ffd700; }
+        .frame-crystal { border: 4px solid #e0ffff !important; box-shadow: 0 0 30px #e0ffff, inset 0 0 20px #e0ffff !important; }
+        .frame-crystal .frame-badge { border-color: #e0ffff; box-shadow: 0 0 25px #e0ffff; color: #e0ffff; }
+        .frame-obsidian { border: 4px solid #2f2f2f !important; box-shadow: 0 0 30px #2f2f2f, inset 0 0 20px #2f2f2f !important; }
+        .frame-obsidian .frame-badge { border-color: #2f2f2f; box-shadow: 0 0 25px #2f2f2f; color: #2f2f2f; }
+        .frame-magma { border: 4px solid #ff4500 !important; box-shadow: 0 0 30px #ff4500, inset 0 0 20px #ff4500 !important; border-style: dashed !important; }
+        .frame-magma .frame-badge { border-color: #ff4500; box-shadow: 0 0 25px #ff4500; color: #ff4500; }
+        .frame-aether { border: 4px solid #9370db !important; box-shadow: 0 0 30px #9370db, inset 0 0 20px #9370db !important; border-style: double !important; }
+        .frame-aether .frame-badge { border-color: #9370db; box-shadow: 0 0 25px #9370db; color: #9370db; }
 
         /* Переливающиеся цвета */
         .rainbow-text { background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: rainbow-anim 3s linear infinite; }
@@ -157,6 +215,18 @@
         .neon-cyan-text { color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 25px #00ffff; animation: pulse-anim 1.5s infinite alternate; }
         .neon-yellow-text { color: #ffff00; text-shadow: 0 0 5px #ffff00, 0 0 15px #ffff00, 0 0 25px #ffff00; animation: pulse-anim 1.5s infinite alternate; }
         .neon-white-text { color: #ffffff; text-shadow: 0 0 5px #ffffff, 0 0 15px #ffffff, 0 0 25px #ffffff; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-lime-text { color: #00ff00; text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 25px #00ff00; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-turquoise-text { color: #40e0d0; text-shadow: 0 0 5px #40e0d0, 0 0 15px #40e0d0, 0 0 25px #40e0d0; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-violet-text { color: #ee82ee; text-shadow: 0 0 5px #ee82ee, 0 0 15px #ee82ee, 0 0 25px #ee82ee; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-maroon-text { color: #800000; text-shadow: 0 0 5px #800000, 0 0 15px #800000, 0 0 25px #800000; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-silver-text { color: #c0c0c0; text-shadow: 0 0 5px #c0c0c0, 0 0 15px #c0c0c0, 0 0 25px #c0c0c0; animation: pulse-anim 1.5s infinite alternate; }
+
+        /* Новые неоновые цвета (5) */
+        .neon-darkgreen-text { color: #006400; text-shadow: 0 0 5px #006400, 0 0 15px #006400, 0 0 25px #006400; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-platinum-text { color: #e5e4e2; text-shadow: 0 0 5px #e5e4e2, 0 0 15px #e5e4e2, 0 0 25px #e5e4e2; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-peach-text { color: #ffdab9; text-shadow: 0 0 5px #ffdab9, 0 0 15px #ffdab9, 0 0 25px #ffdab9; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-ice-text { color: #e0ffff; text-shadow: 0 0 5px #e0ffff, 0 0 15px #e0ffff, 0 0 25px #e0ffff; animation: pulse-anim 1.5s infinite alternate; }
+        .neon-bronze-text { color: #cd7f32; text-shadow: 0 0 5px #cd7f32, 0 0 15px #cd7f32, 0 0 25px #cd7f32; animation: pulse-anim 1.5s infinite alternate; }
 
         /* Тёмно-синий неоновый титул */
         .dark-blue-title { color: #000080; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 5px #00f, 0 0 10px #00f; }
@@ -274,6 +344,9 @@
     <div class="screen" id="shopScreen">
         <div class="shop-box">
             <h3>🛒 МАГАЗИН</h3>
+            <div class="shop-tabs" id="shopTabs">
+                <!-- Вкладки будут добавлены JS -->
+            </div>
             <div class="shop-list" id="shopList"></div>
             <button class="close-btn" id="closeShopBtn">Назад</button>
         </div>
@@ -294,7 +367,12 @@
             <div class="frame-badge" id="profileFrameBadge"></div>
             <div class="profile-banner" id="profileBanner"></div>
             <div class="profile-avatar" id="profileAvatar">👤</div>
-            <div class="profile-name" id="profileName">Никнейм</div>
+            
+            <div class="profile-name-wrapper">
+                <div class="profile-name" id="profileName">Никнейм</div>
+                <div class="profile-pin" id="profilePin"></div>
+            </div>
+
             <div class="profile-rank" id="profileRank">Ранг</div>
             <div class="profile-stats">
                 <div style="text-align:center;">
@@ -364,6 +442,7 @@
         const upgradePassiveBtn = document.getElementById('upgradePassiveBtn');
 
         const shopList = document.getElementById('shopList');
+        const shopTabs = document.getElementById('shopTabs');
         const leaderboardList = document.getElementById('leaderboardList');
         const myFriendsList = document.getElementById('myFriendsList');
         const friendRequestsList = document.getElementById('friendRequestsList');
@@ -382,6 +461,7 @@
         let resetTimerInterval = null;
         let currentChatRoomId = null;
         let chatUnsubscribe = null;
+        let currentShopCategory = 'avatar'; // По умолчанию открыта вкладка Аватарки
 
         // --- ТИТУЛЫ ---
         const allTitles = [
@@ -426,23 +506,39 @@
             { id: 'title27', icon: '👨', name: 'Батя мистера Макса', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title28', icon: '🦾', name: 'Тони Старк собрал мини реактор', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title29', icon: '🗣️', name: 'Нет такого слова не хочу', requiredLevel: 0, price: 350000, isDarkBlue: true },
-            
-            // Новые обычные титулы
             { id: 'title30', icon: '🚜', name: 'Бульдозер', requiredLevel: 0, price: 200000 },
             { id: 'title31', icon: '1️⃣', name: 'Один такой', requiredLevel: 0, price: 200000 },
             { id: 'title32', icon: '🍬', name: 'Сладость или гадость', requiredLevel: 0, price: 200000 },
             { id: 'title33', icon: '⚛️', name: 'Наноэнергетика', requiredLevel: 0, price: 200000 },
-
-            // Новые неоновые титулы
             { id: 'title34', icon: '🕷️', name: 'Ты как человек паук!', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title35', icon: '👦', name: 'Ровный поцанчик', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title36', icon: '🚽', name: 'Б-р скибиди скибиди', requiredLevel: 0, price: 350000, isDarkBlue: true },
-            { id: 'title37', icon: '🤝', name: 'Тиммейты просто превосходны', requiredLevel: 0, price: 350000, isDarkBlue: true }
+            { id: 'title37', icon: '🤝', name: 'Тиммейты просто превосходны', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title38', icon: '🌬️', name: 'Ветроэнергетика', requiredLevel: 0, price: 200000 },
+            { id: 'title39', icon: '🥈', name: 'Топ 2', requiredLevel: 0, price: 200000 },
+            { id: 'title40', icon: '🥉', name: 'Топ 3', requiredLevel: 0, price: 200000 },
+            { id: 'title41', icon: '😎', name: 'Крутость', requiredLevel: 0, price: 200000 },
+            { id: 'title42', icon: '💥', name: 'Кобяков топчик', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title43', icon: '🕊️', name: 'Жизнь одна а стендофф 2', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title44', icon: '⌚', name: 'Космические часики нарушили покой', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title45', icon: '🧼', name: 'Помойся с мылом', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            
+            // Новые обычные
+            { id: 'title46', icon: '🌭', name: 'Сосиска', requiredLevel: 0, price: 200000 },
+            { id: 'title47', icon: '🤔', name: 'Какой расклад?', requiredLevel: 0, price: 200000 },
+            { id: 'title48', icon: '🌑', name: 'Порождение ночи', requiredLevel: 0, price: 200000 },
+            { id: 'title49', icon: '🫡', name: 'Всегда готов', requiredLevel: 0, price: 200000 },
+
+            // Новые неоновые
+            { id: 'title50', icon: '💫', name: 'Особенный', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title51', icon: '🎒', name: 'Что в мешочке?', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title52', icon: '🧮', name: '2+2=5', requiredLevel: 0, price: 350000, isDarkBlue: true }
         ];
 
         // --- РАМКИ ---
         const allFrames = [
-            { id: 'frame_rank', name: 'Рамка Ранга (Бронза) 🎁', price: 0, className: 'frame-rank', icon: '🥉' }, // Бесплатная
+            { id: 'frame_rank', name: 'Рамка Ранга (Бронза) 🎁', price: 0, className: 'frame-rank', icon: '🥉' }, 
+            { id: 'frame_silver', name: 'Серебряная Рамка 🎁', price: 0, className: 'frame-silver', icon: '🥈' }, // Бесплатная
             { id: 'frame_legendary', name: 'Легендарная Рамка', price: 550000, className: 'frame-legendary', icon: '🌟' },
             { id: 'frame_diamond', name: 'Алмазная Рамка', price: 550000, className: 'frame-diamond', icon: '💎' },
             { id: 'frame_mythic', name: 'Мифическая Рамка', price: 550000, className: 'frame-mythic', icon: '🔮' },
@@ -451,12 +547,22 @@
             { id: 'frame_sapphire', name: 'Сапфировая Рамка', price: 550000, className: 'frame-sapphire', icon: '💙' },
             { id: 'frame_plasma', name: 'Плазменная Рамка', price: 550000, className: 'frame-plasma', icon: '⚡' },
             { id: 'frame_void', name: 'Рамка Пустоты', price: 550000, className: 'frame-void', icon: '🕳️' },
-            // Новые 5 рамок
             { id: 'frame_ice', name: 'Ледяная Рамка', price: 550000, className: 'frame-ice', icon: '🧊' },
             { id: 'frame_fire', name: 'Огненная Рамка', price: 550000, className: 'frame-fire', icon: '🔥' },
             { id: 'frame_earth', name: 'Земляная Рамка', price: 550000, className: 'frame-earth', icon: '🌍' },
             { id: 'frame_wind', name: 'Воздушная Рамка', price: 550000, className: 'frame-wind', icon: '🌪️' },
-            { id: 'frame_light', name: 'Светлая Рамка', price: 550000, className: 'frame-light', icon: '✨' }
+            { id: 'frame_light', name: 'Светлая Рамка', price: 550000, className: 'frame-light', icon: '✨' },
+            { id: 'frame_dark', name: 'Тёмная Рамка', price: 550000, className: 'frame-dark', icon: '🖤' },
+            { id: 'frame_water', name: 'Водяная Рамка', price: 550000, className: 'frame-water', icon: '🌊' },
+            { id: 'frame_nature', name: 'Природная Рамка', price: 550000, className: 'frame-nature', icon: '🌿' },
+            { id: 'frame_storm', name: 'Штормовая Рамка', price: 550000, className: 'frame-storm', icon: '⛈️' },
+            { id: 'frame_star', name: 'Звёздная Рамка', price: 550000, className: 'frame-star', icon: '⭐' },
+            // Новые 5 рамок
+            { id: 'frame_gold', name: 'Золотая Рамка', price: 550000, className: 'frame-gold', icon: '🥇' },
+            { id: 'frame_crystal', name: 'Кристальная Рамка', price: 550000, className: 'frame-crystal', icon: '🔷' },
+            { id: 'frame_obsidian', name: 'Обсидиановая Рамка', price: 550000, className: 'frame-obsidian', icon: '⬛' },
+            { id: 'frame_magma', name: 'Магмовая Рамка', price: 550000, className: 'frame-magma', icon: '🌋' },
+            { id: 'frame_aether', name: 'Эфирная Рамка', price: 550000, className: 'frame-aether', icon: '🔮' }
         ];
 
         // --- ЦВЕТА ДЛЯ НИКА ---
@@ -472,17 +578,47 @@
             { id: 'color_cyan', name: 'Неоново-голубой', price: 150000, className: 'neon-cyan-text' },
             { id: 'color_yellow', name: 'Неоново-желтый', price: 150000, className: 'neon-yellow-text' },
             { id: 'color_white', name: 'Неоново-белый', price: 150000, className: 'neon-white-text' },
-            // Новые 5 цветов
             { id: 'color_lime', name: 'Неоново-лаймовый', price: 150000, className: 'neon-lime-text' },
             { id: 'color_turquoise', name: 'Неоново-бирюзовый', price: 150000, className: 'neon-turquoise-text' },
             { id: 'color_violet', name: 'Неоново-сиреневый', price: 150000, className: 'neon-violet-text' },
             { id: 'color_maroon', name: 'Неоново-бордовый', price: 150000, className: 'neon-maroon-text' },
-            { id: 'color_silver', name: 'Неоново-серебряный', price: 150000, className: 'neon-silver-text' }
+            { id: 'color_silver', name: 'Неоново-серебряный', price: 150000, className: 'neon-silver-text' },
+            { id: 'color_darkblue', name: 'Тёмно-синий неон', price: 150000, className: 'neon-darkblue-text' },
+            { id: 'color_magenta', name: 'Неоново-маджента', price: 150000, className: 'neon-magenta-text' },
+            { id: 'color_spring', name: 'Неоново-весенний', price: 150000, className: 'neon-spring-text' },
+            { id: 'color_aqua', name: 'Неоново-аква', price: 150000, className: 'neon-aqua-text' },
+            { id: 'color_coral', name: 'Неоново-коралловый', price: 150000, className: 'neon-coral-text' },
+            // Новые 5 цветов
+            { id: 'color_darkgreen', name: 'Тёмно-зеленый неон', price: 150000, className: 'neon-darkgreen-text' },
+            { id: 'color_platinum', name: 'Платиновый неон', price: 150000, className: 'neon-platinum-text' },
+            { id: 'color_peach', name: 'Персиковый неон', price: 150000, className: 'neon-peach-text' },
+            { id: 'color_ice', name: 'Ледяной неон', price: 150000, className: 'neon-ice-text' },
+            { id: 'color_bronze', name: 'Бронзовый неон', price: 150000, className: 'neon-bronze-text' }
+        ];
+
+        // --- ПИНЫ (ЗНАЧКИ) ---
+        const allPins = [
+            { id: 'pin1', name: 'Огонь', icon: '🔥', price: 50000 },
+            { id: 'pin2', name: 'Корона', icon: '👑', price: 150000 },
+            { id: 'pin3', name: 'Череп', icon: '💀', price: 100000 },
+            { id: 'pin4', name: 'Звезда', icon: '⭐', price: 75000 },
+            { id: 'pin5', name: 'Сердце', icon: '❤️', price: 50000 },
+            { id: 'pin6', name: 'Молния', icon: '⚡', price: 120000 },
+            { id: 'pin7', name: 'Алмаз', icon: '💎', price: 200000 },
+            { id: 'pin8', name: 'Меч', icon: '⚔️', price: 180000 },
+            { id: 'pin9', name: 'Щит', icon: '🛡️', price: 80000 },
+            { id: 'pin10', name: 'Крылья', icon: '🕊️', price: 130000 },
+            // Новые 5 пинов
+            { id: 'pin11', name: 'Кошка', icon: '🐱', price: 90000 },
+            { id: 'pin12', name: 'Собака', icon: '🐶', price: 90000 },
+            { id: 'pin13', name: 'Ракета', icon: '🚀', price: 170000 },
+            { id: 'pin14', name: 'Книга', icon: '📚', price: 60000 },
+            { id: 'pin15', name: 'Гитара', icon: '🎸', price: 140000 }
         ];
 
         // --- МАГАЗИН ---
         const shopItems = [
-            // Аватарки (оставил прежние)
+            // Аватарки
             { id: 'avatar1', type: 'avatar', icon: '👤', name: 'Новичок', price: 0 },
             { id: 'avatar2', type: 'avatar', icon: '🐱', name: 'Котик', price: 500 },
             { id: 'avatar3', type: 'avatar', icon: '👽', name: 'Пришелец', price: 2000 },
@@ -520,6 +656,22 @@
             { id: 'avatar35', type: 'avatar', icon: '🦅', name: 'Орел', price: 1500000 },
             { id: 'avatar36', type: 'avatar', icon: '🍔', name: 'Бургер', price: 6000 },
             { id: 'avatar37', type: 'avatar', icon: '🤠', name: 'Ковбой', price: 450000 },
+            { id: 'avatar38', type: 'avatar', icon: '🦆', name: 'Утка', price: 2500 },
+            { id: 'avatar39', type: 'avatar', icon: '🦩', name: 'Фламинго', price: 12000 },
+            { id: 'avatar40', type: 'avatar', icon: '🦥', name: 'Ленивец', price: 9000 },
+            { id: 'avatar41', type: 'avatar', icon: '🦔', name: 'Ежик', price: 1800 },
+            { id: 'avatar42', type: 'avatar', icon: '🦦', name: 'Выдра', price: 30000 },
+            { id: 'avatar43', type: 'avatar', icon: '🦭', name: 'Тюлень', price: 7000 },
+            { id: 'avatar44', type: 'avatar', icon: '🦚', name: 'Павлин', price: 150000 },
+            { id: 'avatar45', type: 'avatar', icon: '🦜', name: 'Попугай', price: 4000 },
+            { id: 'avatar46', type: 'avatar', icon: '🐲', name: 'Китайский дракон', price: 900000 },
+            { id: 'avatar47', type: 'avatar', icon: '🧸', name: 'Мишка', price: 35000 },
+            // Новые 5 аватарок
+            { id: 'avatar48', type: 'avatar', icon: '🦮', name: 'Собака', price: 5500 },
+            { id: 'avatar49', type: 'avatar', icon: '🐹', name: 'Хомяк', price: 700 },
+            { id: 'avatar50', type: 'avatar', icon: '🦌', name: 'Олень', price: 18000 },
+            { id: 'avatar51', type: 'avatar', icon: '🐳', name: 'Кит', price: 180000 },
+            { id: 'avatar52', type: 'avatar', icon: '🦂', name: 'Скорпион', price: 300000 },
             
             // Баннеры (старые)
             { id: 'banner1', type: 'banner', icon: '⬛', name: 'Стандартный', price: 0, style: 'linear-gradient(90deg, #111, #333)' },
@@ -547,13 +699,22 @@
             { id: 'banner33', type: 'banner', icon: '🍭', name: 'Конфета', price: 10000, style: 'linear-gradient(45deg, #ff0, #f0f, #0ff, #ff0)' },
             { id: 'banner34', type: 'banner', icon: '🌲', name: 'Лес', price: 8000, style: 'linear-gradient(180deg, #003300, #006600, #003300)' },
             { id: 'banner35', type: 'banner', icon: '🧨', name: 'Взрыв', price: 500000, style: 'radial-gradient(circle, #ff0 10%, #f00 50%, #000 90%)' },
-            
-            // Новые 5 обычных баннеров
             { id: 'banner41', type: 'banner', icon: '🛸', name: 'Инопланетный', price: 45000, style: 'linear-gradient(90deg, #00ff00, #000000, #00ff00)' },
             { id: 'banner42', type: 'banner', icon: '⚓', name: 'Морской', price: 25000, style: 'linear-gradient(180deg, #000080, #00ffff, #000080)' },
             { id: 'banner43', type: 'banner', icon: '🔥', name: 'Тёмное пламя', price: 100000, style: 'linear-gradient(90deg, #000, #ff0000, #000)' },
             { id: 'banner44', type: 'banner', icon: '🩷', name: 'Розовый рай', price: 15000, style: 'linear-gradient(90deg, #ff69b4, #ff1493, #ff69b4)' },
             { id: 'banner45', type: 'banner', icon: '🥇', name: 'Победитель', price: 800000, style: 'linear-gradient(90deg, #ffd700, #ffffff, #ffd700)' },
+            { id: 'banner51', type: 'banner', icon: '🌌', name: 'Галактика', price: 300000, style: 'linear-gradient(45deg, #000, #4b0082, #000)' },
+            { id: 'banner52', type: 'banner', icon: '🌈', name: 'Радужный', price: 50000, style: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff)' },
+            { id: 'banner53', type: 'banner', icon: '🌌', name: 'Туманность', price: 600000, style: 'radial-gradient(circle, #ff69b4 10%, #8a2be2 50%, #000 90%)' },
+            { id: 'banner54', type: 'banner', icon: '🔮', name: 'Магия', price: 200000, style: 'linear-gradient(90deg, #8a2be2, #4b0082, #8a2be2)' },
+            { id: 'banner55', type: 'banner', icon: '🌠', name: 'Комета', price: 150000, style: 'linear-gradient(90deg, #00f, #fff, #00f)' },
+            // Новые 5 обычных баннеров
+            { id: 'banner61', type: 'banner', icon: '🏜️', name: 'Пустыня', price: 22000, style: 'linear-gradient(180deg, #ffd700, #ff8c00, #ffd700)' },
+            { id: 'banner62', type: 'banner', icon: '🌊', name: 'Глубина', price: 40000, style: 'linear-gradient(180deg, #000080, #191970, #000080)' },
+            { id: 'banner63', type: 'banner', icon: '🍄', name: 'Грибной', price: 7000, style: 'linear-gradient(90deg, #ff0000, #ffffff, #ff0000)' },
+            { id: 'banner64', type: 'banner', icon: '🌌', name: 'Червоточина', price: 700000, style: 'radial-gradient(circle, #4b0082 10%, #000 70%)' },
+            { id: 'banner65', type: 'banner', icon: '🌋', name: 'Извержение', price: 90000, style: 'linear-gradient(180deg, #ff4500, #8b0000, #ff4500)' },
 
             // Переливающиеся баннеры (старые)
             { id: 'banner21', type: 'banner', icon: '🌈', name: 'Переливающаяся Радуга', price: 200000, style: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000)', isAnimated: true },
@@ -571,34 +732,44 @@
             { id: 'banner38', type: 'banner', icon: '🌺', name: 'Переливающийся Цветок', price: 200000, style: 'linear-gradient(90deg, #ff1493, #ff69b4, #ff1493, #ff69b4)', isAnimated: true },
             { id: 'banner39', type: 'banner', icon: '🪄', name: 'Переливающаяся Магия', price: 200000, style: 'linear-gradient(90deg, #8a2be2, #4b0082, #8a2be2, #4b0082)', isAnimated: true },
             { id: 'banner40', type: 'banner', icon: '🔱', name: 'Переливающийся Трезубец', price: 200000, style: 'linear-gradient(90deg, #00ffff, #00008b, #00ffff, #00008b)', isAnimated: true },
-
-            // Новые 5 анимированных баннеров
             { id: 'banner46', type: 'banner', icon: '💫', name: 'Переливающаяся Звезда', price: 200000, style: 'linear-gradient(90deg, #ff0, #fff, #ff0, #fff)', isAnimated: true },
             { id: 'banner47', type: 'banner', icon: '🩸', name: 'Переливающаяся Кровь', price: 200000, style: 'linear-gradient(90deg, #800000, #ff0000, #800000, #ff0000)', isAnimated: true },
             { id: 'banner48', type: 'banner', icon: '🌫️', name: 'Переливающийся Туман', price: 200000, style: 'linear-gradient(90deg, #aaa, #fff, #aaa, #fff)', isAnimated: true },
             { id: 'banner49', type: 'banner', icon: '🪐', name: 'Переливающийся Сатурн', price: 200000, style: 'linear-gradient(90deg, #8b4513, #ffd700, #8b4513, #ffd700)', isAnimated: true },
-            { id: 'banner50', type: 'banner', icon: '🌱', name: 'Переливающийся Росток', price: 200000, style: 'linear-gradient(90deg, #00ff00, #90ee90, #00ff00, #90ee90)', isAnimated: true }
+            { id: 'banner50', type: 'banner', icon: '🌱', name: 'Переливающийся Росток', price: 200000, style: 'linear-gradient(90deg, #00ff00, #90ee90, #00ff00, #90ee90)', isAnimated: true },
+            { id: 'banner56', type: 'banner', icon: '🌌', name: 'Переливающаяся Галактика', price: 200000, style: 'linear-gradient(90deg, #000, #4b0082, #000, #4b0082)', isAnimated: true },
+            { id: 'banner57', type: 'banner', icon: '🔮', name: 'Переливающаяся Магия', price: 200000, style: 'linear-gradient(90deg, #8a2be2, #4b0082, #8a2be2, #4b0082)', isAnimated: true },
+            { id: 'banner58', type: 'banner', icon: '🌠', name: 'Переливающаяся Комета', price: 200000, style: 'linear-gradient(90deg, #00f, #fff, #00f, #fff)', isAnimated: true },
+            { id: 'banner59', type: 'banner', icon: '🌋', name: 'Переливающийся Вулкан', price: 200000, style: 'linear-gradient(90deg, #300, #f00, #300, #f00)', isAnimated: true },
+            { id: 'banner60', type: 'banner', icon: '🌊', name: 'Переливающийся Океан', price: 200000, style: 'linear-gradient(90deg, #000080, #00ffff, #000080, #00ffff)', isAnimated: true },
+            
+            // Новые 5 анимированных баннеров
+            { id: 'banner66', type: 'banner', icon: '🌅', name: 'Переливающийся Рассвет', price: 200000, style: 'linear-gradient(90deg, #ff8c00, #ff0080, #ff8c00, #ff0080)', isAnimated: true },
+            { id: 'banner67', type: 'banner', icon: '🌌', name: 'Переливающийся Млечный Путь', price: 200000, style: 'linear-gradient(90deg, #191970, #483d8b, #191970, #483d8b)', isAnimated: true },
+            { id: 'banner68', type: 'banner', icon: '🔮', name: 'Переливающийся Кристалл', price: 200000, style: 'linear-gradient(90deg, #e0ffff, #00ffff, #e0ffff, #00ffff)', isAnimated: true },
+            { id: 'banner69', type: 'banner', icon: '🌪️', name: 'Переливающийся Смерч', price: 200000, style: 'linear-gradient(90deg, #696969, #d3d3d3, #696969, #d3d3d3)', isAnimated: true },
+            { id: 'banner70', type: 'banner', icon: '🔥', name: 'Переливающийся Ад', price: 200000, style: 'linear-gradient(90deg, #8b0000, #ff0000, #8b0000, #ff0000)', isAnimated: true }
         ];
 
-        // Дополнительные CSS классы для новых цветов
+        // Дополнительные CSS классы
         const style = document.createElement('style');
         style.innerHTML = `
-            .neon-lime-text { color: #00ff00; text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 25px #00ff00; animation: pulse-anim 1.5s infinite alternate; }
-            .neon-turquoise-text { color: #40e0d0; text-shadow: 0 0 5px #40e0d0, 0 0 15px #40e0d0, 0 0 25px #40e0d0; animation: pulse-anim 1.5s infinite alternate; }
-            .neon-violet-text { color: #ee82ee; text-shadow: 0 0 5px #ee82ee, 0 0 15px #ee82ee, 0 0 25px #ee82ee; animation: pulse-anim 1.5s infinite alternate; }
-            .neon-maroon-text { color: #800000; text-shadow: 0 0 5px #800000, 0 0 15px #800000, 0 0 25px #800000; animation: pulse-anim 1.5s infinite alternate; }
-            .neon-silver-text { color: #c0c0c0; text-shadow: 0 0 5px #c0c0c0, 0 0 15px #c0c0c0, 0 0 25px #c0c0c0; animation: pulse-anim 1.5s infinite alternate; }
+            .neon-darkgreen-text { color: #006400; text-shadow: 0 0 5px #006400, 0 0 15px #006400, 0 0 25px #006400; animation: pulse-anim 1.5s infinite alternate; }
+            .neon-platinum-text { color: #e5e4e2; text-shadow: 0 0 5px #e5e4e2, 0 0 15px #e5e4e2, 0 0 25px #e5e4e2; animation: pulse-anim 1.5s infinite alternate; }
+            .neon-peach-text { color: #ffdab9; text-shadow: 0 0 5px #ffdab9, 0 0 15px #ffdab9, 0 0 25px #ffdab9; animation: pulse-anim 1.5s infinite alternate; }
+            .neon-ice-text { color: #e0ffff; text-shadow: 0 0 5px #e0ffff, 0 0 15px #e0ffff, 0 0 25px #e0ffff; animation: pulse-anim 1.5s infinite alternate; }
+            .neon-bronze-text { color: #cd7f32; text-shadow: 0 0 5px #cd7f32, 0 0 15px #cd7f32, 0 0 25px #cd7f32; animation: pulse-anim 1.5s infinite alternate; }
 
-            .frame-ice { border: 4px solid #87ceeb !important; box-shadow: 0 0 25px #87ceeb, inset 0 0 15px #87ceeb !important; }
-            .frame-ice .frame-badge { border-color: #87ceeb; box-shadow: 0 0 20px #87ceeb; color: #87ceeb; }
-            .frame-fire { border: 4px solid #ff4500 !important; box-shadow: 0 0 25px #ff4500, inset 0 0 15px #ff4500 !important; }
-            .frame-fire .frame-badge { border-color: #ff4500; box-shadow: 0 0 20px #ff4500; color: #ff4500; }
-            .frame-earth { border: 4px solid #8b4513 !important; box-shadow: 0 0 25px #8b4513, inset 0 0 15px #8b4513 !important; }
-            .frame-earth .frame-badge { border-color: #8b4513; box-shadow: 0 0 20px #8b4513; color: #8b4513; }
-            .frame-wind { border: 4px solid #d3d3d3 !important; box-shadow: 0 0 25px #d3d3d3, inset 0 0 15px #d3d3d3 !important; border-style: dotted !important; }
-            .frame-wind .frame-badge { border-color: #d3d3d3; box-shadow: 0 0 20px #d3d3d3; color: #d3d3d3; }
-            .frame-light { border: 4px solid #fffacd !important; box-shadow: 0 0 25px #fffacd, inset 0 0 15px #fffacd !important; }
-            .frame-light .frame-badge { border-color: #fffacd; box-shadow: 0 0 20px #fffacd; color: #fffacd; }
+            .frame-gold { border: 4px solid #ffd700 !important; box-shadow: 0 0 30px #ffd700, inset 0 0 20px #ffd700 !important; border-style: ridge !important; }
+            .frame-gold .frame-badge { border-color: #ffd700; box-shadow: 0 0 25px #ffd700; color: #ffd700; }
+            .frame-crystal { border: 4px solid #e0ffff !important; box-shadow: 0 0 30px #e0ffff, inset 0 0 20px #e0ffff !important; }
+            .frame-crystal .frame-badge { border-color: #e0ffff; box-shadow: 0 0 25px #e0ffff; color: #e0ffff; }
+            .frame-obsidian { border: 4px solid #2f2f2f !important; box-shadow: 0 0 30px #2f2f2f, inset 0 0 20px #2f2f2f !important; }
+            .frame-obsidian .frame-badge { border-color: #2f2f2f; box-shadow: 0 0 25px #2f2f2f; color: #2f2f2f; }
+            .frame-magma { border: 4px solid #ff4500 !important; box-shadow: 0 0 30px #ff4500, inset 0 0 20px #ff4500 !important; border-style: dashed !important; }
+            .frame-magma .frame-badge { border-color: #ff4500; box-shadow: 0 0 25px #ff4500; color: #ff4500; }
+            .frame-aether { border: 4px solid #9370db !important; box-shadow: 0 0 30px #9370db, inset 0 0 20px #9370db !important; border-style: double !important; }
+            .frame-aether .frame-badge { border-color: #9370db; box-shadow: 0 0 25px #9370db; color: #9370db; }
         `;
         document.head.appendChild(style);
 
@@ -610,8 +781,9 @@
             avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', 
             customTitle: '', 
             customColor: '', 
-            customFrame: 'frame-rank', // По умолчанию бронзовая рамка
-            inventory: ['avatar1', 'banner1', 'frame_rank'], // Бронза в инвентаре
+            customFrame: 'frame-rank',
+            customPin: '',
+            inventory: ['avatar1', 'banner1', 'frame_rank'],
             friends: [],
             passiveMultiplier: 1,
             passiveUpgradeCost: 10,
@@ -657,8 +829,8 @@
                     await setDoc(doc(db, "users", userCredential.user.uid), {
                         nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false,
                         avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', customTitle: '', customColor: '', 
-                        customFrame: 'frame-rank', // Выдаем рамку
-                        inventory: ['avatar1', 'banner1', 'frame_rank'], // Кладем в инвентарь
+                        customFrame: 'frame-rank', customPin: '',
+                        inventory: ['avatar1', 'banner1', 'frame_rank'],
                         friends: [],
                         passiveMultiplier: 1,
                         passiveUpgradeCost: 10,
@@ -699,14 +871,15 @@
                     }
                     userData = cloudData;
                     
-                    // Восстановление дефолтных значений, если их нет
                     if (!userData.inventory) userData.inventory = ['avatar1', 'banner1'];
-                    if (!userData.inventory.includes('frame_rank')) userData.inventory.push('frame_rank'); // Принудительно выдаем бронзу
+                    if (!userData.inventory.includes('frame_rank')) userData.inventory.push('frame_rank'); 
+                    if (!userData.inventory.includes('frame_silver')) userData.inventory.push('frame_silver'); // Автоматически выдаем серебряную рамку
                     if (!userData.avatar) userData.avatar = '👤';
                     if (!userData.banner) userData.banner = 'linear-gradient(90deg, #111, #333)';
                     if (!userData.customTitle) userData.customTitle = '';
                     if (!userData.customColor) userData.customColor = '';
                     if (!userData.customFrame) userData.customFrame = 'frame-rank';
+                    if (!userData.customPin) userData.customPin = '';
                     if (!userData.friends) userData.friends = [];
                     if (!userData.passiveMultiplier) userData.passiveMultiplier = 1;
                     if (!userData.passiveUpgradeCost) userData.passiveUpgradeCost = 10;
@@ -842,7 +1015,8 @@
                         score: Math.floor(userData.score), clicksPerClick: userData.clicksPerClick, 
                         level: userData.level, upgradeCost: userData.upgradeCost,
                         avatar: userData.avatar, banner: userData.banner, 
-                        customTitle: userData.customTitle, customColor: userData.customColor, customFrame: userData.customFrame,
+                        customTitle: userData.customTitle, customColor: userData.customColor, 
+                        customFrame: userData.customFrame, customPin: userData.customPin,
                         inventory: userData.inventory,
                         passiveMultiplier: userData.passiveMultiplier,
                         passiveUpgradeCost: userData.passiveUpgradeCost,
@@ -898,17 +1072,14 @@
 
         // --- ЧАТ ---
         function openChat(friendUid) {
-            // Создаем уникальный ID комнаты (сортируем UID, чтобы у обоих был одинаковый ID)
             const roomId = [currentUser.uid, friendUid].sort().join('_');
             currentChatRoomId = roomId;
             
             showScreen(chatScreen);
             chatMessages.innerHTML = '<div style="text-align:center; color:#aaa;">Загрузка сообщений...</div>';
             
-            // Отписываемся от предыдущего чата, если был
             if (chatUnsubscribe) chatUnsubscribe();
 
-            // Подписываемся на сообщения в реальном времени
             const q = query(collection(db, "chats", roomId, "messages"), orderBy("timestamp", "asc"), limit(100));
             chatUnsubscribe = onSnapshot(q, (snapshot) => {
                 chatMessages.innerHTML = '';
@@ -922,20 +1093,17 @@
                         div.textContent = msg.text;
                         chatMessages.appendChild(div);
                     });
-                    // Прокрутка вниз
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
             });
         }
 
-        // Закрыть чат
         document.getElementById('closeChatBtn').addEventListener('click', () => {
             if (chatUnsubscribe) chatUnsubscribe();
             currentChatRoomId = null;
             showScreen(friendsScreen);
         });
 
-        // Отправить сообщение
         sendChatBtn.addEventListener('click', async () => {
             const text = chatInput.value.trim();
             if (!text || !currentChatRoomId) return;
@@ -952,14 +1120,12 @@
             }
         });
 
-        // Отправка по Enter
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 sendChatBtn.click();
             }
         });
 
-        // Кнопка "Написать в чат" из профиля
         document.getElementById('chatWithFriendBtn').addEventListener('click', () => {
             if (viewingProfileUid) {
                 openChat(viewingProfileUid);
@@ -1142,7 +1308,7 @@
             }
         }
 
-        // --- Техподдержка ---
+        // --- Техподдержка (Бот) ---
         document.getElementById('supportBtn').addEventListener('click', () => { loadTickets(); showScreen(supportScreen); });
         document.getElementById('closeSupportBtn').addEventListener('click', () => showScreen(gameScreen));
 
@@ -1163,123 +1329,255 @@
 
         document.getElementById('sendTicketBtn').addEventListener('click', async () => {
             const msg = document.getElementById('ticketMessage').value.trim();
+            const lowerMsg = msg.toLowerCase();
             if (!msg) return alert('Напишите сообщение!');
+            
+            let autoReply = "Извините, я не понял ваш вопрос. Пожалуйста, опишите проблему подробнее или обратитесь к администратору. Вы можете спросить про: клики, уровни, пассивный доход, друзей, чат, магазин, косметику, сброс сезона, баги, аккаунт.";
+            let isUnbanRequest = false;
+
+            if (lowerMsg.includes("разбан") || lowerMsg.includes("разблокир")) {
+                isUnbanRequest = true;
+                const nickMatch = msg.match(/ник[:\s]+([a-zA-Z0-9_]+)/i);
+                
+                if (!nickMatch) {
+                    autoReply = "Для разбана аккаунта мне нужны данные. Пожалуйста, напишите в формате: 'Разбан. Ник: [ваш_ник]. Код: [код_разбана]'. Код разбана выдает администратор.";
+                } else {
+                    const targetNick = nickMatch[1].toLowerCase().trim();
+                    const codeMatch = msg.match(/код[:\s]+([a-zA-Z0-9_]+)/i);
+                    
+                    if (!codeMatch || codeMatch[1] !== "12345") {
+                        autoReply = `Аккаунт "${targetNick}" не может быть разбанен. Неверный или отсутствующий код разбана. Код выдает только администратор.`;
+                    } else {
+                        try {
+                            const userQuery = query(collection(db, "users"), where("nickname", "==", targetNick));
+                            const userSnap = await getDocs(userQuery);
+                            
+                            if (userSnap.empty) {
+                                autoReply = `Аккаунт с ником "${targetNick}" не найден.`;
+                            } else {
+                                const userDoc = userSnap.docs[0];
+                                const userDataToUnban = userDoc.data();
+                                
+                                if (userDataToUnban.banned === false) {
+                                    autoReply = `Аккаунт "${targetNick}" не забанен. Разбан не требуется.`;
+                                } else {
+                                    await updateDoc(doc(db, "users", userDoc.id), { banned: false });
+                                    autoReply = `✅ Аккаунт "${targetNick}" успешно разбанен! Пожалуйста, перезайдите в игру.`;
+                                }
+                            }
+                        } catch (e) {
+                            autoReply = "Произошла ошибка при попытке разбана. Обратитесь к администратору.";
+                            console.error(e);
+                        }
+                    }
+                }
+            } 
+            else if (lowerMsg.includes("клик") || lowerMsg.includes("кнопк") || lowerMsg.includes("жми") || lowerMsg.includes("тап")) {
+                autoReply = "Чтобы зарабатывать клики, просто нажимайте на большую синюю кнопку 'ЖМИ' в центре экрана. За каждый клик вы получаете определенное количество очков. Чтобы получать больше за один клик, улучшайте уровень!";
+            } else if (lowerMsg.includes("уров") || lowerMsg.includes("прокач") || lowerMsg.includes("апгрейд") || lowerMsg.includes("улучш")) {
+                autoReply = "Для повышения уровня используйте панель 'Улучшение'. Каждый новый уровень дает +1 к силе клика. Стоимость прокачки растет, но и доход увеличивается!";
+            } else if (lowerMsg.includes("пассив") || lowerMsg.includes("авто") || lowerMsg.includes("время")) {
+                autoReply = "Пассивный доход начисляется каждые 2 секунды. Чтобы его увеличить, нажимайте кнопку 'Улучшить пассив'. Чем выше множитель, тем больше кликов вы получаете просто так!";
+            } else if (lowerMsg.includes("друг") || lowerMsg.includes("чат") || lowerMsg.includes("общен") || lowerMsg.includes("писать")) {
+                autoReply = "Вы можете добавлять друзей через поиск по нику. После добавления вы сможете общаться с ними в личном чате. Перейдите в раздел 'Друзья' для управления!";
+            } else if (lowerMsg.includes("бан") || lowerMsg.includes("разбан") || lowerMsg.includes("блокиров") || lowerMsg.includes("заблок")) {
+                autoReply = "Для разбана аккаунта мне нужны данные. Пожалуйста, напишите в формате: 'Разбан. Ник: [ваш_ник]. Код: [код_разбана]'. Код разбана выдает администратор.";
+            } else if (lowerMsg.includes("титул") || lowerMsg.includes("рамк") || lowerMsg.includes("баннер") || lowerMsg.includes("цвет") || lowerMsg.includes("пин") || lowerMsg.includes("значок")) {
+                autoReply = "Всю косметику (титулы, рамки, баннеры, цвета, пины) можно купить в разделе 'Магазин'. Некоторые титулы открываются за достижение определенного уровня!";
+            } else if (lowerMsg.includes("сброс") || lowerMsg.includes("сезон") || lowerMsg.includes("обнул")) {
+                autoReply = "Каждые 14 дней происходит сброс сезона. Ваши клики и уровни сбрасываются, но вся купленная косметика (титулы, рамки, цвета) остается навсегда!";
+            } else if (lowerMsg.includes("баг") || lowerMsg.includes("ошибк") || lowerMsg.includes("не работает") || lowerMsg.includes("глючит") || lowerMsg.includes("лагает")) {
+                autoReply = "Если вы нашли баг или игру лагает, пожалуйста, опишите его подробнее. Возможно, вам потребуется перезагрузить страницу. Администратор проверит вашу заявку.";
+            } else if (lowerMsg.includes("привет") || lowerMsg.includes("здравствуй") || lowerMsg.includes("добрый")) {
+                autoReply = "Привет! Чем я могу вам помочь? Вы можете спросить про клики, уровни, друзей, магазин, сброс сезона или баги.";
+            } else if (lowerMsg.includes("аккаунт") || lowerMsg.includes("пароль") || lowerMsg.includes("вход") || lowerMsg.includes("зайти")) {
+                autoReply = "Если вы не можете зайти в аккаунт, проверьте правильность введенного ника и пароля. Помните, что ник должен содержать только латинские буквы и цифры. Если проблема не решена, обратитесь к администратору.";
+            } else if (lowerMsg.includes("деньг") || lowerMsg.includes("донат") || lowerMsg.includes("купить")) {
+                autoReply = "В игре нет доната за реальные деньги. Все предметы покупаются исключительно за клики, которые вы зарабатываете в игре!";
+            } else if (lowerMsg.includes("как играть") || lowerMsg.includes("правила") || lowerMsg.includes("что делать")) {
+                autoReply = "Ваша цель — кликать по кнопке, зарабатывать клики, повышать уровень, покупать косметику и соревноваться с другими игроками в таблице лидеров. Добавляйте друзей и общайтесь в чате!";
+            } else if (lowerMsg.includes("обман") || lowerMsg.includes("читер") || lowerMsg.includes("взлом") || lowerMsg.includes("хакер")) {
+                autoReply = "Мы серьезно относимся к читерам и взломам. Если вы заметили подозрительную активность или игрока с нереальным счетом, напишите его ник в этот тикет, и администратор проверит его.";
+            } else if (lowerMsg.includes("спасибо") || lowerMsg.includes("благодар")) {
+                autoReply = "Всегда пожалуйста! Если у вас есть другие вопросы, обращайтесь.";
+            }
+
             const btn = document.getElementById('sendTicketBtn'); btn.disabled = true; btn.textContent = 'Отправка...';
             try {
-                await addDoc(collection(db, "tickets"), { uid: currentUser.uid, nickname: userData.nickname, message: msg, status: 'open', reply: '', timestamp: Date.now() });
+                await addDoc(collection(db, "tickets"), { 
+                    uid: currentUser.uid, 
+                    nickname: userData.nickname, 
+                    message: msg, 
+                    status: 'closed', 
+                    reply: autoReply, 
+                    timestamp: Date.now() 
+                });
                 document.getElementById('ticketMessage').value = '';
                 loadTickets();
             } catch(e) { alert('Ошибка отправки'); } finally { btn.disabled = false; btn.textContent = 'Отправить запрос'; }
         });
 
-        // --- Магазин ---
-        document.getElementById('shopBtn').addEventListener('click', () => { renderShop(); showScreen(shopScreen); });
+        // --- Магазин (Логика с категориями) ---
+        document.getElementById('shopBtn').addEventListener('click', () => { 
+            currentShopCategory = 'avatar'; // Сброс на аватарки при открытии
+            renderShopTabs();
+            renderShopItems();
+            showScreen(shopScreen); 
+        });
         document.getElementById('closeShopBtn').addEventListener('click', () => showScreen(gameScreen));
 
-        function renderShop() {
+        // Отрисовка вкладок
+        function renderShopTabs() {
+            shopTabs.innerHTML = '';
+            const categories = [
+                { id: 'avatar', name: 'Аватарки' },
+                { id: 'banner', name: 'Баннеры' },
+                { id: 'frame', name: 'Рамки' },
+                { id: 'color', name: 'Цвета' },
+                { id: 'title', name: 'Титулы' },
+                { id: 'pin', name: 'Пины' }
+            ];
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `shop-tab ${currentShopCategory === cat.id ? 'active' : ''}`;
+                btn.textContent = cat.name;
+                btn.onclick = () => {
+                    currentShopCategory = cat.id;
+                    renderShopTabs(); // Перерисовываем вкладки для обновления выделения
+                    renderShopItems(); // Перерисовываем предметы
+                };
+                shopTabs.appendChild(btn);
+            });
+        }
+
+        // Отрисовка предметов выбранной категории
+        function renderShopItems() {
             shopList.innerHTML = '';
-
-            // АВАТАРКИ
-            const catAvatars = document.createElement('div'); catAvatars.className = 'shop-category'; catAvatars.textContent = 'Аватарки'; shopList.appendChild(catAvatars);
-            shopItems.filter(i => i.type === 'avatar').forEach(item => {
-                const isOwned = userData.inventory.includes(item.id);
-                const isEquipped = userData.avatar === item.icon;
-                const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
-                const btn = div.querySelector('button');
-                btn.onclick = () => {
-                    if (isEquipped) return;
-                    if (isOwned) { userData.avatar = item.icon; saveToCloud(true); renderShop(); updateUI(); }
-                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.avatar = item.icon; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
-                };
-                shopList.appendChild(div);
-            });
-
-            // БАННЕРЫ
-            const catBanners = document.createElement('div'); catBanners.className = 'shop-category'; catBanners.textContent = 'Баннеры'; shopList.appendChild(catBanners);
-            shopItems.filter(i => i.type === 'banner').forEach(item => {
-                const isOwned = userData.inventory.includes(item.id);
-                const isEquipped = userData.banner === item.style;
-                const div = document.createElement('div'); div.className = 'shop-item';
-                const animClass = item.isAnimated ? 'animated-banner' : '';
-                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${animClass}" style="background:${item.style}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
-                const btn = div.querySelector('button');
-                btn.onclick = () => {
-                    if (isEquipped) return;
-                    if (isOwned) { userData.banner = item.style; saveToCloud(true); renderShop(); updateUI(); }
-                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.banner = item.style; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
-                };
-                shopList.appendChild(div);
-            });
-
-            // РАМКИ            const catFrames = document.createElement('div'); catFrames.className = 'shop-category'; catFrames.textContent = 'Рамки для профиля'; shopList.appendChild(catFrames);
-            allFrames.forEach(item => {
-                const isOwned = userData.inventory.includes(item.id);
-                const isEquipped = userData.customFrame === item.className;
-                const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${item.className}" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : (item.price === 0 ? 'Бесплатно' : 'Купить'))}</button>`;
-                const btn = div.querySelector('button');
-                btn.onclick = () => {
-                    if (isEquipped) return;
-                    if (isOwned) { userData.customFrame = item.className; saveToCloud(true); renderShop(); updateUI(); }
-                    else { 
-                        if (item.price === 0) {
-                            // Бесплатно
-                            userData.inventory.push(item.id);
-                            userData.customFrame = item.className;
-                            updateUI(); saveToCloud(true); renderShop();
-                        } else if (userData.score >= item.price) { 
-                            userData.score -= item.price; userData.inventory.push(item.id); userData.customFrame = item.className; 
-                            updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); 
-                        } else alert('Недостаточно кликов!'); 
-                    }
-                };
-                shopList.appendChild(div);
-            });
-
-            // ЦВЕТА
-            const catColors = document.createElement('div'); catColors.className = 'shop-category'; catColors.textContent = 'Цвета для ника'; shopList.appendChild(catColors);
-            allColors.forEach(item => {
-                const isOwned = userData.inventory.includes(item.id);
-                const isEquipped = userData.customColor === item.className;
-                const div = document.createElement('div'); div.className = 'shop-item';
-                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${item.className}" style="font-weight:bold; font-size:1.2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">Aa</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
-                const btn = div.querySelector('button');
-                btn.onclick = () => {
-                    if (isEquipped) return;
-                    if (isOwned) { userData.customColor = item.className; saveToCloud(true); renderShop(); updateUI(); }
-                    else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customColor = item.className; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
-                };
-                shopList.appendChild(div);
-            });
-
-            // ТИТУЛЫ
-            const catTitles = document.createElement('div'); catTitles.className = 'shop-category'; catTitles.textContent = 'Титулы'; shopList.appendChild(catTitles);
-            allTitles.forEach(item => {
-                const titleText = `${item.icon} ${item.name.toUpperCase()}`;
-                const isEquipped = userData.customTitle === titleText;
-
-                if (item.requiredLevel > 0) {
-                    const isUnlocked = userData.level >= item.requiredLevel;
-                    const div = document.createElement('div'); div.className = 'shop-item';
-                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#ffd700">${item.name}</div><div style="font-size:0.7rem; color:${isUnlocked ? '#0f0' : '#ff3366'};">${isUnlocked ? 'Доступно' : 'Достигните ' + item.requiredLevel + ' лвл'}</div></div></div><button class="buy-btn" ${isEquipped || !isUnlocked ? 'disabled' : ''}>${isEquipped ? 'Надето' : 'Надеть'}</button>`;
-                    const btn = div.querySelector('button');
-                    btn.onclick = () => { if (!isUnlocked) return; userData.customTitle = titleText; saveToCloud(true); renderShop(); updateUI(); };
-                    shopList.appendChild(div);
-                } else {
+            
+            // Аватарки
+            if (currentShopCategory === 'avatar') {
+                shopItems.filter(i => i.type === 'avatar').forEach(item => {
                     const isOwned = userData.inventory.includes(item.id);
+                    const isEquipped = userData.avatar === item.icon;
                     const div = document.createElement('div'); div.className = 'shop-item';
-                    const titleClass = item.isDarkBlue ? 'dark-blue-title' : '';
-                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div class="title-name ${titleClass}" style="font-weight:bold;">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
                     const btn = div.querySelector('button');
                     btn.onclick = () => {
                         if (isEquipped) return;
-                        if (isOwned) { userData.customTitle = titleText; saveToCloud(true); renderShop(); updateUI(); }
-                        else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customTitle = titleText; updateUI(); saveToCloud(true); renderShop(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
+                        if (isOwned) { userData.avatar = item.icon; saveToCloud(true); renderShopItems(); updateUI(); }
+                        else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.avatar = item.icon; updateUI(); saveToCloud(true); renderShopItems(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
                     };
                     shopList.appendChild(div);
-                }
-            });
+                });
+            }
+            
+            // Баннеры
+            else if (currentShopCategory === 'banner') {
+                shopItems.filter(i => i.type === 'banner').forEach(item => {
+                    const isOwned = userData.inventory.includes(item.id);
+                    const isEquipped = userData.banner === item.style;
+                    const div = document.createElement('div'); div.className = 'shop-item';
+                    const animClass = item.isAnimated ? 'animated-banner' : '';
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${animClass}" style="background:${item.style}; border-radius:5px; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#0ff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                    const btn = div.querySelector('button');
+                    btn.onclick = () => {
+                        if (isEquipped) return;
+                        if (isOwned) { userData.banner = item.style; saveToCloud(true); renderShopItems(); updateUI(); }
+                        else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.banner = item.style; updateUI(); saveToCloud(true); renderShopItems(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
+                    };
+                    shopList.appendChild(div);
+                });
+            }
+
+            // Рамки
+            else if (currentShopCategory === 'frame') {
+                allFrames.forEach(item => {
+                    const isOwned = userData.inventory.includes(item.id);
+                    const isEquipped = userData.customFrame === item.className;
+                    const div = document.createElement('div'); div.className = 'shop-item';
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${item.className}" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : (item.price === 0 ? 'Бесплатно' : 'Купить'))}</button>`;
+                    const btn = div.querySelector('button');
+                    btn.onclick = () => {
+                        if (isEquipped) return;
+                        if (isOwned) { userData.customFrame = item.className; saveToCloud(true); renderShopItems(); updateUI(); }
+                        else { 
+                            if (item.price === 0) {
+                                userData.inventory.push(item.id);
+                                userData.customFrame = item.className;
+                                updateUI(); saveToCloud(true); renderShopItems();
+                            } else if (userData.score >= item.price) { 
+                                userData.score -= item.price; userData.inventory.push(item.id); userData.customFrame = item.className; 
+                                updateUI(); saveToCloud(true); renderShopItems(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); 
+                            } else alert('Недостаточно кликов!'); 
+                        }
+                    };
+                    shopList.appendChild(div);
+                });
+            }
+
+            // Цвета
+            else if (currentShopCategory === 'color') {
+                allColors.forEach(item => {
+                    const isOwned = userData.inventory.includes(item.id);
+                    const isEquipped = userData.customColor === item.className;
+                    const div = document.createElement('div'); div.className = 'shop-item';
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview ${item.className}" style="font-weight:bold; font-size:1.2rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">Aa</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                    const btn = div.querySelector('button');
+                    btn.onclick = () => {
+                        if (isEquipped) return;
+                        if (isOwned) { userData.customColor = item.className; saveToCloud(true); renderShopItems(); updateUI(); }
+                        else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customColor = item.className; updateUI(); saveToCloud(true); renderShopItems(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
+                    };
+                    shopList.appendChild(div);
+                });
+            }
+
+            // Титулы
+            else if (currentShopCategory === 'title') {
+                allTitles.forEach(item => {
+                    const titleText = `${item.icon} ${item.name.toUpperCase()}`;
+                    const isEquipped = userData.customTitle === titleText;
+
+                    if (item.requiredLevel > 0) {
+                        const isUnlocked = userData.level >= item.requiredLevel;
+                        const div = document.createElement('div'); div.className = 'shop-item';
+                        div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#ffd700">${item.name}</div><div style="font-size:0.7rem; color:${isUnlocked ? '#0f0' : '#ff3366'};">${isUnlocked ? 'Доступно' : 'Достигните ' + item.requiredLevel + ' лвл'}</div></div></div><button class="buy-btn" ${isEquipped || !isUnlocked ? 'disabled' : ''}>${isEquipped ? 'Надето' : 'Надеть'}</button>`;
+                        const btn = div.querySelector('button');
+                        btn.onclick = () => { if (!isUnlocked) return; userData.customTitle = titleText; saveToCloud(true); renderShopItems(); updateUI(); };
+                        shopList.appendChild(div);
+                    } else {
+                        const isOwned = userData.inventory.includes(item.id);
+                        const div = document.createElement('div'); div.className = 'shop-item';
+                        const titleClass = item.isDarkBlue ? 'dark-blue-title' : '';
+                        div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div class="title-name ${titleClass}" style="font-weight:bold;">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                        const btn = div.querySelector('button');
+                        btn.onclick = () => {
+                            if (isEquipped) return;
+                            if (isOwned) { userData.customTitle = titleText; saveToCloud(true); renderShopItems(); updateUI(); }
+                            else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customTitle = titleText; updateUI(); saveToCloud(true); renderShopItems(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
+                        };
+                        shopList.appendChild(div);
+                    }
+                });
+            }
+
+            // Пины
+            else if (currentShopCategory === 'pin') {
+                allPins.forEach(item => {
+                    const isOwned = userData.inventory.includes(item.id);
+                    const isEquipped = userData.customPin === item.icon;
+                    const div = document.createElement('div'); div.className = 'shop-item';
+                    div.innerHTML = `<div style="display:flex; align-items:center;"><span class="preview" style="font-size:1.5rem; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">${item.icon}</span><div style="margin-left: 10px;"><div style="font-weight:bold; color:#fff">${item.name}</div><div style="font-size:0.7rem; color:#aaa;">${isOwned ? 'Куплено' : 'Цена: ' + item.price}</div></div></div><button class="buy-btn" ${isEquipped ? 'disabled' : ''}>${isEquipped ? 'Надето' : (isOwned ? 'Надеть' : 'Купить')}</button>`;
+                    const btn = div.querySelector('button');
+                    btn.onclick = () => {
+                        if (isEquipped) return;
+                        if (isOwned) { userData.customPin = item.icon; saveToCloud(true); renderShopItems(); updateUI(); }
+                        else { if (userData.score >= item.price) { userData.score -= item.price; userData.inventory.push(item.id); userData.customPin = item.icon; updateUI(); saveToCloud(true); renderShopItems(); createParticles(window.innerWidth/2, window.innerHeight/2, 30); } else alert('Недостаточно кликов!'); }
+                    };
+                    shopList.appendChild(div);
+                });
+            }
         }
 
         // --- Таблица лидеров ---
@@ -1312,13 +1610,14 @@
                     
                     const colorClass = data.customColor || '';
                     const frameClass = data.customFrame || '';
+                    const pinIcon = data.customPin || '';
                     
                     let avatarHtml = data.avatar || '👤';
                     if (frameClass) {
                         avatarHtml = `<span class="${frameClass}" style="display:inline-flex; justify-content:center; align-items:center; width:24px; height:24px; font-size:0.8rem;">${avatarHtml}</span>`;
                     }
                     
-                    div.innerHTML = `<span>${rank}. ${avatarHtml} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(player.score)}</span>`;
+                    div.innerHTML = `<span>${rank}. ${avatarHtml} <span class="${colorClass}">${data.nickname || 'Игрок'}</span> ${pinIcon ? `<span>${pinIcon}</span>` : ''} <span style="font-size:0.65rem; color:#ffd700;">${getDisplayTitle(data.level, data.customTitle)}</span></span><span style="font-weight:bold; color:#0ff;">${Math.floor(player.score)}</span>`;
                     
                     div.onclick = () => showProfile(data, player.id);
                     
@@ -1381,6 +1680,9 @@
             nameEl.textContent = data.nickname || 'Игрок';
             nameEl.className = 'profile-name ' + (data.customColor || '');
             
+            const pinEl = document.getElementById('profilePin');
+            pinEl.textContent = data.customPin || '';
+
             const rankEl = document.getElementById('profileRank');
             rankEl.textContent = getDisplayTitle(data.level, data.customTitle);
             const isDarkBlue = allTitles.some(t => t.isDarkBlue && `${t.icon} ${t.name.toUpperCase()}` === data.customTitle);
@@ -1395,7 +1697,7 @@
             if (uid !== currentUser.uid) {
                 if (userData.friends && userData.friends.includes(uid)) {
                     addBtn.style.display = 'none';
-                    chatBtn.style.display = 'block'; // Показываем кнопку чата
+                    chatBtn.style.display = 'block'; 
                 } else {
                     addBtn.style.display = 'block';
                     addBtn.textContent = 'Добавить в друзья'; 
@@ -1439,4 +1741,4 @@
         animate();
     </script>
 </body>
-</html>
+            </html>
