@@ -82,12 +82,13 @@
         .shop-category { font-size: 0.8rem; color: #ffd700; text-transform: uppercase; margin: 10px 0 5px 0; font-weight: bold; text-align: left; width: 100%; }
         
         .shop-item, .friend-item, .admin-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
-        .admin-item { border-color: rgba(255, 51, 102, 0.3); }
+        .admin-item { border-color: rgba(255, 51, 102, 0.3); flex-direction: column; align-items: flex-start; gap: 8px; }
         .shop-item .preview { font-size: 1.5rem; margin-right: 10px; }
         .buy-btn, .action-btn { padding: 6px 12px; border-radius: 10px; background: #0ff; color: #000; font-weight: bold; border: none; cursor: pointer; white-space: nowrap; font-size: 0.75rem; }
         .buy-btn:disabled, .action-btn:disabled { background: #555; color: #aaa; cursor: not-allowed; }
         .action-btn.danger { background: #ff3366; color: white; }
         .action-btn.success { background: #00ff00; color: #000; }
+        .action-btn.warning { background: #ffaa00; color: #000; }
         
         .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-radius: 8px; }
         .leader-item:hover { background: rgba(255,255,255,0.1); }
@@ -160,6 +161,8 @@
         /* --- РАМКИ ДЛЯ ВСЕГО ПРОФИЛЯ --- */
         .frame-rank { border: 4px solid #cd7f32 !important; box-shadow: 0 0 15px #cd7f32, inset 0 0 10px #cd7f32 !important; }
         .frame-rank .frame-badge { border-color: #cd7f32; box-shadow: 0 0 15px #cd7f32; color: #cd7f32; }
+        .frame-silver { border: 4px solid #c0c0c0 !important; box-shadow: 0 0 25px #c0c0c0, inset 0 0 15px #c0c0c0 !important; }
+        .frame-silver .frame-badge { border-color: #c0c0c0; box-shadow: 0 0 20px #c0c0c0; color: #c0c0c0; }
         .frame-legendary { border: 4px solid #ffd700 !important; box-shadow: 0 0 25px #ffd700, inset 0 0 15px #ffd700 !important; }
         .frame-legendary .frame-badge { border-color: #ffd700; box-shadow: 0 0 20px #ffd700; color: #ffd700; }
         .frame-diamond { border: 4px solid #00ffff !important; box-shadow: 0 0 25px #00ffff, inset 0 0 15px #00ffff !important; }
@@ -186,12 +189,16 @@
         .frame-wind .frame-badge { border-color: #d3d3d3; box-shadow: 0 0 20px #d3d3d3; color: #d3d3d3; }
         .frame-light { border: 4px solid #fffacd !important; box-shadow: 0 0 25px #fffacd, inset 0 0 15px #fffacd !important; }
         .frame-light .frame-badge { border-color: #fffacd; box-shadow: 0 0 20px #fffacd; color: #fffacd; }
-
-        /* НОВАЯ СЕРЕБРЯНАЯ РАМКА */
-        .frame-silver { border: 4px solid #c0c0c0 !important; box-shadow: 0 0 25px #c0c0c0, inset 0 0 15px #c0c0c0 !important; }
-        .frame-silver .frame-badge { border-color: #c0c0c0; box-shadow: 0 0 20px #c0c0c0; color: #c0c0c0; }
-
-        /* Новые рамки (5) */
+        .frame-dark { border: 4px solid #1a1a1a !important; box-shadow: 0 0 25px #1a1a1a, inset 0 0 15px #1a1a1a !important; }
+        .frame-dark .frame-badge { border-color: #1a1a1a; box-shadow: 0 0 20px #1a1a1a; color: #1a1a1a; }
+        .frame-water { border: 4px solid #00bfff !important; box-shadow: 0 0 25px #00bfff, inset 0 0 15px #00bfff !important; }
+        .frame-water .frame-badge { border-color: #00bfff; box-shadow: 0 0 20px #00bfff; color: #00bfff; }
+        .frame-nature { border: 4px solid #228b22 !important; box-shadow: 0 0 25px #228b22, inset 0 0 15px #228b22 !important; }
+        .frame-nature .frame-badge { border-color: #228b22; box-shadow: 0 0 20px #228b22; color: #228b22; }
+        .frame-storm { border: 4px solid #4b0082 !important; box-shadow: 0 0 25px #4b0082, inset 0 0 15px #4b0082 !important; border-style: dashed !important; }
+        .frame-storm .frame-badge { border-color: #4b0082; box-shadow: 0 0 20px #4b0082; color: #4b0082; }
+        .frame-star { border: 4px solid #ffd700 !important; box-shadow: 0 0 25px #ffd700, inset 0 0 15px #ffd700 !important; border-style: double !important; }
+        .frame-star .frame-badge { border-color: #ffd700; box-shadow: 0 0 20px #ffd700; color: #ffd700; }
         .frame-gold { border: 4px solid #ffd700 !important; box-shadow: 0 0 30px #ffd700, inset 0 0 20px #ffd700 !important; border-style: ridge !important; }
         .frame-gold .frame-badge { border-color: #ffd700; box-shadow: 0 0 25px #ffd700; color: #ffd700; }
         .frame-crystal { border: 4px solid #e0ffff !important; box-shadow: 0 0 30px #e0ffff, inset 0 0 20px #e0ffff !important; }
@@ -220,8 +227,6 @@
         .neon-violet-text { color: #ee82ee; text-shadow: 0 0 5px #ee82ee, 0 0 15px #ee82ee, 0 0 25px #ee82ee; animation: pulse-anim 1.5s infinite alternate; }
         .neon-maroon-text { color: #800000; text-shadow: 0 0 5px #800000, 0 0 15px #800000, 0 0 25px #800000; animation: pulse-anim 1.5s infinite alternate; }
         .neon-silver-text { color: #c0c0c0; text-shadow: 0 0 5px #c0c0c0, 0 0 15px #c0c0c0, 0 0 25px #c0c0c0; animation: pulse-anim 1.5s infinite alternate; }
-
-        /* Новые неоновые цвета (5) */
         .neon-darkgreen-text { color: #006400; text-shadow: 0 0 5px #006400, 0 0 15px #006400, 0 0 25px #006400; animation: pulse-anim 1.5s infinite alternate; }
         .neon-platinum-text { color: #e5e4e2; text-shadow: 0 0 5px #e5e4e2, 0 0 15px #e5e4e2, 0 0 25px #e5e4e2; animation: pulse-anim 1.5s infinite alternate; }
         .neon-peach-text { color: #ffdab9; text-shadow: 0 0 5px #ffdab9, 0 0 15px #ffdab9, 0 0 25px #ffdab9; animation: pulse-anim 1.5s infinite alternate; }
@@ -461,7 +466,19 @@
         let resetTimerInterval = null;
         let currentChatRoomId = null;
         let chatUnsubscribe = null;
-        let currentShopCategory = 'avatar'; // По умолчанию открыта вкладка Аватарки
+        let currentShopCategory = 'avatar'; 
+
+        // --- ПОДАРКИ ПО ССЫЛКЕ (GIFTS) ---
+        const allGifts = {
+            "click10k": { type: "clicks", amount: 10000, name: "10 000 кликов" },
+            "click100k": { type: "clicks", amount: 100000, name: "100 000 кликов" },
+            "avatar_unicorn": { type: "avatar", itemId: "avatar12", name: "Аватарка Единорог" },
+            "avatar_dragon": { type: "avatar", itemId: "avatar7", name: "Аватарка Дракон" },
+            "frame_gold": { type: "frame", itemId: "frame_gold", name: "Золотая Рамка" },
+            "frame_crystal": { type: "frame", itemId: "frame_crystal", name: "Кристальная Рамка" },
+            "pin_crown": { type: "pin", itemId: "pin2", name: "Пин Корона" },
+            "banner_rainbow": { type: "banner", itemId: "banner21", name: "Баннер Радуга" }
+        };
 
         // --- ТИТУЛЫ ---
         const allTitles = [
@@ -522,23 +539,20 @@
             { id: 'title43', icon: '🕊️', name: 'Жизнь одна а стендофф 2', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title44', icon: '⌚', name: 'Космические часики нарушили покой', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title45', icon: '🧼', name: 'Помойся с мылом', requiredLevel: 0, price: 350000, isDarkBlue: true },
-            
-            // Новые обычные
             { id: 'title46', icon: '🌭', name: 'Сосиска', requiredLevel: 0, price: 200000 },
             { id: 'title47', icon: '🤔', name: 'Какой расклад?', requiredLevel: 0, price: 200000 },
             { id: 'title48', icon: '🌑', name: 'Порождение ночи', requiredLevel: 0, price: 200000 },
             { id: 'title49', icon: '🫡', name: 'Всегда готов', requiredLevel: 0, price: 200000 },
-
-            // Новые неоновые
             { id: 'title50', icon: '💫', name: 'Особенный', requiredLevel: 0, price: 350000, isDarkBlue: true },
             { id: 'title51', icon: '🎒', name: 'Что в мешочке?', requiredLevel: 0, price: 350000, isDarkBlue: true },
-            { id: 'title52', icon: '🧮', name: '2+2=5', requiredLevel: 0, price: 350000, isDarkBlue: true }
+            { id: 'title52', icon: '🧮', name: '2+2=5', requiredLevel: 0, price: 350000, isDarkBlue: true },
+            { id: 'title53', icon: '📺', name: 'Здесь могла быть ваша реклама', requiredLevel: 0, price: 200000 }
         ];
 
         // --- РАМКИ ---
         const allFrames = [
             { id: 'frame_rank', name: 'Рамка Ранга (Бронза) 🎁', price: 0, className: 'frame-rank', icon: '🥉' }, 
-            { id: 'frame_silver', name: 'Серебряная Рамка 🎁', price: 0, className: 'frame-silver', icon: '🥈' }, // Бесплатная
+            { id: 'frame_silver', name: 'Серебряная Рамка 🎁', price: 0, className: 'frame-silver', icon: '🥈' },
             { id: 'frame_legendary', name: 'Легендарная Рамка', price: 550000, className: 'frame-legendary', icon: '🌟' },
             { id: 'frame_diamond', name: 'Алмазная Рамка', price: 550000, className: 'frame-diamond', icon: '💎' },
             { id: 'frame_mythic', name: 'Мифическая Рамка', price: 550000, className: 'frame-mythic', icon: '🔮' },
@@ -557,7 +571,6 @@
             { id: 'frame_nature', name: 'Природная Рамка', price: 550000, className: 'frame-nature', icon: '🌿' },
             { id: 'frame_storm', name: 'Штормовая Рамка', price: 550000, className: 'frame-storm', icon: '⛈️' },
             { id: 'frame_star', name: 'Звёздная Рамка', price: 550000, className: 'frame-star', icon: '⭐' },
-            // Новые 5 рамок
             { id: 'frame_gold', name: 'Золотая Рамка', price: 550000, className: 'frame-gold', icon: '🥇' },
             { id: 'frame_crystal', name: 'Кристальная Рамка', price: 550000, className: 'frame-crystal', icon: '🔷' },
             { id: 'frame_obsidian', name: 'Обсидиановая Рамка', price: 550000, className: 'frame-obsidian', icon: '⬛' },
@@ -588,7 +601,6 @@
             { id: 'color_spring', name: 'Неоново-весенний', price: 150000, className: 'neon-spring-text' },
             { id: 'color_aqua', name: 'Неоново-аква', price: 150000, className: 'neon-aqua-text' },
             { id: 'color_coral', name: 'Неоново-коралловый', price: 150000, className: 'neon-coral-text' },
-            // Новые 5 цветов
             { id: 'color_darkgreen', name: 'Тёмно-зеленый неон', price: 150000, className: 'neon-darkgreen-text' },
             { id: 'color_platinum', name: 'Платиновый неон', price: 150000, className: 'neon-platinum-text' },
             { id: 'color_peach', name: 'Персиковый неон', price: 150000, className: 'neon-peach-text' },
@@ -608,7 +620,6 @@
             { id: 'pin8', name: 'Меч', icon: '⚔️', price: 180000 },
             { id: 'pin9', name: 'Щит', icon: '🛡️', price: 80000 },
             { id: 'pin10', name: 'Крылья', icon: '🕊️', price: 130000 },
-            // Новые 5 пинов
             { id: 'pin11', name: 'Кошка', icon: '🐱', price: 90000 },
             { id: 'pin12', name: 'Собака', icon: '🐶', price: 90000 },
             { id: 'pin13', name: 'Ракета', icon: '🚀', price: 170000 },
@@ -666,7 +677,6 @@
             { id: 'avatar45', type: 'avatar', icon: '🦜', name: 'Попугай', price: 4000 },
             { id: 'avatar46', type: 'avatar', icon: '🐲', name: 'Китайский дракон', price: 900000 },
             { id: 'avatar47', type: 'avatar', icon: '🧸', name: 'Мишка', price: 35000 },
-            // Новые 5 аватарок
             { id: 'avatar48', type: 'avatar', icon: '🦮', name: 'Собака', price: 5500 },
             { id: 'avatar49', type: 'avatar', icon: '🐹', name: 'Хомяк', price: 700 },
             { id: 'avatar50', type: 'avatar', icon: '🦌', name: 'Олень', price: 18000 },
@@ -709,13 +719,12 @@
             { id: 'banner53', type: 'banner', icon: '🌌', name: 'Туманность', price: 600000, style: 'radial-gradient(circle, #ff69b4 10%, #8a2be2 50%, #000 90%)' },
             { id: 'banner54', type: 'banner', icon: '🔮', name: 'Магия', price: 200000, style: 'linear-gradient(90deg, #8a2be2, #4b0082, #8a2be2)' },
             { id: 'banner55', type: 'banner', icon: '🌠', name: 'Комета', price: 150000, style: 'linear-gradient(90deg, #00f, #fff, #00f)' },
-            // Новые 5 обычных баннеров
             { id: 'banner61', type: 'banner', icon: '🏜️', name: 'Пустыня', price: 22000, style: 'linear-gradient(180deg, #ffd700, #ff8c00, #ffd700)' },
             { id: 'banner62', type: 'banner', icon: '🌊', name: 'Глубина', price: 40000, style: 'linear-gradient(180deg, #000080, #191970, #000080)' },
             { id: 'banner63', type: 'banner', icon: '🍄', name: 'Грибной', price: 7000, style: 'linear-gradient(90deg, #ff0000, #ffffff, #ff0000)' },
             { id: 'banner64', type: 'banner', icon: '🌌', name: 'Червоточина', price: 700000, style: 'radial-gradient(circle, #4b0082 10%, #000 70%)' },
             { id: 'banner65', type: 'banner', icon: '🌋', name: 'Извержение', price: 90000, style: 'linear-gradient(180deg, #ff4500, #8b0000, #ff4500)' },
-
+            
             // Переливающиеся баннеры (старые)
             { id: 'banner21', type: 'banner', icon: '🌈', name: 'Переливающаяся Радуга', price: 200000, style: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000)', isAnimated: true },
             { id: 'banner22', type: 'banner', icon: '🌊', name: 'Переливающаяся Волна', price: 200000, style: 'linear-gradient(90deg, #00f, #0ff, #00f, #0ff, #00f)', isAnimated: true },
@@ -742,8 +751,6 @@
             { id: 'banner58', type: 'banner', icon: '🌠', name: 'Переливающаяся Комета', price: 200000, style: 'linear-gradient(90deg, #00f, #fff, #00f, #fff)', isAnimated: true },
             { id: 'banner59', type: 'banner', icon: '🌋', name: 'Переливающийся Вулкан', price: 200000, style: 'linear-gradient(90deg, #300, #f00, #300, #f00)', isAnimated: true },
             { id: 'banner60', type: 'banner', icon: '🌊', name: 'Переливающийся Океан', price: 200000, style: 'linear-gradient(90deg, #000080, #00ffff, #000080, #00ffff)', isAnimated: true },
-            
-            // Новые 5 анимированных баннеров
             { id: 'banner66', type: 'banner', icon: '🌅', name: 'Переливающийся Рассвет', price: 200000, style: 'linear-gradient(90deg, #ff8c00, #ff0080, #ff8c00, #ff0080)', isAnimated: true },
             { id: 'banner67', type: 'banner', icon: '🌌', name: 'Переливающийся Млечный Путь', price: 200000, style: 'linear-gradient(90deg, #191970, #483d8b, #191970, #483d8b)', isAnimated: true },
             { id: 'banner68', type: 'banner', icon: '🔮', name: 'Переливающийся Кристалл', price: 200000, style: 'linear-gradient(90deg, #e0ffff, #00ffff, #e0ffff, #00ffff)', isAnimated: true },
@@ -788,7 +795,8 @@
             passiveMultiplier: 1,
             passiveUpgradeCost: 10,
             lastLogoutTime: 0,
-            lastResetTime: Date.now()
+            lastResetTime: Date.now(),
+            usedGifts: [] // Массив для хранения активированных подарков
         };
 
         function getDefaultTitle(level) {
@@ -798,6 +806,44 @@
 
         function getDisplayTitle(level, customTitle) {
             return customTitle || getDefaultTitle(level);
+        }
+
+        // --- ЛОГИКА ПОДАРКОВ ---
+        async function checkGiftLink() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const giftId = urlParams.get('gift');
+
+            if (giftId && allGifts[giftId]) {
+                // Убираем параметр из URL, чтобы нельзя было обновить страницу
+                window.history.replaceState({}, document.title, window.location.pathname);
+
+                if (userData.usedGifts && userData.usedGifts.includes(giftId)) {
+                    alert('❌ Вы уже активировали этот подарок!');
+                    return;
+                }
+
+                const gift = allGifts[giftId];
+                let successMessage = '';
+
+                if (gift.type === 'clicks') {
+                    userData.score += gift.amount;
+                    successMessage = `🎁 Подарок активирован! Вы получили ${gift.amount} кликов!`;
+                } else if (gift.type === 'avatar' || gift.type === 'frame' || gift.type === 'banner' || gift.type === 'pin') {
+                    if (!userData.inventory.includes(gift.itemId)) {
+                        userData.inventory.push(gift.itemId);
+                        successMessage = `🎁 Подарок активирован! Вы получили "${gift.name}"!`;
+                    } else {
+                        successMessage = `🎁 Вы уже имеете "${gift.name}", но подарок засчитан!`;
+                    }
+                }
+
+                if (!userData.usedGifts) userData.usedGifts = [];
+                userData.usedGifts.push(giftId);
+
+                updateUI();
+                saveToCloud(true);
+                setTimeout(() => alert(successMessage), 500);
+            }
         }
 
         // --- Авторизация ---
@@ -830,12 +876,13 @@
                         nickname: nick, score: 0, clicksPerClick: 1, level: 1, upgradeCost: 4, banned: false,
                         avatar: '👤', banner: 'linear-gradient(90deg, #111, #333)', customTitle: '', customColor: '', 
                         customFrame: 'frame-rank', customPin: '',
-                        inventory: ['avatar1', 'banner1', 'frame_rank'],
+                        inventory: ['avatar1', 'banner1', 'frame_rank', 'frame_silver'],
                         friends: [],
                         passiveMultiplier: 1,
                         passiveUpgradeCost: 10,
                         lastLogoutTime: Date.now(),
-                        lastResetTime: Date.now()
+                        lastResetTime: Date.now(),
+                        usedGifts: []
                     });
                 }
             } catch (error) {
@@ -873,7 +920,7 @@
                     
                     if (!userData.inventory) userData.inventory = ['avatar1', 'banner1'];
                     if (!userData.inventory.includes('frame_rank')) userData.inventory.push('frame_rank'); 
-                    if (!userData.inventory.includes('frame_silver')) userData.inventory.push('frame_silver'); // Автоматически выдаем серебряную рамку
+                    if (!userData.inventory.includes('frame_silver')) userData.inventory.push('frame_silver');
                     if (!userData.avatar) userData.avatar = '👤';
                     if (!userData.banner) userData.banner = 'linear-gradient(90deg, #111, #333)';
                     if (!userData.customTitle) userData.customTitle = '';
@@ -885,12 +932,16 @@
                     if (!userData.passiveUpgradeCost) userData.passiveUpgradeCost = 10;
                     if (!userData.lastLogoutTime) userData.lastLogoutTime = Date.now();
                     if (!userData.lastResetTime) userData.lastResetTime = Date.now();
+                    if (!userData.usedGifts) userData.usedGifts = [];
 
                     checkSeasonReset();
                     calculateOfflineIncome();
                     updateUI();
                     startPassiveIncome();
                     updateResetTimer();
+                    
+                    // Проверяем подарок только после загрузки данных
+                    checkGiftLink();
                 }
                 showScreen(gameScreen);
             } else {
@@ -1020,7 +1071,8 @@
                         inventory: userData.inventory,
                         passiveMultiplier: userData.passiveMultiplier,
                         passiveUpgradeCost: userData.passiveUpgradeCost,
-                        lastResetTime: userData.lastResetTime
+                        lastResetTime: userData.lastResetTime,
+                        usedGifts: userData.usedGifts
                     };
                     if (isLogout) dataToSave.lastLogoutTime = Date.now();
                     await updateDoc(doc(db, "users", currentUser.uid), dataToSave);
@@ -1274,8 +1326,8 @@
                     const nameHtml = `<span class="${colorClass}">${data.nickname || 'Игрок'}</span>`;
                     
                     div.innerHTML = `
-                        <div style="display:flex; flex-direction:column;">
-                            <span style="font-weight:bold;">${nameHtml} ${isBanned ? '🚫 (Забанен)' : ''}</span>
+                        <div style="display:flex; flex-direction:column; width:100%;">
+                            <span style="font-weight:bold; font-size:1rem;">${nameHtml} ${isBanned ? '🚫 (Забанен)' : ''}</span>
                             <span style="font-size:0.7rem; color:#aaa;">Ур. ${data.level || 1} · Кликов: ${Math.floor(data.score || 0)}</span>
                         </div>
                     `;
@@ -1283,6 +1335,8 @@
                     const btn = document.createElement('button');
                     btn.className = `action-btn ${isBanned ? 'success' : 'danger'}`;
                     btn.textContent = isBanned ? 'Разбанить' : 'Забанить';
+                    btn.style.width = '100%';
+                    btn.style.marginTop = '5px';
                     
                     btn.onclick = async () => {
                         btn.disabled = true;
@@ -1419,14 +1473,13 @@
 
         // --- Магазин (Логика с категориями) ---
         document.getElementById('shopBtn').addEventListener('click', () => { 
-            currentShopCategory = 'avatar'; // Сброс на аватарки при открытии
+            currentShopCategory = 'avatar'; 
             renderShopTabs();
             renderShopItems();
             showScreen(shopScreen); 
         });
         document.getElementById('closeShopBtn').addEventListener('click', () => showScreen(gameScreen));
 
-        // Отрисовка вкладок
         function renderShopTabs() {
             shopTabs.innerHTML = '';
             const categories = [
@@ -1444,18 +1497,16 @@
                 btn.textContent = cat.name;
                 btn.onclick = () => {
                     currentShopCategory = cat.id;
-                    renderShopTabs(); // Перерисовываем вкладки для обновления выделения
-                    renderShopItems(); // Перерисовываем предметы
+                    renderShopTabs(); 
+                    renderShopItems(); 
                 };
                 shopTabs.appendChild(btn);
             });
         }
 
-        // Отрисовка предметов выбранной категории
         function renderShopItems() {
             shopList.innerHTML = '';
             
-            // Аватарки
             if (currentShopCategory === 'avatar') {
                 shopItems.filter(i => i.type === 'avatar').forEach(item => {
                     const isOwned = userData.inventory.includes(item.id);
@@ -1472,7 +1523,6 @@
                 });
             }
             
-            // Баннеры
             else if (currentShopCategory === 'banner') {
                 shopItems.filter(i => i.type === 'banner').forEach(item => {
                     const isOwned = userData.inventory.includes(item.id);
@@ -1490,7 +1540,6 @@
                 });
             }
 
-            // Рамки
             else if (currentShopCategory === 'frame') {
                 allFrames.forEach(item => {
                     const isOwned = userData.inventory.includes(item.id);
@@ -1516,7 +1565,6 @@
                 });
             }
 
-            // Цвета
             else if (currentShopCategory === 'color') {
                 allColors.forEach(item => {
                     const isOwned = userData.inventory.includes(item.id);
@@ -1533,7 +1581,6 @@
                 });
             }
 
-            // Титулы
             else if (currentShopCategory === 'title') {
                 allTitles.forEach(item => {
                     const titleText = `${item.icon} ${item.name.toUpperCase()}`;
@@ -1562,7 +1609,6 @@
                 });
             }
 
-            // Пины
             else if (currentShopCategory === 'pin') {
                 allPins.forEach(item => {
                     const isOwned = userData.inventory.includes(item.id);
@@ -1741,4 +1787,4 @@
         animate();
     </script>
 </body>
-            </html>
+                </html>
